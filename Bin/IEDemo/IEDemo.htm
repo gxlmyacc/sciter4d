@@ -1,0 +1,69 @@
+﻿<html>
+  <head>
+    <title></title>
+    <style>
+
+    @import "plugin://sciter4d/Plugins/SciterIE"; 
+  
+    html {
+	    background-image: url(main_bg.png);
+	    background-repeat: stretch;
+	  }
+
+    widget[type=ie] {
+	    display: inline-block;
+      behavior: ie;
+ 
+      width: *;
+      height: *;
+	    margin: 10px;
+      border:1px solid black;
+      foreground-size:contain;
+    } 
+    
+    #out {
+      height: 1em;
+    }
+
+	  #container { flow:horizontal; size:*; }
+    </style>
+    <script type="text/tiscript">
+    
+      //includePlugin("plugin://sciter4d/Plugins/SciterIE"); 
+
+      var ie = null;
+      function self.ready() {
+        ie = $(widget[type=ie]);
+        var out = $(#out);
+        
+        ie.config { silent: true };
+      
+        ie.onStatusTextChange = function(text){
+          out.value = text;
+        };
+        ie.onGetMessage = function(msg){
+          out.value = "接收到消息：" + msg;
+          return "已接收到消息！";
+        };
+        
+        ie.go("ie.html");
+      }
+      
+      function self#test.onClick(){ 
+        var out = $(#out);
+        if (ie.postEnable()) 
+          out.value = "IE返回值：" + ie.postMessage("哈哈！");
+        else 
+          out.value = "不支持postMessage";
+      }
+    </script>
+  </head>
+<body>
+  <button type="button" id="test">向IE发消息</button>
+  <div #container>
+    <widget type="ie" />
+  </div>
+  <p id="out" />
+
+</body>
+</html>

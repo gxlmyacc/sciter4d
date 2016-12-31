@@ -1,0 +1,145 @@
+
+// 类似于Lang名称空间
+
+const Lang = function() {
+
+  var   xlation = null; // 当前翻译映射表 
+  var   langId = null;  // 当前语言: "en", "ru", "jp"等 
+  
+  var   notfound = null; // xlation中*未找到*项 (主要用于报告信息) 
+  var   used = null; // xlation中使用的项 (主要用于报告信息) 
+  
+  const ON_LANG_CHANGE = #onLangChange; // 事件名
+  
+  function loadTranslation(lang = null) { 
+    
+    langId = lang || self.attributes["lang"]; assert langId;
+    
+    //<link href="lang/ru.tis" hreflang="ru" rel="translation" >
+    
+    var link = self.$(>head>link[hreflang={langId}]);
+    assert link : "属性[hreflang=" + langId + "]的link元素未找到";
+    
+    var href = link.attributes["href"];
+    assert href : "link元素未定义[href]属性";
+    
+    var data = self.request(10000, #get, self.url(href) );
+    
+    if( data instanceof Stream )
+      xlation = eval(data);  
+      
+    assert xlation : "不正确的翻译文件";
+  }
+  
+  function updateLang(el) {
+    var evh = el[ON_LANG_CHANGE];
+    if( evh ) evh();
+    for( var child in el ) // 为整个DOM树更新语言 
+      updateLang(child); 
+  }
+
+  function Controller() {
+  
+    if(!xlation) loadTranslation();
+    
+    this.language = property(v) {
+      get return langId;
+      set {
+        this.attributes["lang"] = v;
+        this.attributes["dir"] = v == "ar" || v == "he" ? "rtl" : "ltr";
+        loadTranslation(v);
+        updateLang(this);
+      }
+    }
+  }
+  
+  // 静态标签(label)更新器, 用于<dfn>或<xxx .dfn>
+  function Label() {
+    var key = this.text;
+    
+    function setText(tn) {
+      this.clear();
+      this.appendNode( Node.createText(tn) );
+    }
+    
+    function update() {
+      var text = xlation[key];
+      if( !text ) { if(notfound) notfound[key] = #text; setText.call(this super, key); }
+      else { setText.call(this super,text); if(used) used[key] = true; }
+    }
+    
+    this[#text] = property(v) {
+      get {
+        var tn = this.firstNode;
+        if( !tn ) return "";
+        return tn.text;
+      }
+      set {
+        key = v;
+        update.call(this);
+      }
+    }
+    
+    this[ON_LANG_CHANGE] = update;
+    update();
+  }
+  
+  // 动态文本更新器, 用于<var>或<xxx .var>
+  // 调用语言映射表中定义的pluralizer/formatting函数
+  function Formatter() {
+    var key = this.text;
+    var val = parseData(this.attributes["value"] || "0");
+    var fmt = xlation[key];
+    if( fmt && used) used[key] = true;
+    if( !fmt && notfound) notfound[key] = #function;
+    
+    function update() { 
+      fmt = xlation[key]; 
+      if( !fmt ) { if(notfound) notfound[key] = #function; }
+      else { (this super).value = val; }
+    }
+    this[ON_LANG_CHANGE] = update;
+    
+    this[#value] = property(v) {
+      get return val;
+      set {
+        val = v;
+        var text = ( typeof fmt == #function ) ? fmt.call(this, v) :  fmt.replace("#",v.toString() );
+        this.text = text;
+      }
+    }
+    this.value = val;
+  }
+  
+  function initStats() {
+    notfound = {}; // xlation中*未找到*项 (主要用于报告信息) 
+    used = {}; // xlation中使用的项 (主要用于报告信息)  
+
+    function notFoundItems() { return notfound; }
+    function notUsedItems() { 
+      var nused = {};
+      for(var (k,v) in xlation) {
+        if( used[k] === undefined ) nused[k] = v;
+      }
+      return nused; 
+    }
+    return (notFoundItems,notUsedItems);
+  }
+  
+  function translate(text, val = "") 
+  {
+    var fmt = xlation[text]; 
+    if( !fmt ) { if(notfound) notfound[text] = #text; }
+    else return typeof fmt == #function ? fmt.call(this, val) : fmt.replace("#",val.toString() );
+  }
+  
+  return {
+      Controller    : Controller,
+      Label         : Label,
+      Formatter     : Formatter,
+      initStats     : initStats,
+      translate     : translate,
+      x             : translate // short form of the above
+   };
+
+}();

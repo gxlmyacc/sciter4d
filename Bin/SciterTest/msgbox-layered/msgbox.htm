@@ -1,0 +1,93 @@
+﻿<html custom-frame="layered">
+<head>
+  <style>
+    @import url(sciter:msgbox.css);
+  </style>
+  <script type="text/tiscript">
+    self.onControlEvent = function(evt)
+    {
+      if(evt.type != Event.BUTTON_CLICK || !evt.target.match("#button-bar button[id]"))
+        return false;
+
+      var idsym = evt.target.attributes["id"].toSymbol();
+     
+      if( view.parameters.onClose instanceof Function )
+      {
+        if(view.parameters.onClose(self, idsym) === false)
+          return true; // caller's script rejected closing
+      }
+      view.close(idsym); 
+    }
+    
+    if( view.parameters.onLoad instanceof Function )
+      view.parameters.onLoad(self);
+    
+    view.caption = "<% =title || "Sciter"; %>";
+    </script>
+</head>
+<body>
+<div id="titlebar" role="window-caption">
+  <div id="title"><% =title || type || "Sciter"; %></div>
+  <div id="close" role="window-close">r</div>
+</div>
+<div id="content" type="<% =type || ""; %>" 
+<% if(icon) { %>
+  style="foreground-image:url(<% =icon %>)"
+<% } %>
+><% = content ? content.toString().trim() : "{nothing?}"; %></div>
+<div id="button-bar">
+<% 
+  var captions = { ok:"确定", cancel:"取消", abort:"中断", ignore:"忽略",yes:"是",no:"否",close:"关闭"};
+  function renderButton(role, button_def)
+  {
+      try 
+     {
+       var id; 
+       var text;
+       if( typeof button_def == #object ) { id = button_def.id; text = button_def.text; }
+       else { id = button_def;  text = captions[id]; }
+%><button id="<% =id %>" role="<% = role %>" ><% =text %></button><%
+       return true;
+    } catch(e) { stdout << "msgbox error - bad button definition:" << e; }
+    return false;
+  }
+  var numbuttons = 0;
+  
+  if( typeof buttons == #array )
+  {
+    var has_default, has_cancel;
+    
+    for(var i = 0; i < buttons.length; ++i)
+    {
+      var btn = buttons[i];
+      if( typeof btn != #object )
+        continue;
+      if( btn.role == "default-button" )
+        has_default = true;
+      else if( btn.role == "cancel-button" )
+        has_cancel = true;
+    }
+
+    for(var i = 0; i < buttons.length; ++i)
+      {
+        var btn = buttons[i];
+        var role = typeof btn == #object ? btn.role : "";
+        if( i == 0 && !has_default ) role = "default-button";
+        else if( i != 0 && i == (buttons.length-1) && !has_cancel && role != "default-button") role = "cancel-button";
+        if(renderButton(role, buttons[i]));
+        ++numbuttons;
+      }
+  }
+  else if( typeof buttons == #object || typeof buttons == #symbol)
+  {
+    if(renderButton("default-button", buttons))
+      ++numbuttons;
+  }
+  if(!numbuttons)  // no buttons - no luck
+    {
+%><button id="ok" role="default-button" >确定</button> <%
+    } 
+%>
+</div>
+</body>
+</html>

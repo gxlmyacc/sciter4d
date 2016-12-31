@@ -1,0 +1,314 @@
+﻿namespace formation {
+  
+  class Formation 
+  { 
+    function toHtmlString() 
+    {
+      var out = "<ul>";
+      for(var (name,val) in this) {
+        var typename = "";
+        if( val instanceof RadioGroup ) 
+          typename = "RadioGroup";
+        else if( val instanceof Repeatable ) 
+          typename = "Repeatable";
+        else if( val instanceof Formation ) 
+          typename = "Formation";
+        else { 
+          typename = val.tag;  
+          if( var t = val.attributes["type"] ) typename += "|" + t; }
+            out += "<li><span class=name>" + name + "</span> 的类型为: <span class=type>" + typename + "</span>";
+          if( val instanceof RadioGroup ) 
+            {}
+          else if( val instanceof Formation )
+            out += val.toHtmlString();
+        out += "</li>";
+      }
+      return out + "</ul>";  
+    }
+  }
+  
+  // RadioGroup formation
+  
+  class RadioGroup: Formation 
+  {
+    function this(el) { this.group = [el]; }
+    property value(v) {
+      get {
+        for( var el in this.group ) 
+          if( el.state.checked ) 
+            return el.attributes["value"];
+      }
+      set {
+        for( var el in this.group ) 
+          el.state.checked = el.attributes["value"] == v; 
+      }
+    }
+    function add(el) { this.group.push(el); }
+  }
+
+  // formation构造器
+  function this( container ) {
+     
+    var f = null; 
+    if( container ) 
+      f = container.formation;
+
+    if(f) return f; // formation已经创建
+
+    var val = {}; // formation的值
+    
+    function getValues() {
+      // 遍历formation中的元素
+      for(var (name, el) in f)
+        val[name] = el.value;
+      return val;
+    }
+    
+    function setValues(map) {
+      val = map;
+      for(var (name, nval) in map)  // TODO: 如果某些数据丢失，则重新创建子元素列表...
+      {
+        var el = f[name];
+        if( !el ) continue; // 将上面的TODO
+        el.value = nval;
+      }
+    }
+
+    f = {}; // 创建formation对象
+    var fp = {};
+    fp[#container] = property(v) { get return container; set container = v; }
+    fp[#value] = property(v) { get return getValues(); set setValues(v); }
+    
+    fp.prototype = Formation;
+    f.prototype = fp;    
+
+    function addNamedItem(fo, name, el) {
+      if( typeof name == #array) {
+         for(var part in name) 
+          fo = addNamedItem(fo, part, part === name.last? el: null);
+      } 
+      else if( name.indexOf(".") >= 0 ) {
+        addNamedItem(fo, name.split("."), el);
+      }  
+      else if( name ) {
+        if( typeof name == #string ) 
+          name = symbol(name);
+          
+        if( var v = fo[name] ) { // 如果已经定义，make VectorFormation or what? 
+          if( v instanceof Formation )
+            return v;
+          else
+            stdout.printf("WARNING: %s 已经在formation %s 中定义\n", name, typeof v);
+        }
+        else {
+          if( !el ) { // 子formation请求
+            var nf = formation(null);  
+            fo[name] = nf; // stdout.printf("addNamedItem: %s, %s\n", name, typeof el);
+            return nf;
+          } else {
+            fo[name] = el; // stdout.printf("addNamedItem: %s, %s\n", name, typeof el);
+          }
+        }
+      }
+      else
+        stdout.printf("WARNING: 正在尝试将一个空名称赋值给formation %V\n", fo); 
+      return fo;
+    }
+    
+    function visitChildren(root, cb) {
+        for(var c in root ) {
+          var r = cb( c );
+          if( r === true ) 
+            visitChildren( c, cb );
+        }
+    }
+    
+    const CONTAINERS = ["div","section","fieldset"];
+    const LISTS = ["ul","ol","list","table","tbody"];
+    
+    visitChildren(container, function(el) 
+    {
+      var behaviorName = el.style#behavior;
+      var isCtl = behaviorName !== undefined;
+      var name = el.attributes["name"] /*|| el.attributes["id"]*/; 
+          //name = name? symbol(name) : null;
+          
+      if( !name ) 
+        return true; // go inside to collect others
+        
+      // 处理命名项:
+
+      if( el.tag in CONTAINERS ) { // <section id="something"> <section name="something">  
+                                   // <div id="something">     <div name="something">
+        addNamedItem(f,name,formation(el)) ; // add its sub-hierachy
+        return false;                          // don't go inside it
+      }
+      else if( el.tag in LISTS ) { 
+        addNamedItem(f,name,repeatable(el)) ; // theses are repeatable formations
+        return false;                         // don't go inside it
+      }
+      
+      if( behaviorName == "radio") { // 对于单选框(radio)组需要特别处理
+        var rg = f[name]; 
+        if( !rg) f[name] = rg = new RadioGroup(el); else rg.add(el);
+      } else
+        addNamedItem(f,name,el); // 命名元素是终端元素, 
+      return false;  // don't go inside it
+      
+    });
+    
+    // 也更新container:
+    if(container) {
+      container[#formation] = property(v) { get return f; }
+      container[#value] = property(v) { get return getValues(); set setValues(v); }
+    }
+    return f;
+  }
+  
+  //|
+  //| repeatable formation
+  //| 
+  
+  class Repeatable : Formation
+  { 
+  }  
+  
+  function repeatable(container) // repeatable formation, 它的值是一个项列表数组
+  {
+    var f = container.formation;
+    if(f) return f; // 已经创建
+  
+    var temp = []; // 模板列表, DOM元素
+    var cond = []; // 条件列表，对象匹配条件
+    
+    var val = [];  // formation的值
+    
+    function any(rec) { return true; }
+    var filter = any;
+    
+    container.templates = function() { return (temp,cond); } 
+
+    const NOTEMPATTR = ["value", "class", "if", "init"];
+    function templateModelTerminals(el) {
+      var result = { init: el.@#init };
+      var attrs = [];
+      for (var i = 0; i < el.attributes.length; i++) {
+        var attrname = el.attributes.name(i);
+        if (NOTEMPATTR.indexOf(attrname) >= 0) 
+          continue;
+        var attrval = el.attributes[i];
+        if (!attrval) continue;
+        var expr  = (attrval ~% "{{") /~ "}}"; // {{...}} 中的每一部分
+        if (expr)
+          attrs.push { index: i, expr: expr };
+      }
+      result.attrs = attrs;
+      el.$model = result;
+    }     
+    
+    // 获取 模板/条件 对
+    while( var el = container.first )
+    {
+      //stdout.println("template", el);
+      templateModelTerminals(el);
+      temp.push( el );
+      if( var filter = el.attributes["if"] ) {
+        var c = parseData(filter);
+        cond.push(c);
+        el.remove();
+      } else {
+        cond.push(null);
+        el.remove();
+        break;
+      }   
+    }
+    
+    // 基础比较方法
+    function match( data, cond ) {
+      for( var (k,v) in cond ) {
+        var dv = data[k];
+        if( dv === undefined ) 
+          return false; // 没有这样的成员，不匹配 
+        else if( v instanceof Class || v instanceof Type ) {
+          // 如：{ something: Array }
+          if( dv !instanceof v )
+            return false;
+        }
+        else if( typeof v == #object && typeof dv == #object  ) { // 子对象
+          if( !match(dv, v))
+            return false;
+        }
+        else { // literal value
+          if( dv != v )
+            return false;
+        }
+      }
+      return true; // 匹配成功
+    }
+    
+    function render( v ) 
+    {
+      container.clear();
+      
+      if( temp.length == 0 ) // that is inner repeatable without templates
+                             // get collection of templates/conditionals from its parent
+        for(var p = container.parent; p; p = p.parent) 
+          if( p.templates ) {
+            (temp,cond) = p.templates();
+            //stdout.println("temp,cond",temp,cond);
+            break;
+          }
+          
+      //assert this.length == 0 : "Element without @if shall be the last one";
+      assert temp.length != 0 : "没有提供模板项";
+      
+      function ModelTerminals(el, rec, temp) {
+        var model = temp.$model;
+        if (!model) return;
+        for (var attr in model.attrs)
+          el.attributes[attr.index] = rec.propertyAt(attr.expr);
+        if (model.init)
+          try {eval.call(el, model.init, rec); } catch(e) { stdout.println(e) }
+      }
+      
+      for(var (recno,rec) in v) 
+      {
+        if( !filter(rec) )
+          continue;
+        for( var (i,c) in cond ) {
+          if(!match(rec,c))
+            continue;
+          var el = temp[i].clone();                
+          ModelTerminals(el, rec, temp[i]);         
+          container.append(el);
+          el.recno = recno;
+          formation(el).value = rec; // each record is a formation by itself 
+          break;
+        }
+      }
+    }
+    
+    function gather() {
+      for( var el in container ) 
+      {
+        var recno = el.recno;
+        val[ recno ] = el.value;
+      }
+      return val;
+    }
+            
+    f = {}; // construct the formation object
+    var fp = {};
+    fp[#container] = property(v) { get return container; set container = v; }
+    fp[#value] = property(v) { get return gather(); set render(v); }
+    fp.prototype = Repeatable;
+    f.prototype = fp;    
+    
+    container[#formation] = property(v) { get return f; }
+    container[#value] = property(v) { get return gather(); set render(v); } 
+    
+    return f;
+
+  }  
+
+}

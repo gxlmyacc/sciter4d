@@ -1,0 +1,26 @@
+﻿<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="0_start.css" media="all" />
+  <link rel="stylesheet" type="text/css" href="sciter4d:plus.css" media="all" />
+  <script type="text/tiscript" src="SYInstall.tis"></script>  
+  <script type="text/tiscript" src="0_start.tis"></script>
+</head>
+<body model="SYInstall">
+	<section id="logo">
+    <img id="logo1" src="Images/u3.png" />
+    <img id="logo2" src="Images/u5.png" />
+    <img id="logo3" src="Images/u7.png" />
+  </section>
+  <section id="bottom" command="window-client">
+    <div id="install-buttons-panel" >
+      <div id="install" click="toInstall()">立即安装</div><span id="custom-dir" name="installInfos.customPath" >自定义安装目录</span>
+    </div>  
+    <div id="custom-dir-panel" @expanded="installInfos.customPath">
+      <label for="installPath">安装目录</label>
+      <input #installPath name="installInfos.installPath" type="text" readonly /><span id="select-dir" click="toSelectFolder()">选择目录</span>
+    </div>
+  </section>
+</body>
+</html>

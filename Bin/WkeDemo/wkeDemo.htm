@@ -1,0 +1,45 @@
+﻿<html>
+  <head>
+    <title></title>
+    <style>
+
+	@import "plugin://sciter4d/Plugins/SciterWke"; 
+    html {
+	  background-image: url(main_bg.png);
+	  background-repeat: stretch;
+	}
+
+    widget[type=wke] {
+	  display: inline-block;
+      behavior: wke;
+      
+      width: *;
+      height: *;
+	    margin: 10px;
+      border:1px solid black;
+	 // background-color: transparent;
+      foreground-size:contain;
+    } 
+
+    widget[type=wke]:focus {
+      border-color: red;
+    }
+
+   // widget[type=wke]:hover
+   // { 
+   //   transform:rotate(15deg) scale(.75);
+   //   transition: transform(quart-out,0.5s,quart-in);
+   // }
+
+	#container { flow:horizontal; size:*; }
+    </style>
+  </head>
+<body>
+  <input|text />
+  <div #container>
+    <widget type="wke" url="http://news.baidu.com/" url1="http://html5test.com/" />
+	<!--url="flash\\flash.html" url="CSSBubbles\\CSS Bubbles.htm"-->
+  </div>
+
+</body>
+</html>

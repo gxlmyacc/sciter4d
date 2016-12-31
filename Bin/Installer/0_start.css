@@ -1,0 +1,111 @@
+html, body {
+  background-color: transparent;
+  color: #333333;
+}
+
+body {
+  horizontal-align: center;
+}
+
+#logo {
+  flow: "1 2" "1 3";
+  horizontal-align: center;
+  height: 280dip;
+}
+
+#logo1 {
+  size: 130dip 130dip;
+  margin-right: 30dip;
+  margin-bottom: *;
+  margin-top: *;
+}
+
+#logo2 {
+  size: 230dip 70dip;
+  margin-top: *;
+}
+
+#logo3 {
+  size: 270dip 40dip;
+  padding-top: 10dip;
+  margin-bottom: *;
+}
+
+#bottom {
+  height: *;
+  margin-right: 75dip;
+  margin-top: 30dip;
+  horizontal-align: right;
+}
+
+#install-buttons-panel {
+  vertical-align: middle;
+  flow: horizontal;
+  width: max-content;
+}
+
+#install {
+  border: 1px solid #E1581A;
+  color: #E1581A;
+  font-size: 22dip;
+  display: inline-block;
+  width: 270dip;
+  height: 50dip;
+  text-align: center;
+  vertical-align: middle;  
+  border-radius: 5dip;
+  margin: 10dip;
+  cursor: pointer;
+  behavior:clickable;
+}
+
+#install:hover {
+  color: white;
+  background-color: #E1581A;
+}
+
+#custom-dir {
+  cursor: pointer;
+  behavior:check
+}
+
+#custom-dir-panel {
+  vertical-align: middle;
+  line-height: 22dip;
+  flow: horizontal;
+  width: max-content;
+  visibility: none;
+}
+
+#custom-dir-panel:expanded {
+  visibility: visible;
+}
+
+
+input#installPath {
+  margin-left: 10dip;
+  background-image: none;
+  background-color: white;
+  min-height: 22dip;
+  size: 345dip 22dip;
+  border: 1px solid #D7D7D7;
+  color: #7D667D;
+  padding: 0dip;
+  padding-left: 3dip;
+  border-right: none;
+}
+
+#select-dir {
+  display: inline-block;
+  background-color: #F2F2F2;
+  height: 22dip;
+  width: 106dip;
+  border: 1px solid #D7D7D7;
+  text-align: center;
+  behavior: clickable;
+}
+
+#select-dir:hover {
+  background-color: #D7D7D7;
+  cursor: pointer;
+}

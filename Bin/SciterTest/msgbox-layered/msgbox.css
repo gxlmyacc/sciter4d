@@ -1,0 +1,166 @@
+html 
+{ 
+  font:system;
+  width:max-content; 
+  height:min-content; 
+  overflow:none;
+  background-color: transparent;
+}
+body { 
+  margin:6dip; 
+  padding:0; 
+  background-color: white; 
+  outline: 6dip glow #666 0dip; 
+  outline-shift: 3dip; 
+  border-radius: 3dip; 
+}
+
+#titlebar {
+  height: 30dip;
+  width: 1*;
+  border-bottom: 1px solid #ddd;
+  flow: horizontal;
+  vertical-align: middle;
+}
+
+#title {
+  margin-left: 10dip;
+  width: max-content;
+  height: 1*;
+  vertical-align: middle;
+}
+
+#close {
+  font-size: 1.2em;
+  font-family: webdings;
+  position: absolute;
+  top: 10dip;
+  right: 10dip;
+  height: 1*;
+  behavior: clickable;
+  padding: 3dip;
+}
+
+#close:hover {
+  color: white;
+  background-color: #E45F3B;
+}
+
+#content
+{
+  background-color: threedhighlight;
+  padding-left:20dip;
+  padding-right:20dip;
+  vertical-align:middle;
+  foreground-repeat: no-repeat;
+  foreground-position: 16dip 50%;
+  background-repeat: no-repeat;
+  background-position: -10dip 50%;
+  background-size: 96dip 96dip; 
+  min-width:260dip;
+  min-height:80dip;
+  width:*;
+  height:*;
+  white-space:pre;
+}
+
+@media composition-supported && platform == "Windows"
+{
+  /* running on D2D systems */
+  html 
+  { 
+     background-color:transparent;
+  }
+  #content
+  {
+    background-color: white;
+  }
+}
+
+#content[type="information"] { 
+  padding-left:96dip; 
+  background-image:url(master:images\msgbox\information.png); 
+  background-size: 60px 60px;   
+  background-position-left: 20px; 
+}
+#content[type="alert"] { 
+  padding-left:96dip; 
+  background-image:url(master:images\msgbox\alert.png); 
+  background-size: 60px 60px; 
+  background-position-left: 20px; 
+}
+#content[type="error"] { 
+  padding-left:96dip; 
+  background-image:url(master:images\msgbox\error.png); 
+  background-size: 60px 60px;
+  background-position-left: 20px;   
+}
+#content[type="warning"] { 
+  padding-left:96dip; 
+  background-image:url(master:images\msgbox\warning.png); 
+  background-size: 60px 60px;
+  background-position-left: 20px; 
+}
+#content[type="question"] { 
+  padding-left:96dip; 
+  background-image:url(master:images\msgbox\question.png); 
+  background-size: 60px 60px;
+  background-position-left: 20px; 
+}
+
+#button-bar
+{
+  flow:horizontal;
+  padding:10dip;
+  border-spacing:10dip;
+  margin:0;
+  flow:horizontal;
+  horizontal-align: right;
+}
+
+label { line-height:1.4em; }
+
+#button-bar button  
+{
+  font-size: 1em;
+  background-image: none;
+  display:block; 
+  min-width:4em; 
+  line-height:2em; 
+  vertical-align:middle; 
+  width: min-intrinsic; 
+  text-align:center;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5dip;
+  color: black;
+  outline: none;
+  padding: 2dip 4dip 2dip 4dip;
+}
+
+#button-bar button:hover {
+  background-color: #E6E6E7;
+}
+
+#button-bar button:focus {
+  border-color: #aaa;
+}
+
+button#ok, button#yes  
+{
+  border: 1px solid #2EB875;
+  background-color: #2EB875;
+  border-radius: 5dip;
+  color: white;
+}
+
+button#ok:hover, button#yes:hover {
+  background-color: #2BAA6D;
+}
+
+button#ok:focus, button#yes:focus {
+  border-color: #248D5A;
+}
+
+
+

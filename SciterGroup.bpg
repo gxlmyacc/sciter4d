@@ -1,0 +1,109 @@
+#------------------------------------------------------------------------------
+VERSION = BWS.01
+#------------------------------------------------------------------------------
+!ifndef ROOT
+ROOT = $(MAKEDIR)\..
+!endif
+#------------------------------------------------------------------------------
+MAKE = $(ROOT)\bin\make.exe -$(MAKEFLAGS) -f$**
+DCC = $(ROOT)\bin\dcc32.exe $**
+BRCC = $(ROOT)\bin\brcc32.exe $**
+#------------------------------------------------------------------------------
+PROJECTS = Layered.exe QQLogin.exe SciterTest.exe Sciter.exe minimal.exe \
+  Installer.exe plainWin.exe UIFramework.exe uminimal.exe d360.exe d360_2.exe \
+  d360_3.exe d360_4.exe Picasa.exe Collapsible.exe KillerWhale.exe AButtons.exe \
+  DeskTip.exe BrushAsist.exe Repeatable.exe Plus.exe DeskLyrics.exe EPPortal.exe \
+  DirectxDemo.exe VSTDemo.exe VSTPlugin.dll SciterWke.dll SciterFlash.dll \
+  SciterIE.dll
+#------------------------------------------------------------------------------
+default: $(PROJECTS)
+#------------------------------------------------------------------------------
+
+SciterTest.exe: Demos\Test\SciterTest.dpr
+  $(DCC)
+
+Layered.exe: Demos\Layered\Layered.dpr
+  $(DCC)
+
+Sciter.exe: Demos\Sciter\Sciter.dpr
+  $(DCC)
+
+minimal.exe: Demos\minimal\minimal.dpr
+  $(DCC)
+
+plainWin.exe: Demos\plain-win\plainWin.dpr
+  $(DCC)
+
+UIFramework.exe: Demos\ui-framework\UIFramework.dpr
+  $(DCC)
+
+uminimal.exe: Demos\uminimal\uminimal.dpr
+  $(DCC)
+
+d360.exe: Demos\360\d360.dpr
+  $(DCC)
+
+Picasa.exe: Demos\Picasa\Picasa.dpr
+  $(DCC)
+
+d360_2.exe: Demos\d360_2\d360_2.dpr
+  $(DCC)
+
+Collapsible.exe: Demos\Collapsible\Collapsible.dpr
+  $(DCC)
+
+KillerWhale.exe: Demos\KillerWhale\KillerWhale.dpr
+  $(DCC)
+
+AButtons.exe: Demos\Buttons\AButtons.dpr
+  $(DCC)
+
+DeskTip.exe: Demos\DeskTip\DeskTip.dpr
+  $(DCC)
+
+BrushAsist.exe: Demos\BrushAsist\BrushAsist.dpr
+  $(DCC)
+
+d360_3.exe: Demos\d360_3\d360_3.dpr
+  $(DCC)
+
+Repeatable.exe: Demos\repeatable\Repeatable.dpr
+  $(DCC)
+
+d360_4.exe: Demos\d360_4\d360_4.dpr
+  $(DCC)
+
+DeskLyrics.exe: Demos\DeskLyrics\DeskLyrics.dpr
+  $(DCC)
+
+EPPortal.exe: Demos\EPPortal\EPPortal.dpr
+  $(DCC)
+
+Plus.exe: Demos\Plus\Plus.dpr
+  $(DCC)
+
+VSTDemo.exe: Demos\VSTDemo\VSTDemo.dpr
+  $(DCC)
+
+VSTPlugin.dll: Demos\VSTPlugin\VSTPlugin.dpr
+  $(DCC)
+
+SciterWke.dll: Plugins\SciterWke\SciterWke.dpr
+  $(DCC)
+
+QQLogin.exe: Demos\QQLogin\QQLogin.dpr
+  $(DCC)
+
+SciterFlash.dll: Plugins\SciterFlash\SciterFlash.dpr
+  $(DCC)
+
+DirectxDemo.exe: Demos\DirectxDemo\DirectxDemo.dpr
+  $(DCC)
+
+SciterIE.dll: Plugins\SciterIE\SciterIE.dpr
+  $(DCC)
+
+Installer.exe: Demos\Installer\Installer.dpr
+  $(DCC)
+
+

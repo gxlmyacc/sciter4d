@@ -1,0 +1,93 @@
+﻿<html>
+  <head>
+    <title>VSTDemo 标题</title>
+
+	<style type="text/css" >
+	  @import "plugin://sciter4d/Plugins/VSTPlugin"; //引入VST插件
+
+	  /*
+	   *插件URI格式：
+	   *  plugin://顶级域名.二级域名.三级域名/插件路径?key1=value1&key2=value2
+	   *说明:
+	   *  1. URI以plugin://开头
+	   *  2. 域名会解析成对应名称，其中顶级域名包含绝对路径，其他域名只需相对路径即可
+	   *  3. URI中/后面的路径会与域名解析的路径组合成插件的绝对路径，应以找到插件
+	   *  4. URI中?后面的为自定义参数，以&符号分隔不同的参数，一般不建议使用参数，
+	   *     因为这些参数只有在加载插件时才会传递给插件，以后即使重新引入该插件也不会重新加载
+	   *	 所有自定义参数只会有效一次，具体哪个有效，取决于第一个加载该插件的页面
+	   *  5. 目前注册了两个默认的顶级域名：
+	   *       sciter4d: sciter4d.dll所在路径
+	   *	   app:      当前应用程序路径
+	   *  6. 某个页面需要使用某个扩展插件，不管之前其他页面是否引用过，都必须使用@import将其引入到页面中
+	   *  7. URI示例：
+	   *       plugin://epportal.grsds.dkdk/Modules/MainViewPlugin?taxno=4403043023234234&sdyf=201504
+	   *       plugin://epportal.grsds.gsgjx:4403/Modules/12WZXSBPlugin?taxno=4403043023234234&sdyf=201504
+	  */
+
+	  #client {
+	    height:*;
+		width:*;
+	  }
+	  #vst {
+		behavior: vstdemo; /* 在@import该插件后，这里就可以使用behavior属性来指定该扩展行为了 */
+	  }
+
+	  #memo {
+	   // height: 50%%;
+		//border: 1px solid;
+	  }
+
+	  #memo > plaintext {
+	    height: 1*;
+		width: 1*;
+	  }
+	</style>
+	<script type="text/tiscript">
+
+	  include "vstDatas.tis";
+      
+	  !function() {
+		  $(#content).value = String.printf("%V", vstDatas).replace("\t","  ");   
+	  }();
+	  
+	  $(#getColumn).onClick = function() {
+		 $(#content).value = $(#vst).text;
+	  }
+
+	  $(#setColumn).onClick = function() {
+	    $(#vst).text = "正式"
+	  }
+
+	  $(#getValue).onClick = function() {
+		 $(#content).value = String.printf("%V", $(#vst).value).replace("\t","  "); 
+	  }
+
+	  $(#setValue).onClick = function() {
+	    $(#vst).value = $(#content).value;
+	  }
+
+	  $(#addValue).onClick = function() {
+	    $(#vst).addData {
+          row: [{text: "[c2, r1]"}, {text: "[c2, r2]"}, {text: "[c2, r3]"}, {text: "[c2, r4]"} ]
+        };
+	  }
+	</script>
+  </head>
+  <body>
+    <div#opeas>
+	  <input#getColumn type=button value="获取列" />
+	  <input#setColumn type=button value="设置列" />
+	  <input#getValue type=button value="获取值" />
+	  <input#setValue type=button value="设置值" />
+	  <input#addValue type=button value="增加一行数据" />
+	</div>
+	<frameset#client rows="*,200px">
+	  <div#vst>
+	  </div>
+	  <div#memo>
+	    <plaintext#content>
+        </plaintext>
+	  </div>
+	</frameset>
+  </body>
+</html>

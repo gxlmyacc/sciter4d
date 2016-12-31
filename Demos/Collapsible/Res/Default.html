@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <title>Simple Tree View</title>
+<style type="text/css"> 
+  @import url(res:treeview.css) screen;
+</style>
+  </head>
+  <body>
+    <ul id="treeview" class="treeview">
+      <li state="open"><img class="icon">Item1
+        <ul>
+          <li>Sub Item1</li>
+          <li state="open"><img class="icon">Sub Item2
+            <ul>
+              <li>Sub Sub Item1</li>
+              <li>Sub Sub Item2</li>
+            </ul>
+			</li>
+          <li>Sub Item3</li>
+          <li state="open"><img class="icon">Sub Item4
+            <ul>
+              <li>Sub Sub Item1</li>
+              <li>Sub Sub Item2</li>
+            </ul>
+        </ul>
+      </li>
+      <li>Item2 caption</li>
+      <li>Item3 caption</li>
+      <li state="open"><img class="icon">Item4
+        <ul>
+          <li style="background-color:red yellow green blue; color:white; text-align:center; font-size:10pt"> 
+            <p>Yep, collapsible items can have any content.</p>
+            <p>Even input elements like input/text <INPUT type="text" value="hello" style="width:10em;" /><br>
+            and input/hslider: <INPUT type="hslider" value="50" style="width:10em;" min="0" max="0" buddy="slider-buddy" />. Later one has this element <span id="slider-buddy" >x</span> as a "buddy".</p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </body>
+</html>

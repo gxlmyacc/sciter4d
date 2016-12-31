@@ -1,0 +1,1576 @@
+* {
+  font-family: "Microsoft YaHei","SimSun";
+  vertical-scrollbar: std-v-scrollbar; 
+  horizontal-scrollbar: std-h-scrollbar; 
+}
+
+@set std-edit < std-edit-base
+{
+  :root {
+    color:windowtext;
+    padding:3px;  
+    text-align: left;
+    text-selection: windowtext threedface;
+  	border: 1pt solid #ccc;
+    border-radius: 3dip;
+    background-color: white;
+	  font-size: 9pt;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    transition: outline(linear, 100ms);
+  }
+  
+  :root:empty { color: #999 }
+
+  :root:owns-popup,
+  :root:focus { border-color: #66AFE9;  text-selection: highlighttext highlight; outline:3px glow #66AFE9 0px; }
+  
+  :root.error:owns-popup, 
+  :root.danger:owns-popup, 
+  :root.error:focus,
+  :root.danger:focus  { border-color: #A94442; text-selection: highlighttext highlight; outline:3px glow #A94442 0px; }
+  
+  :root.success:owns-popup, 
+  :root.success:focus { border-color: #4CAE4C; text-selection: highlighttext highlight; outline:3px glow #4CAE4C 0px; }
+  
+  :root.warning:owns-popup, 
+  :root.warning:focus { border-color: #EEA236; text-selection: highlighttext highlight; outline:3px glow #EEA236 0px; }
+  
+  :root:disabled { background-color: #F0F0F0;  border-color: #D5D5D5; color:#999999; }
+}
+
+@set std-number-edit < std-number-edit-base
+{
+  :root
+  {
+    color:windowtext;
+    padding:0px;  
+    text-align: left;
+    text-selection: windowtext threedface;
+  	border: 1pt solid #ccc;
+    border-radius: 3dip;
+    background-color: white;
+	  font-size: 9pt;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    transition: outline(linear, 100ms);
+  }
+  :root > caption { height:*; width:*; padding:2px; }
+
+  :root:empty { color: #999 }
+
+  :root:owns-popup,
+  :root:focus { border-color: #66AFE9;  text-selection: highlighttext highlight; outline:3px glow #66AFE9 0px; }
+  
+  :root.error:owns-popup, 
+  :root.danger:owns-popup, 
+  :root.error:focus,
+  :root.danger:focus  { border-color: #A94442; text-selection: highlighttext highlight; outline:3px glow #A94442 0px; }
+  
+  :root.success:owns-popup, 
+  :root.success:focus { border-color: #4CAE4C; text-selection: highlighttext highlight; outline:3px glow #4CAE4C 0px; }
+  
+  :root.warning:owns-popup, 
+  :root.warning:focus { border-color: #EEA236; text-selection: highlighttext highlight; outline:3px glow #EEA236 0px; }
+  
+  :root:disabled { background-color: #F0F0F0;  border-color: #D5D5D5; color:#999999; }
+
+  :root > button { height:0.5*; min-height:8dip; background:none; visibility:hidden; border: none; border-collapse:collapse; }
+  :root:focus > button { visibility: visible; }
+
+  :root > button:hover,
+  :root > button:active { outline: none; }
+
+  :root > button.minus
+  {
+    padding:0;
+    margin: 0 -2px -2px 0;
+    background: url(stock:arrow-s) no-repeat center;
+    fill: #888;
+    width:system-scrollbar-width;
+    height:50%%;
+    border-left: 1px solid #DBDBDB;
+    border-top: 1px solid #DBDBDB;
+    border-radius: 0px;
+  }
+  :root > button.minus:hover,
+  :root > button.minus:active { transition:none; fill: black; }
+  :root > button.minus:disabled { visibility:none; }
+  
+  :root > button.plus
+  {
+    padding:0;
+    margin: -2px -2px -1 0;
+    background: url(stock:arrow-n) no-repeat center;
+    fill: #888;
+    width:system-scrollbar-width;
+    height:50%%;
+    border-left: 1px solid #DBDBDB;
+    border-radius: 0px;
+  }
+  :root > button.plus:hover,
+  :root > button.plus:active { transition:none; fill: black; }
+  :root > button.plus:disabled { visibility:none; }
+}
+
+/* text button */
+@set std-button < std-button-base
+{
+  :root
+  { 
+    font-size: 1em;
+    line-height:1.4em;
+    font-rendering-mode:snap-pixel;
+    padding: 4dip 10dip; 
+    border: 1px solid #ccc;  
+    background-color: #fff;
+    color: #333;
+	  border-radius: 4dip;
+    margin: 2dip;
+  }
+  :root:tab-focus, :root:focus { outline:2px solid #A4C6FD -1px; }
+  
+  //:root:focus { color: #333; background-color: #e6e6e6; border-color: #8c8c8c; }
+  :root:hover { color: #333; background-color: #e6e6e6; border-color: #adadad; }
+  :root:active { color: #333; background-color: #e6e6e6; border-color: #adadad; }
+  :root:active:hover { color: #333; background-color: #d4d4d4; border-color: #8c8c8c; }
+  :root:disabled { background-color: #fff; border-color: #ccc; opacity: 0.6; }
+  
+  :root[role=default-button] { color: #fff; background-color: #337ab7; border-color: #2e6da4; }
+  //:root[role=default-button]:focus { color: #fff; background-color: #286090; border-color: #122b40; }
+  :root[role=default-button]:hover { color: #fff; background-color: #286090; border-color: #204d74; }
+  :root[role=default-button]:active { color: #fff; background-color: #286090; border-color: #204d74; }
+  :root[role=default-button]:active:hover { color: #fff; background-color: #204d74; border-color: #122b40; }
+  :root[role=default-button]:disabled { background-color: #337ab7; border-color: #2e6da4; opacity: 0.6; }
+
+  :root.primary { color: #fff; background-color: #337ab7; border-color: #2e6da4; }
+  //:root.primary:focus { color: #fff; background-color: #286090; border-color: #122b40; }
+  :root.primary:hover { color: #fff; background-color: #286090; border-color: #204d74; }
+  :root.primary:active { color: #fff; background-color: #286090; border-color: #204d74; }
+  :root.primary:active:hover { color: #fff; background-color: #204d74; border-color: #122b40; }
+  :root.primary:disabled { background-color: #337ab7; border-color: #2e6da4; opacity: 0.6; }
+  
+  :root.success { color: #fff; background-color: #5cb85c; border-color: #4cae4c; }
+  //:root.success:focus { color: #fff; background-color: #449d44; border-color: #255625; }
+  :root.success:hover { color: #fff; background-color: #449d44; border-color: #398439; }
+  :root.success:active { color: #fff; background-color: #449d44; border-color: #398439; }
+  :root.success:active:hover { color: #fff; background-color: #398439; border-color: #255625; }
+  :root.success:disabled { background-color: #5cb85c; border-color: #4cae4c; opacity: 0.6; }
+  
+  :root.info { color: #fff; background-color: #5bc0de; border-color: #46b8da; }
+  //:root.info:focus { color: #fff; background-color: #31b0d5; border-color: #1b6d85; }
+  :root.info:hover { color: #fff; background-color: #31b0d5; border-color: #269abc; }
+  :root.info:active { color: #fff; background-color: #31b0d5; border-color: #269abc; }
+  :root.info:active:hover { color: #fff; background-color: #269abc; border-color: #1b6d85; }
+  :root.info:disabled { background-color: #5bc0de; border-color: #46b8da; opacity: 0.6; }
+  
+  :root.warning { color: #fff; background-color: #f0ad4e; border-color: #eea236; }
+  //:root.warning:focus { color: #fff; background-color: #ec971f; border-color: #985f0d; }
+  :root.warning:hover { color: #fff; background-color: #ec971f; border-color: #d58512; }
+  :root.warning:active { color: #fff; background-color: #ec971f; border-color: #d58512; }
+  :root.warning:active:hover { color: #fff; background-color: #d58512; border-color: #985f0d; }
+  :root.warning:disabled { background-color: #f0ad4e; border-color: #eea236; opacity: 0.6; }
+  
+  :root.danger { color: #fff; background-color: #d9534f; border-color: #d43f3a; }
+  //:root.danger:focus { color: #fff; background-color: #c9302c; border-color: #761c19; }
+  :root.danger:hover { color: #fff; background-color: #c9302c; border-color: #ac2925; }
+  :root.danger:active { color: #fff; background-color: #c9302c; border-color: #ac2925; }
+  :root.danger:active:hover { color: #fff; background-color: #ac2925; border-color: #761c19; }
+  :root.danger:disabled { background-color: #d9534f; border-color: #d43f3a; opacity: 0.6; }
+  
+  :root > menu.popup { visibility: none; }
+}
+
+
+@set std-toolbar-button < std-toolbar-button-base
+{
+  :root
+  { 
+    font:system;
+    font-rendering-mode:snap-pixel;
+    color:windowtext;
+    padding:4px; 
+    background-image:none;
+    background-repeat:stretch;
+  }
+  :root:hover     { background-image:url(theme:toolbar-button-hover); transition:none; }
+  :root:active    { background-image:url(theme:toolbar-button-pressed); }
+  :root:disabled  { background-image:none; color:graytext; }
+}
+
+@set std-button-menu < std-button
+{
+  :root
+  {
+    behavior:button popup-menu; 
+  }
+  :root:owns-popup /* button when popup is shown */
+  {
+    //background-image:url(theme:button-pressed); /* ?? */  
+  }
+}
+
+@image-map radio-icons
+{
+  src: url(master:images/RadioUnCheck.png);
+  cells: 5 1; 
+  items: normal, focus, hover, active, disabled;
+}
+
+@image-map radio-checked-icons
+{
+  src: url(master:images/RadioChecked.png);
+  cells: 5 1; 
+  items: normal, focus, hover, active, disabled;
+}
+
+/* radio button */
+@set std-radio < std-radio-base
+{
+  input:root
+  { 
+    padding:0px; 
+    height:system-small-icon-height; 
+    width:system-small-icon-width; 
+    background-repeat:no-repeat; 
+    background-position:50% 50%;
+    background-image:image-map(radio-icons, normal);  
+  }
+  :not(input):root
+  {
+    padding:4px 4px 4px system-small-icon-width; 
+    background-repeat:no-repeat; 
+    background-position:1px 50%;
+    background-image:image-map(radio-icons, normal);  
+  }
+  :not(input):root:rtl
+  {
+    padding:4px system-small-icon-width 4px 4px; 
+    background-position-right:1px;
+    background-position-left:auto;
+  }
+  :root:hover    { background-image:image-map(radio-icons, hover);  }
+  :root:active   { background-image:image-map(radio-icons, active);  }
+  :root:disabled { background-image:image-map(radio-icons, disabled);  color :graytext; }
+  :root:checked  { background-image:image-map(radio-checked-icons, normal); }
+  :root:checked:hover    { background-image:image-map(radio-checked-icons, hover);  }
+  :root:checked:active   { background-image:image-map(radio-checked-icons, active); }
+  :root:checked:disabled { background-image:image-map(radio-checked-icons, disabled);  color:graytext; }
+  :root:tab-focus        { outline:1px dotted windowtext -1px; /* inside */ }
+}
+
+@image-map check-icons
+{
+  src: url(master:images/CheckUnCheck.png);
+  cells: 5 1; 
+  items: normal, focus, hover, active, disabled;
+}
+
+@image-map check-checked-icons
+{
+  src: url(master:images/CheckChecked.png);
+  cells: 5 1; 
+  items: normal, focus, hover, active, disabled;
+}
+
+@image-map check-mixed-icons
+{
+  src: url(master:images/CheckMixed.png);
+  cells: 5 1; 
+  items: normal, focus, hover, active, disabled;
+}
+
+/* checkbox button */
+@set std-checkbox < std-checkbox-base
+{
+  input:root
+  {
+    padding:0px; 
+    height:system-small-icon-height; 
+    width:system-small-icon-width; 
+    background-repeat:no-repeat; 
+    background-position:50% 50%;
+    background-image:image-map(check-icons, normal);
+  }
+  :not(input):root
+  {
+    padding:4px 4px 4px system-small-icon-width; 
+    background-repeat:no-repeat; 
+    background-position:1px 50%;
+    background-image:image-map(check-icons, normal);  
+  }
+  :not(input):root:rtl
+  {
+    padding:4px system-small-icon-width 4px 4px; 
+    background-position-right:1px;
+    background-position-left:auto;
+  }
+  :root:hover     { background-image:image-map(check-icons, hover); }
+  :root:active    { background-image:image-map(check-icons, active); }
+  :root:disabled  { background-image:image-map(check-icons, disabled); color:graytext; }
+  :root:checked   { background-image:image-map(check-checked-icons, normal); }
+  :root:checked:hover    { background-image:image-map(check-checked-icons, hover); }
+  :root:checked:active   { background-image:image-map(check-checked-icons, active);  }
+  :root:checked:disabled { background-image:image-map(check-checked-icons, disabled); color:graytext; }
+   
+  :root[mixed]:empty          { background-image:image-map(check-mixed-icons, normal); }
+  :root[mixed]:empty:hover    { background-image:image-map(check-mixed-icons, hover);  }
+  :root[mixed]:empty:active   { background-image:image-map(check-mixed-icons, active);  }
+  :root[mixed]:empty:disabled { background-image:image-map(check-mixed-icons, disabled);  color:graytext; }
+    
+  :root:tab-focus { outline:1px dotted windowtext -1px; }
+}
+
+@set std-popup < std-popup-base
+{
+  :root[role="overflow-tooltip"] 
+  { 
+    background-color: infobackground;
+    color:infotext;
+  }
+  :root[role="tooltip"] 
+  {
+	  background-color: #F4F8FD; 
+	  color: #010101;
+	  border: 1px solid #A1BEDE;
+    padding:2px 4px; 
+  }
+}
+
+@set std-selector 
+  {
+    :root
+    { 
+      color:windowtext;
+      white-space: nowrap;
+      background-repeat:stretch; 
+      background-image:url(theme:button-normal); 
+      cursor:default;
+      text-align:center;
+      padding:4px 14px 4px 8px; /* + room for the arrow */
+      behavior:popup-selector;
+      foreground-image:url(stock:arrow-down); /* that arrow */
+      foreground-repeat: no-repeat;
+      foreground-position-top: 50%;
+      foreground-position-right: 3px;
+      overflow: hidden;
+      height:min-intrinsic;
+    }
+    
+    :root > caption { margin-top:*; margin-bottom:*; }    
+   
+    :root:hover
+    { 
+      background-image:url(theme:button-hover);  
+      //transition:blend-atop(linear,200ms);
+    }
+    :root:focus
+    {
+      background-image:url(theme:button-defaulted); 
+    }
+    :root:active 
+    { 
+      background-image:url(theme:button-pressed);  
+    }
+        
+    :root:active > caption
+    { 
+      position:relative;
+      left:1px;
+      top:1px;
+    }
+    :root:disabled
+    { 
+      background-image:url(theme:button-disabled);
+      color:graytext;
+    }
+    :root:tab-focus
+    {
+      outline:1px dotted -4px; /* inside */
+    }
+    :root:active
+    { 
+      foreground-position-top: 55%;
+      foreground-position-right: 2px;
+    }
+    :root > menu,
+    :root > popup
+    { 
+      style-set: "std-popup-menu";
+      display:block; 
+      visibility:collapse;/* invisible normally */
+      border:none;
+      min-width: max-intrinsic;
+      width: *;
+      height: max-intrinsic;
+      transition:window-slide-ttb;
+    }
+    :root > menu:popup,
+    :root > popup:popup
+    {
+      visibility:visible;/* visible when popup */
+    }
+
+  }
+
+
+@set std-meter
+{
+  :root 
+  {
+    display: inline-block;
+    vertical-align:middle;
+    behavior:progress; 
+    background-color: #eee;
+    //border-radius: 0.6em;    
+
+    height:1.2em;
+    width:8em;
+    padding:0;
+  
+    foreground-color: #2ECC71;    
+    foreground-clip: border-box;
+    flow:vertical;
+  }
+  
+  :root > text { display:none; }
+} 
+
+@set std-select < std-select-base
+{
+  :root
+  { 
+    font-rendering-mode: classic;
+    padding:2px; 
+    border: 1pt solid #ccc;
+	  background-color: white; 
+    border-radius: 3dip;
+  }
+  
+  :root:disabled
+  { 
+    background-color: #F0F0F0; 
+	  border-color: #D5D5D5;  
+    color:#999999;
+  }
+
+  optgroup > caption 
+  { 
+    padding:1px 3px; 
+    font-weight:bold; 
+    color: graytext;
+  }
+
+  option 
+  { 
+    padding:1px 1px 1px 3px; 
+    color: windowtext;
+  }
+  option:rtl 
+  { 
+    padding:1px 3px 1px 1px; 
+  }
+
+  option:checked:not(:has-children-of-type(option)),
+  option:current:not(:has-children-of-type(option)) 
+  { 
+    background-color:threeddarkshadow; color:highlighttext;
+  }
+
+  :root:focus option:current:not(:has-children-of-type(option)),
+  popup:root option:current:not(:has-children-of-type(option))
+  { 
+    background-color:highlight; color:highlighttext; 
+  }
+
+  optgroup > option 
+  { 
+    padding-left:20dip; 
+  }
+  optgroup > option:rtl
+  { 
+    padding-right:20dip; 
+    padding-left:1px; 
+  }
+}
+
+@set std-select-checkmarks < std-select-base
+{
+  :root
+  { 
+    font-rendering-mode: classic;
+    padding:2px; 
+    border: 1pt solid #D5D5D5;
+  }
+  
+  :root:disabled
+  { 
+    background-image:url(theme:edit-disabled); 
+    color:graytext;
+  }
+
+  option 
+  { 
+    padding:2px; 
+    color: windowtext;
+    min-height:1.2em;
+    width:*;
+    padding-left:20dip; 
+    foreground-image:url(theme:check-normal);
+    foreground-repeat: no-repeat;
+    foreground-position: 3px 50%;
+    foreground-image-cursor: pointer;
+    
+    
+  }
+  option:rtl 
+  { 
+    padding:2px; 
+    padding-left:2px; 
+    padding-right:20dip;
+    foreground-position-right: 3px;
+    foreground-position-left: auto;    
+  }
+
+  option:checked
+  {
+    /*color:windowtext;*/
+    /*text-decoration:underline;*/
+    foreground-image:url(theme:check-checked-normal);
+  }
+  
+  option:checked:not(:has-children-of-type(option))
+  { 
+    background-color:infobackground; color:windowtext;
+  }
+
+  :root:focus option:current:not(:has-children-of-type(option)),
+  popup:root option:current:not(:has-children-of-type(option))
+  { 
+    background-color:highlight; color:highlighttext; 
+  }
+  
+  
+  option:incomplete  { foreground-image:url(theme:check-mixed-normal);  }
+
+}
+
+/* simple multiselect (without check boxes) */
+@set std-select-multiple < std-select
+{
+  option
+  {
+    background-color:transparent; color:windowtext;
+  }
+  option:checked
+  {
+    background-color:threeddarkshadow; color:highlighttext;
+  }
+  :root:focus option:checked
+  {
+    background-color:highlight; color:highlighttext;
+  }
+} 
+
+@set std-select-multiple-checkmarks < std-select
+{
+  option
+  {
+    padding: 1px 1px 1px system-small-icon-width; 
+    foreground-repeat:no-repeat; 
+    foreground-position:1px 50%;
+    foreground-image:url(theme:check-normal);  
+    background-color:transparent; color:windowtext;
+  }
+  option:checked
+  {
+    foreground-image:url(theme:check-checked-normal);  
+    background-color:transparent; color:windowtext;
+  }
+  option:rtl
+  {
+    padding: 1px system-small-icon-width 1px 1px; 
+    foreground-position-right:1px;
+    foreground-position-left:auto;
+  }
+}
+
+@set std-tree < std-tree-base
+{
+  :root
+  { 
+    padding:2dip; 
+    background-repeat:stretch; 
+    background-image:url(theme:edit-normal); 
+    color: windowtext;
+  }
+
+  :root:disabled
+  { 
+    background-image:url(theme:edit-disabled); 
+    color:graytext;
+  }
+  
+  /* :current hightlighting */
+  option:not(:node):current,
+  option:node:current > text,
+  option:node:current > caption
+  { 
+    background-image: url(theme:list-view-item-selected-not-focus);
+    background-repeat:stretch;
+  }
+  
+  :root:focus option:not(:node):current,
+  :root:focus option:node:current > text,
+  :root:focus option:node:current > caption
+  { 
+    background-image: url(theme:list-view-item-selected);
+  }
+}    
+
+@set std-tree-checkmarks < std-tree
+{
+    :root { behavior: tree-checkmarks; }
+    
+    option:not(:node),
+    option:node > text,
+    option:node > caption
+    {
+      padding-left:21dip;
+      foreground-image:url(theme:check-normal);
+      foreground-repeat: no-repeat;
+      foreground-position: 2px 50%;
+      foreground-image-cursor: pointer;
+    }
+    
+    option:not(:node):rtl,
+    option:node > text:rtl,
+    option:node > caption:rtl
+    {
+      padding-left:3px;
+      padding-right:21dip;
+      foreground-position-right:2px;
+      foreground-position-left:auto;
+    }    
+    
+    option:not(:node):incomplete,
+    option:node:incomplete > text,
+    option:node:incomplete > caption 
+      { foreground-image:url(theme:check-mixed-normal);  }
+      
+    option:not(:node):checked,
+    option:node:checked > text,    
+    option:node:checked > caption
+      { foreground-image:url(theme:check-checked-normal); }      
+}
+
+@set std-file-selector < std-file-selector-base
+{
+  :root 
+  {
+    padding:0;
+    font:system;
+    flow:horizontal;
+    width:20em;
+    background-repeat:stretch; 
+    background-image:url(theme:edit-normal); 
+  }
+  :root:disabled 
+  {
+    background-image:url(theme:edit-disabled);       
+  }
+  :root > caption
+  {
+    padding:4dip 4dip 4dip system-small-icon-width;
+    foreground-position: 2dip 50%;
+  }
+  :root:empty > caption
+  {
+    color:graytext;
+  }
+  :root:disabled > caption
+  {
+    color:graytext;
+  }
+  :root > button
+  {
+    margin:1px;
+    padding:3dip 6dip;
+    width:max-intrinsic;
+    height:*;
+  }
+}
+
+
+/* dropdown combobox */
+@set std-select-dropdown < std-select-dropdown-base
+{
+    :root
+    {  
+      font-rendering-mode:classic;      
+      border: 1pt solid #ccc;
+      background-color: white;
+      border-radius: 3dip;
+      padding:0;
+      line-height:1.2em; 
+	    font-size: 9pt;
+    }
+    :root:active,
+    :root:owns-popup { border-color: #66AFE9; outline:3px glow #66AFE9 0px;}
+    :root:disabled    { background-color: #F0F0F0;  border-color: #D5D5D5; color:#999999; }
+  
+    /* caption portion of combobox */
+    :root > caption
+    { 
+      padding:2dip 2dip 4dip 4dip;
+      margin:2dip;
+      min-width : system-scrollbar-width;
+      color:windowtext; 
+    }
+
+    :root[editable] > caption {
+      aspect: EditableCaption url(master:tis\select-dropdown.tis);
+    }
+    :root[editable].focused {
+	    border-color: #66AFE9; outline:3px glow #66AFE9 0px;
+	  }
+
+    :root:focus:not([editable]) > caption,
+    :root:tab-focus > caption
+    {
+      outline:1px dotted windowtext -1px; 
+    }
+    
+    :root[editable] > caption {
+      padding:1dip 0px 2dip 1dip;
+      text-selection: windowtext threedface;
+    }
+    
+    :root:owns-popup[editable] > caption,
+    :root[editable] > caption:focus {  
+	   text-selection: highlighttext highlight;
+	}    
+
+    /* popup select element */
+    :root > popup
+    { 
+      margin:0px;
+      padding:6px; 
+	    padding-right: 4px;
+      background-color: transparent;
+      background-image: url(master:images/popup_back.png);
+      background-repeat: expand;
+      background-position: 6 5 6 5;
+      border-radius:1px;
+      overflow-y: scroll-indicator;
+    }
+    
+    option { line-height:28px; color: #333; }
+    :root:not([multiple]) > popup option { padding: 0 4dip; }
+    option:hover { background-color: #E5F3FF; }
+    option:current { background-color:#CCE8FF; border: 1px solid #99D1FF; }
+
+    optgroup > caption 
+    { 
+      padding:1dip 3dip; 
+      font-weight:bold; 
+      color:@GRAYTEXT;
+    }
+    optgroup > option 
+    { 
+      padding-left:20dip; 
+    }
+    optgroup > option:rtl
+    { 
+      padding-right:20dip; 
+      padding-left:1dip; 
+    }
+    
+    /* dropdown button of the combobox */
+    :root > button
+    {
+	    background-color: transparent;
+      display :block; 
+      line-height:1.2em;
+      min-height:1.2em;
+      width    :system-scrollbar-width;
+      height  :*;
+      padding  :2; 
+	    color: #BBBBB9;
+	    border: none; 
+    }
+
+    :root > button            { color: #BBBBB9; background-color: transparent; }   
+	  :root > button:hover { outline: none; }
+    :root:owns-popup > button { color: #66AFE9;}
+    :root:disabled > button   { background-color: #F0F0F0; color:#999999; outline: none; }
+
+    :root[multiple] > span.count 
+    {
+      padding:2dip 2dip 4dip 4dip;
+      margin:2dip;
+      border-left:1px threedshadow solid;
+      border-right:1px threedshadow solid;
+    }
+}
+
+@set std-htmlarea < std-htmlarea-base
+{
+  :root 
+  {
+    font: 10pt sans-serif;
+    width:*;
+    padding:3px; 
+    background-image:url(theme:edit-normal); 
+    background-repeat:stretch; 
+    text-selection: windowtext threedface;
+  }
+  :root:disabled
+  {
+    overflow:hidden; 
+    cursor:default;
+  }
+  
+  :root:focus,
+  :root:owns-popup
+  {
+    text-selection: highlighttext highlight;
+  }
+}
+
+@set std-textarea < std-textarea-base
+{
+  :root 
+  {
+    background-color: white;
+    padding:system-3d-border-width; 
+    border: 1pt solid #D5D5D5;
+    text-selection: windowtext transparent;
+  }
+  
+  :root:focus,
+  :root:owns-popup
+  {
+    text-selection: highlighttext highlight;
+	  border-color: #66AFE9; 
+	  outline:3px glow #66AFE9 0px;
+  }
+
+  :root:disabled
+  {
+    background-color: #F0F0F0; 
+    border-color: #D5D5D5;  
+    color:#999999;  
+  }
+  textarea:root
+  {
+    width: auto;
+    height: auto;
+  }
+  plaintext:root
+  {
+    size: *;
+  }
+}
+
+
+@set std-plaintext < std-plaintext
+{
+  :root {
+    border: 1pt solid #D5D5D5;
+  }
+  
+  :root:focus,
+  :root:owns-popup
+  {
+  	border-color: #66AFE9; 
+	  outline:3px glow #66AFE9 0px;
+  }
+ 
+  :root:disabled
+  {
+    background-color: #F0F0F0; 
+    border-color: #D5D5D5;  
+    color:#999999;  
+  }
+}
+
+
+@set std-hslider < std-slider-base
+{
+  :root 
+  {
+    border: none;
+    padding:0.8em 0.4em; 
+    size:100dip 8dip;
+    background-color: #eee; 
+    -background-select-color: #41CAC0; 
+    aspect: customSlider url(master:win-master.tis);
+  }
+
+  :root > button
+  { 
+    width:0.8em;
+    height:0.8em;   
+	  border-radius: 0.8em;
+	  border: 3px solid #6FD6CE;
+	  background-color: white;
+  }
+  :root > button:tab-focus { outline:1px dotted windowtext -1px; /* inside */ }
+}
+
+@set std-vslider < std-slider-base
+{
+  :root
+  {
+    display:inline-block;
+    padding:0.4em 0.8em; 
+    size: 8dip 100dip;
+    background-color: #eee; 
+    -background-select-color: #41CAC0; 
+    aspect: customSlider url(master:win-master.tis);
+  }
+
+  :root > button
+  { 
+    width: 0.8em;
+    height: 0.8em;
+    border-radius: 0.8em;
+	  border: 3px solid #6FD6CE;
+	  background-color: white;
+  }
+  :root > button:tab-focus { outline:1px dotted windowtext -1px; /* inside */ }
+}
+
+@set std-popup-menu < std-popup-menu-base
+{
+  :root, menu
+  {
+    background-image: url(master:images/menu_back.png);
+	  background-repeat: expand;
+	  background-position: 6 5 6 5;
+	  vertical-align: middle;
+    padding:8px;
+    color:windowtext;  
+	  min-width:100dip;
+  }
+
+  /* menu item in popup menus */
+  menu > option, li 
+  {  
+    color: #363636;
+    padding-left:28dip; /* room for icon */
+    padding-right:12dip; /* room for the arrow */
+    padding-top:4dip; 
+    padding-bottom:4dip;
+    foreground-image-transformation: colorize(#000);
+  }
+  menu > option:rtl, li:rtl 
+  { 
+    padding-right:28dip; /* room for icon */
+    padding-left:12dip; /* room for the arrow */
+  }
+  menu > option:current span.accesskey,
+  li:current span.accesskey
+  {
+    color:brown;
+  }
+
+  /* current menu item */
+  menu > option:current,
+  li:current
+  { 
+    background-color:#4EA9E9E0; 
+    color: white; 
+    foreground-image-transformation: none;
+  }
+  
+  menu > option:disabled, 
+  li:disabled 
+  { 
+     color:threedshadow; font-weight: normal; 
+     foreground-image-transformation: colorize(#CCC);
+  }
+
+  /* accesskey label (span) */
+  span.accesskey
+  {
+    display:block;
+    width:max-content;
+    margin-left:*; /* spring to attach it to the right */
+    padding-left:1em;
+    color:threeddarkshadow;
+  }
+
+  menu > option:current span.accesskey,
+  li:current span.accesskey
+  {
+    color:brown;
+  }
+  
+  /* menu separator */
+  hr 
+  {
+    margin:2dip;
+    border:none; 
+    border-bottom:1px solid threedshadow;
+  }
+  caption
+  {
+    margin:2dip; 
+    color:graytext;
+  }
+  
+}
+ 
+@set std-calendar < std-calendar-base
+{
+  :root
+  {
+    background:window;
+    color:windowtext;
+    padding:0px; 
+    border:1px solid threedshadow;
+    size: 200dip 196dip;
+  }
+  
+  :root:tab-focus /* :root here is the element with the style-set set */ 
+  {
+    outline:1px dotted invert -4px; /* inside */
+  }
+
+  table
+  { 
+    padding:0px;
+  }
+ 
+  caption
+  {
+    line-height:2em;
+    font-weight:bold;
+    width:*;
+	  background-color: #418BCA;
+	  color: white;
+  }
+  
+  caption > div.month
+  {
+    width:max-content;
+  }
+  caption > div.year
+  {
+    width:max-content;
+  }
+  
+  div.nav 
+  {
+    width:2em;
+    height:*;
+    padding-top:0.2em;
+    foreground-position:50% 50%;
+    foreground-size:7dip;
+    foreground-repeat:no-repeat;
+  }
+  div.nav:hover {
+    background-image:url(theme:toolbar-button-hover);
+    background-repeat:stretch;
+  }
+  div.nav:active
+  {
+    background-image:url(theme:toolbar-button-pressed);
+    background-repeat:stretch;
+  }
+
+  td 
+  {
+    size: *;
+    text-align:center;
+    padding:1dip 6dip;     
+    border:1px solid transparent;
+  }
+     
+  th
+  {
+    font-size:8pt; 
+    font-weight:normal;
+    color:highlight;
+    text-align:center;
+    padding-top:4dip;
+	  padding-bottom:4dip;
+    //border-bottom:1dip solid threedshadow;
+	  vertical-align: middle;
+	  background-color: #F5F5F5;
+  }
+
+  td.month.off, td.day.off
+  {
+    color: brown;
+  }
+  td.day.other-month,
+  td.year.other-year,
+  td.decade.other-decade
+  {
+    color: graytext;
+  }
+
+  td.day.off
+  {
+	  color: #FD6500;
+  }
+
+  td.today
+  {
+	  color: #CE110F;
+	  font-weight: bold;
+	  //content: "½ñ";
+	  background-image:none;
+	  border: none;
+  }
+  
+  td:current 
+  {
+    background-color: #3B8BCF;
+  }
+  
+  td:hover
+  {
+    background-color: #B7E3CD;
+  }
+ 
+  :root:current td.month:current,
+  :root:focus td.month:current,
+  :root:current td.day:current,
+  :root:focus td.day:current,
+  :root:current td.year:current,
+  :root:focus td.year:current,
+  :root:current td.decade:current,
+  :root:focus td.decade:current   
+  {
+    //background:url(theme:list-view-item-selected) stretch;
+	background-color: #428BCA;
+	font-weight: bold;
+	color: white;
+	border: none;
+  }
+
+
+  td:active {
+    background:url(theme:list-view-item-hover) stretch;
+  }    
+  div.button
+  {
+    display:block;
+    padding:* 4dip;
+    text-align:center;
+    height:*;
+  }
+  
+  /* these are sensitive to the mouse wheel */
+  div.button:hover
+  {
+    background-image:url(theme:toolbar-button-hover);
+    background-repeat:stretch;
+  }
+  div.button:active
+  {
+    background-image:url(theme:toolbar-button-pressed);
+  }
+     
+  footer 
+  {
+    border-top:1px solid threedshadow;
+    padding:1dip;
+    line-height:1.4em;
+  }
+  
+  footer > label
+  {
+    display:block;
+    width:max-content;
+  } 
+  footer > div.today 
+  {
+    padding:2px 4px;
+    background-repeat:stretch;      
+  }   
+  
+  footer > div.today:hover 
+  {
+    color:red;
+    background-image:url(theme:toolbar-button-hover);
+  }
+  
+  footer > div.today:active {
+    background-image:url(theme:toolbar-button-pressed);
+  }
+  
+} 
+
+@image-map date-icons
+{
+  src: url(master:images/dateEdit.png);
+  cells: 5 1; 
+  items: normal, focus, hover, active, disabled;
+}
+  
+@set std-date < std-date-base
+{
+  :root
+  {   
+    padding:0;
+    color:windowtext;
+    text-selection: windowtext threedface;
+    border: 1pt solid #ccc;
+    background-color: white;
+    border-radius: 3dip;
+  }
+  
+  :root:disabled {  
+    background-color: #F0F0F0; 
+    border-color: #D5D5D5;  
+    color:#999999; 
+  }       
+
+  :root:owns-popup,
+  :root:focus {  
+    text-selection: highlighttext highlight; 
+	  border-color: #66AFE9; 
+	  outline:3px glow #66AFE9 0px; 
+  }
+
+  :root > popup 
+  {
+    background-color: window;
+    padding:0;
+    border: none;
+  }
+  
+  :root > caption {
+    margin:3dip; 
+  }
+  
+  :root > caption > span:current
+  {
+    background-color: transparent;
+    color: windowtext;
+  }
+  :root:owns-popup > caption > span:current,
+  :root:focus > caption > span:current
+  {
+    background-color: highlight;
+    color: highlighttext;
+  }    
+  
+  :root > button 
+  { 
+    background-color: transparent;
+    width: system-scrollbar-width;
+    padding:0; 
+    background-repeat: no-repeat; 
+    background-image: image-map(date-icons, normal); //url(theme:combobox-button-normal);
+  	background-position: center;
+	  border:none;
+  }
+  :root > button:hover 
+  { outline: none;
+    transition:none;
+    background-image:image-map(date-icons, hover); //url(theme:combobox-button-hover);
+  }
+  :root > button:active 
+  {
+    outline: none;
+    background-image:image-map(date-icons, active); //url(theme:combobox-button-pressed);
+  }
+  :root > button:disabled 
+  {
+    background-image:image-map(date-icons, disabled); //url(theme:combobox-button-disabled);
+  }  
+}     
+  
+@set std-masked-edit < std-masked-edit-base /* style block for the masked ctl, derived from std-edit */
+{
+  :root {
+    color:windowtext;
+    padding:3px; 
+    background-image:url(theme:edit-normal); 
+    background-repeat:stretch; 
+    text-align: left;
+    text-selection: windowtext threedface;
+  }
+  
+  :root:disabled         {  background-image:url(theme:edit-disabled);  color:graytext; }    
+  
+  :root > span:current
+  {
+    background-color: transparent;
+    color: windowtext;
+  }
+  
+  :root:owns-popup > span,
+  :root:focus > span:current
+  {
+    background-color: highlight;
+    color: highlighttext;
+  }
+}
+  
+@set std-time-edit < std-time-edit-base
+{
+  :root
+  {
+    padding: 0px;
+    font-rendering-mode:classic;
+    color:windowtext;
+    border: 1pt solid #ccc;
+    background-color: white;
+    border-radius: 3dip;
+    padding:system-border-width; 
+    text-selection: highlighttext highlight;
+  }
+
+  :root:focus { border-color: #66AFE9; text-selection: highlighttext highlight; outline:3px glow #66AFE9 0px; }
+
+  :root > caption > span:current { background-color: transparent; color: windowtext; }
+  :root:focus > caption > span:current { background-color: highlight; color: highlighttext; }    
+    
+  :root:disabled { background-color: #F0F0F0; border-color: #D5D5D5; color:#999999; }
+
+  :root:invalid { color:red; }
+
+  :root > button { height:0.5*; min-height:8dip; background:none; border: none; border-collapse:collapse; }
+
+  :root > button:hover,
+  :root > button:active { outline: none; }
+
+  :root > button.minus
+  {
+    padding:0;
+    margin: 0 -2px -2px 0;
+    background: url(stock:arrow-s) no-repeat center;
+    fill: #888;
+    width:system-scrollbar-width;
+    height:50%%;
+    border-left: 1px solid #DBDBDB;
+    border-top: 1px solid #DBDBDB;
+    border-radius: 0px;
+  }
+  :root > button.minus:hover,
+  :root > button.minus:active { transition:none; fill: black; }
+  :root > button.minus:disabled { visibility:none; }
+  
+  :root > button.plus
+  {
+    padding:0;
+    margin: -2px -2px -1 0;
+    background: url(stock:arrow-n) no-repeat center;
+    fill: #888;
+    width:system-scrollbar-width;
+    height:50%%;
+    border-left: 1px solid #DBDBDB;
+    border-radius: 0px;
+  }
+  :root > button.plus:hover,
+  :root > button.plus:active { transition:none; fill: black; }
+  :root > button.plus:disabled { visibility:none; }
+}
+
+@set std-v-scrollbar
+{
+  :root { background: none; }
+  .prev 
+  { 
+    background-image:url(master:images\scroll\arrowup_normal.png); 
+    background-repeat:no-repeat; 
+	  background-position: center;
+  }
+  .prev:hover 
+  { 
+    background-image:url(master:images\scroll\arrowup_highlight.png); 
+  }
+  .prev:active 
+  { 
+    background-image:url(master:images\scroll\arrowup_down.png); 
+  }
+  .prev:disabled 
+  { 
+    background-image: none; 
+  }
+
+  .next 
+  { 
+    background-image:url(master:images\scroll\arrowdown_normal.png); 
+    background-repeat:no-repeat; 
+	  background-position: center;
+  }
+  .next:hover 
+  { 
+    background-image:url(master:images\scroll\arrowdown_highlight.png); 
+  }
+  .next:active 
+  { 
+    background-image:url(master:images\scroll\arrowdown_down.png); 
+  }
+  .next:disabled 
+  { 
+    background-image: none; 
+  }
+
+  .base
+  {
+    background: none;
+	  width: 10px;
+  }
+
+ .prev-page 
+  { 
+    background: none;   
+  }
+  
+  .next-page 
+  { 
+    background: none;      
+  }
+
+  .slider 
+  { 
+    background-image:url(master:images\scroll\vbar_normal.png); 
+    background-repeat: expand; 
+	  background-position: 5 0 5 0;
+  }
+  .slider:hover 
+  { 
+    background-image:url(master:images\scroll\vbar_highlight.png); 
+  }
+  .slider:active 
+  { 
+    background-image:url(master:images\scroll\vbar_down.png); 
+  }
+  .slider:disabled 
+  { 
+    background-image: none; //url(theme:v-scrollbar-thumb-disabled); 
+  }
+
+  .corner { background: transparent; }
+}
+
+@set std-h-scrollbar
+{
+  :root { background-image: none;  }
+  .prev 
+  { 
+    background-image:url(master:images\scroll\arrowleft_normal.png); 
+    background-repeat:no-repeat; 
+	  background-position: center;
+  }
+  .prev:hover 
+  { 
+    background-image:url(master:images\scroll\arrowleft_highlight.png); 
+  }
+  .prev:active 
+  { 
+    background-image:url(master:images\scroll\arrowleft_down.png); 
+  }
+  .prev:disabled 
+  { 
+    background-image: none; 
+  }
+
+  .next 
+  { 
+    background-image:url(master:images\scroll\arrowright_normal.png); 
+    background-repeat:no-repeat; 
+	  background-position: center;
+  }
+  .next:hover 
+  { 
+    background-image:url(master:images\scroll\arrowright_highlight.png); 
+  }
+  .next:active 
+  { 
+    background-image:url(master:images\scroll\arrowright_down.png); 
+  }
+  .next:disabled 
+  { 
+    background-image: none; 
+  }
+
+  .base
+  {
+    background: none;
+	  height: 10px;
+  }
+ .prev-page 
+  { 
+    background: none;   
+  }
+  
+  .next-page 
+  { 
+    background: none;      
+  }
+
+  .slider 
+  { 
+    background-image:url(master:images\scroll\hbar_normal.png); 
+	  background-repeat:expand; 
+	  background-position: 0 5 0 5;
+  }
+  .slider:hover 
+  { 
+    background-image:url(master:images\scroll\hbar_highlight.png); 
+  }
+  .slider:active 
+  { 
+    background-image:url(master:images\scroll\hbar_down.png); 
+  }
+  .slider:disabled 
+  { 
+    background-image: none; //url(theme:v-scrollbar-thumb-disabled); 
+  }
+
+  .corner { background: transparent; }
+}
+
+@set std-toggler {
+  :root { 
+    flow: stack;
+    behavior:check; 
+    overflow:hidden;
+    width:max-content;
+    height:min-content;
+    padding:0dip;
+    border-radius:0.8em;
+    transition: none;   
+    cursor:pointer;
+    prototype: Toggler url(master:tis\toggler.tis);   
+  }
+
+  :root:checked { foreground-position:0% 50%;  }
+  
+  :root > caption { line-height:1.4em; padding:0 0.6em; height:1.6em }
+  
+  :root > caption.true  { padding-right:2em; background-color:#337AB7; color: #fff; }
+  :root > caption.false { padding-left:2em; background-color:#F9F9F9; color: #999; }
+  
+  :root:checked > caption.false { transform: translate(100%,0);  }
+  :root:not(:checked) > caption.true  { transform: translate(-100%,0); }
+  
+  /*do transitions only after behavior assignment - when it is UI operational */
+  :root:ready { transition: foreground-position(linear,200ms);  }
+  :root:ready > caption { transition: transform(linear,200ms); }
+  
+  :root::after /* the knob */
+  { 
+    display:block; 
+    size:1.6em; 
+    margin: 1* 1* 1* 0*; 
+    background-image:url(stock:disk);
+    background-size:1.1em;
+    background-position:50% 50%;
+    background-repeat:no-repeat;
+    stroke:#ccc; stroke-width: 1dip; fill:#fff;
+  } 
+  :root:checked::after { margin: 1* 0* 1* 1*; transition: margin(linear,200ms);  } 
+}
+
+button[type=toggler], input[type=toggler] { 
+  style-set: "std-toggler";
+}

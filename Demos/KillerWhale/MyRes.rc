@@ -1,0 +1,10 @@
+default                 HTML                    "res\\default.htm"
+daddy_left              PNG                     "res\\daddy-left.png"
+daddy_right             PNG                     "res\\daddy-right.png"
+menu_back_office        PNG                     "res\\menu-back-office.png"
+mummy_left              PNG                     "res\\mummy-left.png"
+mummy_right             PNG                     "res\\mummy-right.png"
+son_left                PNG                     "res\\son-left.png"
+son_right               PNG                     "res\\son-right.png"
+
+

@@ -1,0 +1,1485 @@
+﻿@import url(master-base.css);
+
+@const THREEDHIGHLIGHT: #fff;
+@const THREEDBORDER: #ABADB3;
+@const THREEDFACE: #dfdfdf;
+@const THREEDHOVER: #add4ef;
+@const THREEDDISABLED: #e8e8e8;
+@const WINDOWTEXT: #000;
+@const WINDOW: #fff;
+@const HIGHLIGHT: #39f;
+@const HIGHLIGHT-NF:#696969;
+@const HIGHLIGHTTEXT: #fff;
+@const INFOBACKGROUND: #FFFFE4;
+@const GRAYTEXT: #808080;
+@const INPUT-RADIUS: 3dip;
+
+@const STD-BUTTON-IMAGE: url(sciter:ux-button-normal.png);
+@const STD-BUTTON-IMAGE-HOVER: url(sciter:ux-button-hover.png); 
+@const STD-BUTTON-IMAGE-PRESSED: url(sciter:ux-button-pressed.png); 
+@const STD-BUTTON-IMAGE-DEFAULT: url(sciter:ux-button-default.png); 
+@const STD-BUTTON-IMAGE-REP: expand(stretch-left,stretch-right,stretch-middle);
+@const STD-BUTTON-IMAGE-POS:3 3 3 3;
+@const STD-BUTTON-BORDER-RADIUS: 2dip;
+@const STD-OUTLINE-FOCUS: 4px glow @HIGHLIGHT;
+@const STD-BUTTON-IMAGE-DISABLED-FILTER: colorize(@GRAYTEXT);
+@const STD-BUTTON-PRESSED-FILTER: contrast-brightness-gamma(0.5,0.5, 1.7);
+
+@const STD-OPTION-BG-NORMAL:  none;
+@const STD-OPTION-BG-CURRENT: url(sciter:list-view-item-selected-not-focus.png) expand(stretch-left,stretch-right,stretch-middle) 4 4 4 4;
+@const STD-OPTION-BG-FOCUS:   url(sciter:list-view-item-selected.png) expand(stretch-left,stretch-right,stretch-middle) 4 4 4 4;
+@const STD-OPTION-BG-HOVER:   url(sciter:list-view-item-hover.png) expand(stretch-left,stretch-right,stretch-middle) 4 4 4 4;
+
+@const STD-TB-BUTTON-BG-NORMAL  : none; 
+@const STD-TB-BUTTON-BG-HOVER   : url(sciter:toolbar-button-hover.png) expand(stretch-left,stretch-right,stretch-middle) 4 4 4 4;
+@const STD-TB-BUTTON-BG-CHECKED : url(sciter:toolbar-button-checked.png) expand(stretch-left,stretch-right,stretch-middle) 4 4 4 4;
+@const STD-TB-BUTTON-BG-CHECKED-HOVER : url(sciter:toolbar-button-checked-hover.png) expand(stretch-left,stretch-right,stretch-middle) 4 4 4 4;
+@const STD-TB-BUTTON-BG-PRESSED : url(sciter:toolbar-button-pressed.png) expand(stretch-left,stretch-right,stretch-middle) 4 4 4 4;
+
+fieldset 
+{
+  background-image:url(sciter:ux-fieldset.png); 
+  background-position:8 4 4 4; 
+  background-repeat:expand; 
+}
+
+fieldset > legend 
+{
+  background-color:@THREEDHIGHLIGHT; 
+  padding: 2px 4px;
+}
+fieldset > legend:rtl
+{
+  margin-right:*;
+} 
+
+@set std-edit < std-edit-base
+{
+  :root {
+    font:system;
+    color:@WINDOWTEXT;
+    background: @WINDOW;
+    border:1dip solid @THREEDBORDER;
+    text-selection: @WINDOWTEXT @THREEDFACE;
+    border-radius: @INPUT-RADIUS;
+    line-height:1.4em;
+    padding:0.25em;
+    text-align: left;
+  }
+  
+  :root:owns-popup,
+  :root:focus            {  text-selection: @HIGHLIGHTTEXT @HIGHLIGHT; }
+  :root:disabled         {  background:@THREEDFACE;  color:@GRAYTEXT; }
+  :root:tab-focus        { outline:@STD-OUTLINE-FOCUS; }  
+}
+
+@set std-number-edit < std-number-edit-base
+{
+  :root
+  {
+    font:system;
+    color:@WINDOWTEXT;
+    text-selection: @WINDOWTEXT @THREEDFACE;
+    padding:0;
+    border-radius: @INPUT-RADIUS; 
+  }
+
+  :root:owns-popup,
+  :root:focus            { text-selection: @HIGHLIGHTTEXT @HIGHLIGHT; }
+  :root:disabled         { background:@THREEDFACE; color:@GRAYTEXT; }  
+  :root:tab-focus        { outline:@STD-OUTLINE-FOCUS; }  
+
+  :root > caption 
+  { 
+    width:*;
+    line-height:1.4em;
+    padding:0.25em 0.5em; 
+    background: @WINDOW;
+    border:1dip solid @THREEDBORDER;
+    border-radius: @INPUT-RADIUS 0 0 @INPUT-RADIUS;
+  }
+  
+  :root:not([step]) > caption { border-radius: @INPUT-RADIUS; }
+
+  :root > button
+  {
+    height:0.5*;
+    width:1.2em;
+    background:@THREEDFACE;
+    border:1dip solid @THREEDBORDER;
+    foreground-position:50% 50%;
+    foreground-size:5dip;
+    foreground-repeat:no-repeat;
+  }
+
+  :root > button:hover
+  {
+    transition:none;
+    background:@THREEDHOVER;
+  }
+  :root > button:active
+  {
+    background:@THREEDHIGHLIGHT;
+  }
+  :root > button:disabled
+  {
+    background:@THREEDDISABLED; 
+  }
+  
+  :root > button.minus
+  {
+    padding:0;
+    border-radius: 0 0 @INPUT-RADIUS 0;
+    border-top-style: none;
+    border-left-style: none;
+    foreground-image: url(stock:arrow-down); 
+  }
+ 
+  :root > button.plus
+  {
+    padding:0;
+    border-radius: 0 @INPUT-RADIUS 0 0;
+    border-bottom-style: none;
+    border-left-style: none;
+    foreground-image: url(stock:arrow-up); 
+  }
+
+}
+
+/* text button */
+
+@set std-button < std-button-base
+{
+  :root
+  { 
+    font:system;
+    flow:vertical;
+    color:@WINDOWTEXT;
+    padding:0.25em 1em 0.25em 1em; 
+    line-height:1.4em;
+    white-space: nowrap;
+    background-repeat:@STD-BUTTON-IMAGE-REP; 
+    background-image:@STD-BUTTON-IMAGE;
+    background-position: @STD-BUTTON-IMAGE-POS;    
+    border:1dip solid transparent;
+  }
+      
+  :root[role="default-button"]  { background-image:@STD-BUTTON-IMAGE-DEFAULT; }
+  :root:hover                   { background-image:@STD-BUTTON-IMAGE-HOVER; }
+  :root:focus                   { background-image:@STD-BUTTON-IMAGE-DEFAULT; }
+  /*:root:focus                   { outline:@STD-OUTLINE-FOCUS; }*/
+  :root:active                  { background-image:@STD-BUTTON-IMAGE-PRESSED; }
+  /*:root:active > *              { transform:translate(1px,1px); }*/
+  :root:disabled                { background-image-transformation: @STD-BUTTON-IMAGE-DISABLED-FILTER; color:@GRAYTEXT; }
+  :root:tab-focus               { outline:@STD-OUTLINE-FOCUS; border-radius: @STD-BUTTON-BORDER-RADIUS; }  
+}
+ 
+@set std-toolbar-button < std-toolbar-button-base
+{
+  :root
+  { 
+    font:system;
+    color:@WINDOWTEXT;
+    padding:4dip; 
+    background:@STD-TB-BUTTON-BG-NORMAL;
+  }
+  :root:hover         { background: @STD-TB-BUTTON-BG-HOVER; transition:none; }
+  :root:checked       { background: @STD-TB-BUTTON-BG-CHECKED; }
+  :root:checked:hover { background: @STD-TB-BUTTON-BG-CHECKED-HOVER; }
+  :root:active        { background: @STD-TB-BUTTON-BG-PRESSED; }
+  :root:disabled      { background: none; color:@GRAYTEXT; }
+}
+
+@set std-button-menu < std-button
+{
+  :root
+  {
+    behavior:button popup-menu; 
+  }
+  :root:owns-popup /* button when popup is shown */
+  {
+    background-image:@STD-BUTTON-IMAGE-PRESSED; /* ?? */  
+  }
+}
+
+@image-map std-radio-check
+{
+    src: url(sciter:ux-radios.png) 100dpi,
+         url(sciter:ux-radios-2.png);
+    cells:5 2; /* 4 columns, 2 rows */
+    /* logical names of the parts, see radios.png */ 
+    items:
+      radio-normal,
+      radio-normal-hover,
+      radio-checked,
+      radio-checked-hover,
+      check-mixed,
+      check-normal,
+      check-normal-hover,
+      check-checked,
+      check-checked-hover,
+      check-mixed-hover;
+} 
+
+@const SMALL-ICON-SIZE:15dip;
+
+/* radio button */
+@set std-radio < std-radio-base
+{
+    input:root
+    { 
+      padding:0px; 
+      height:@SMALL-ICON-SIZE; 
+      width:@SMALL-ICON-SIZE; 
+      vertical-align:middle;
+      foreground-repeat:no-repeat; 
+      foreground-position:50% 50%;
+      foreground-image:image-map(std-radio-check,radio-normal);
+      foreground-size: 14dip;
+    }
+    :root:not(input)
+    {
+      line-height:1.4em;
+      behavior:radio; 
+      foreground-repeat:no-repeat;
+      foreground-position:2dip 50%;
+      foreground-image:image-map(std-radio-check,radio-normal);
+      foreground-size: 14dip;
+      vertical-align:baseline;
+      text-align:left;
+      white-space:nowrap;
+      line-height:1.4em;
+      padding:0.25em 0.25em 0.25em 18dip;
+    }
+    :root:not(input):rtl
+    {
+      padding:0.25em 18dip 0.25em 0.25em;
+      foreground-position-right:2dip;
+      foreground-position-left:auto;
+    }
+    :root:hover             { foreground-image: image-map(std-radio-check,radio-normal-hover); }
+    :root:active            { foreground-image-transformation: @STD-BUTTON-PRESSED-FILTER; }
+    :root:disabled          { foreground-image-transformation: @STD-BUTTON-DISABLED-FILTER; color :@GRAYTEXT; }
+
+    :root:checked           { foreground-image:image-map(std-radio-check,radio-checked); }
+    :root:checked:hover     { foreground-image:image-map(std-radio-check,radio-checked-hover);  }
+
+    :root:tab-focus         { outline:1px dotted black -1px; /* inside */ }
+
+}
+
+/* checkbox button */
+@set std-checkbox < std-checkbox-base
+{
+    input:root
+    {
+      padding:0px; 
+      height:@SMALL-ICON-SIZE; 
+      width:@SMALL-ICON-SIZE; 
+      foreground-repeat:no-repeat; 
+      foreground-position:50% 50%;
+      foreground-image:image-map(std-radio-check,check-normal);
+      foreground-size: 14dip; 
+      vertical-align:middle;
+    }
+    button:root
+    {
+      foreground-repeat:no-repeat;
+      foreground-position:2dip 50%;
+      foreground-image:image-map(std-radio-check,check-normal);
+      foreground-size: 14dip;
+      white-space:nowrap;
+      vertical-align:baseline;
+      line-height:1.4em;
+      padding:0.25em 0.25em 0.25em 18dip;
+    }
+
+    :root:not(input):rtl 
+    {
+      padding:0.25em 18dip 0.25em 0.25em ;
+      foreground-position-right:2dip;
+      foreground-position-left:auto;
+    }
+    :root:hover             { foreground-image: image-map(std-radio-check,check-normal-hover); }
+    :root:active            { foreground-image-transformation: @STD-BUTTON-PRESSED-FILTER; }
+    :root:disabled          { foreground-image-transformation: @STD-BUTTON-DISABLED-FILTER; color :@GRAYTEXT; }
+
+    :root:checked           { foreground-image:image-map(std-radio-check,check-checked); }
+    :root:checked:hover     { foreground-image:image-map(std-radio-check,check-checked-hover);  }
+
+    :root:tab-focus         { outline:1px dotted invert -1px; /* inside */ }
+    
+    :root[mixed]:empty      { foreground-image: image-map(std-radio-check,check-mixed); }  
+    :root[mixed]:empty:hover{ foreground-image: image-map(std-radio-check,check-mixed-hover); }  
+}
+
+@set std-popup < std-popup-base
+{
+  :root[role="overflow-tooltip"] 
+  { 
+    background-color: @INFOBACKGROUND;
+    color:@WINDOWTEXT;
+  }
+  :root[role="tooltip"] 
+  {
+    font: system;
+    background-color: @INFOBACKGROUND;
+    color:@WINDOWTEXT;
+    padding:2dip 4dip; 
+  }
+}
+
+@set std-selector < std-button
+  {
+    :root
+    { 
+      text-align:center;
+      padding:4dip 14dip 4dip 8dip; /* + room for the arrow */
+      behavior:popup-selector;
+      foreground-image:url(stock:arrow-down); /* that arrow */
+      foreground-repeat: no-repeat;
+      foreground-position-top: 50%;
+      foreground-position-right: 3px;
+      overflow: hidden;
+      height:min-intrinsic;
+    }
+    
+    :root > caption { margin-top:*; margin-bottom:*; }    
+   
+    /*:root:active > caption
+    { 
+      position:relative;
+      left:1px;
+      top:1px;
+    }*/
+    :root > menu,
+    :root > popup
+    { 
+      style-set: "std-popup-menu";
+      display:block; 
+      visibility:collapse;/* invisible normally */
+      border:none;
+      min-width: max-intrinsic;
+      width: *;
+      height: max-intrinsic;
+      transition:@WINDOW-slide-ttb;
+    }
+    :root > menu:popup,
+    :root > popup:popup
+    {
+      visibility:visible;/* visible when popup */
+    }
+
+  }
+
+  progress,
+  input[type="progress"],
+  widget[type="progress"]
+  {
+    behavior:progress; 
+    color:@WINDOWTEXT;
+    background: @WINDOW;
+    border:1dip solid @THREEDBORDER;
+    text-selection: @WINDOWTEXT @THREEDFACE;
+    border-radius: @INPUT-RADIUS;
+
+    height:1.2em;
+    width:8em;
+    padding:3dip;
+  
+    foreground-color:#39c;
+    foreground-clip:content-box;
+  
+    list-style-image: url(sciter:ux-progress-overlay.png);
+  }
+
+  meter 
+  {
+    style-set: "std-meter";
+  }
+
+  @set std-meter
+  {
+    :root 
+    {
+      display: inline-block;
+      vertical-align:middle;
+      behavior:progress; 
+
+      color: transparent;  
+      background: @WINDOW;
+      border:1dip solid @THREEDBORDER;
+      text-selection: @WINDOWTEXT @THREEDFACE;
+      border-radius: @INPUT-RADIUS;
+      height:0.8em;
+      width:8em;
+      padding:0;
+
+      foreground-color:#39c;
+      foreground-clip:content-box;
+
+      flow:vertical;
+    }
+    
+    :root > text { display:none; }
+  }
+
+
+@set std-select < std-select-base
+{
+  :root
+  { 
+    font:system;
+    padding:1dip; 
+    color:@WINDOWTEXT;
+    background: @WINDOW;
+    border:1dip solid @THREEDBORDER;
+    text-selection: @WINDOWTEXT @THREEDFACE;
+    /*border-radius: @INPUT-RADIUS;*/
+  }
+  
+  :root:disabled
+  { 
+    background:@THREEDDISABLED; 
+    color:@GRAYTEXT;
+  }
+
+  option 
+  { 
+    padding:0 2dip; 
+    line-height: 1.6em;
+    min-height:1.6em;
+    color: @WINDOWTEXT;
+    /*background: @STD-OPTION-BG-NORMAL;*/
+  }
+
+/*  
+  option:hover:not(:has-children-of-type(option))     { background: @STD-OPTION-BG-HOVER; }
+  option:checked:not(:has-children-of-type(option)),
+  option:current:not(:has-children-of-type(option))   { background: @STD-OPTION-BG-CURRENT; }
+  :root:focus option:current:not(:has-children-of-type(option)),
+  popup:root option:current:not(:has-children-of-type(option)) { background: @STD-OPTION-BG-FOCUS; } */
+  
+  option:checked:not(:has-children-of-type(option)),
+  option:current:not(:has-children-of-type(option)) { background-color:@HIGHLIGHT-NF; color:@HIGHLIGHTTEXT;  }
+
+  :root:focus option:current:not(:has-children-of-type(option)),
+  popup:root option:current:not(:has-children-of-type(option)) { background-color:@HIGHLIGHT; color:@HIGHLIGHTTEXT; }
+
+  optgroup > caption 
+  { 
+    padding:1dip 3dip; 
+    font-weight:bold; 
+    color:@GRAYTEXT;
+  }
+  optgroup > option 
+  { 
+    padding-left:20dip; 
+  }
+  optgroup > option:rtl
+  { 
+    padding-right:20dip; 
+    padding-left:1dip; 
+  }
+}
+
+@set std-select-checkmarks < std-select-base
+{
+  :root
+  { 
+    font:system;
+    padding:1dip; 
+    color:@WINDOWTEXT;
+    background: @WINDOW;
+    border:1dip solid @THREEDBORDER;
+  }
+  
+  :root:disabled
+  { 
+    background:@THREEDDISABLED; 
+    color:@GRAYTEXT;
+  }
+
+  option 
+  { 
+    color: @WINDOWTEXT;
+    line-height: 1.6em;
+    min-height:1.6em;
+    width:*;
+    padding-left:20dip; 
+    padding-right:2dip;    
+    foreground-image:image-map(std-radio-check,check-normal);  
+    foreground-repeat: no-repeat;
+    foreground-position: 3dip 50%;
+    foreground-image-cursor: pointer;
+  }
+  option:rtl 
+  { 
+    padding-left:2dip; 
+    padding-right:20dip;
+    foreground-position-right: 3dip;
+    foreground-position-left: auto;    
+  }
+
+  option:checked { foreground-image:image-map(std-radio-check,check-checked); }
+  option:checked:not(:has-children-of-type(option))
+  { 
+    background-color:@INFOBACKGROUND; color:@WINDOWTEXT;
+  }
+
+  :root:focus option:current:not(:has-children-of-type(option)),
+  popup:root option:current:not(:has-children-of-type(option))
+  { 
+    background-color:@HIGHLIGHT; color:@HIGHLIGHTTEXT; 
+  }
+
+  option:incomplete  { foreground-image:image-map(std-radio-check,check-mixed);  }
+
+}
+
+/* simple multiselect (without check boxes) */
+@set std-select-multiple < std-select
+{
+  option
+  {
+    background-color:transparent; color:@WINDOWTEXT;
+  }
+  option:checked
+  {
+    background-color:@HIGHLIGHT-NF; color:@HIGHLIGHTTEXT;
+  }
+  :root:focus option:checked
+  {
+    background-color:@HIGHLIGHT; color:@HIGHLIGHTTEXT;
+  }
+} 
+
+@set std-select-multiple-checkmarks < std-select
+{
+  option
+  {
+    padding-left: 20dip; 
+    background-color:transparent; color:@WINDOWTEXT;
+  }
+  option:checked
+  {
+    foreground-image:image-map(std-radio-check,check-checked);  
+    background-color:transparent; color:@WINDOWTEXT;
+  }
+  option:rtl
+  {
+    padding-left: 1dip; 
+    padding-right: 20dip; 
+  }
+}
+
+@set std-tree < std-tree-base
+{
+  :root
+  { 
+    font:system;
+    padding:1dip; 
+    color:@WINDOWTEXT;
+    background: @WINDOW;
+    border:1dip solid @THREEDBORDER;
+  }
+
+  :root:disabled
+  { 
+    background:@THREEDDISABLED; 
+    color:@GRAYTEXT;
+  }
+
+  option {
+    line-height: 1.6em;
+    min-height:1.6em;
+  }
+  
+/*  option:hover:not(:has-children-of-type(option))     { background: @STD-OPTION-BG-HOVER; }
+  option:checked:not(:has-children-of-type(option)),
+  option:current:not(:has-children-of-type(option))   { background: @STD-OPTION-BG-CURRENT; }
+  :root:focus option:current:not(:has-children-of-type(option)),
+  popup:root option:current:not(:has-children-of-type(option)) { background: @STD-OPTION-BG-FOCUS; }   */
+  
+  option:not(:node):hover,
+  option:node > text:hover,
+  option:node > caption:hover   { background: @STD-OPTION-BG-HOVER; }
+  
+  /* :current hightlighting */
+  option:not(:node):current,
+  option:node:current > text,
+  option:node:current > caption { background: @STD-OPTION-BG-CURRENT; }
+  
+  :root:focus option:not(:node):current,
+  :root:focus option:node:current > text,
+  :root:focus option:node:current > caption { background: @STD-OPTION-BG-FOCUS; }
+  
+  option:not(:node):current:hover,
+  option:node:current > text:hover,
+  option:node:current > caption:hover
+  { 
+    background: url(sciter:list-view-item-selected-hover.png);
+    background-repeat: expand stretch-left stretch-right stretch-middle;
+    background-position:4 4 4 4;
+  }
+  
+  
+}    
+
+@set std-tree-checkmarks < std-tree
+{
+    :root { behavior: tree-checkmarks; }
+    
+  /*:root:hover             { foreground-image: image-map(std-radio-check,check-normal-hover); }
+  :root:active            { foreground-image-transformation: @STD-BUTTON-PRESSED-FILTER; }
+  :root:disabled          { foreground-image-transformation: @STD-BUTTON-DISABLED-FILTER; color :@GRAYTEXT; }
+
+  :root:checked           { foreground-image:image-map(std-radio-check,check-checked); }
+  :root:checked:hover     { foreground-image:image-map(std-radio-check,check-checked-hover);  } */
+    
+    
+    option:not(:node),
+    option:node > text,
+    option:node > caption
+    {
+      padding-left:21dip;
+      foreground-image: image-map(std-radio-check,check-normal); 
+      foreground-repeat: no-repeat;
+      foreground-position: 2dip 50%;
+      foreground-image-cursor: pointer;
+    }
+    
+    option:not(:node):rtl,
+    option:node > text:rtl,
+    option:node > caption:rtl
+    {
+      padding-left:2px;
+      padding-right:21dip;
+      foreground-position-right:2d;
+      foreground-position-left:auto;
+    }    
+        
+    option:not(:node):incomplete,
+    option:node:incomplete > text,
+    option:node:incomplete > caption 
+      { foreground-image:image-map(std-radio-check,check-mixed); }
+      
+    option:not(:node):checked,
+    option:node:checked > text,    
+    option:node:checked > caption
+      { foreground-image:image-map(std-radio-check,check-checked); }      
+}
+
+@set std-file-selector < std-file-selector-base
+{
+  :root 
+  {
+    padding:0;
+    font:system;
+    flow:horizontal;
+    width:20em;
+    color:@WINDOWTEXT;
+    background: @WINDOW;
+    border:1dip solid @THREEDBORDER;
+    text-selection: @WINDOWTEXT @THREEDFACE;
+    border-radius: @INPUT-RADIUS;
+  }
+  
+  :root:owns-popup,
+  :root:focus            {  text-selection: @HIGHLIGHTTEXT @HIGHLIGHT; }
+  :root:disabled         {  background:@THREEDFACE;  color:@GRAYTEXT; }
+  :root:tab-focus        { outline:@STD-OUTLINE-FOCUS; }    
+  
+  :root > caption
+  {
+    padding:4dip 4dip 4dip system-small-icon-width;
+    foreground-position: 2dip 50%;
+  }
+  :root:empty > caption
+  {
+    color:@GRAYTEXT;
+  }
+  :root:disabled > caption
+  {
+    color:@GRAYTEXT;
+  }
+  :root > button
+  {
+    margin:1px;
+    padding:3dip 6dip;
+    width:max-intrinsic;
+    height:*;
+  }
+}
+
+
+/* dropdown combobox */
+@set std-select-dropdown < std-select-dropdown-base
+  {
+ 
+    :root
+    { 
+      font:system;
+      color:@WINDOWTEXT;
+      padding:0; 
+      white-space: nowrap;
+      background-repeat:@STD-BUTTON-IMAGE-REP; 
+      background-image:@STD-BUTTON-IMAGE;
+      background-position: @STD-BUTTON-IMAGE-POS;    
+      border-radius: @STD-BUTTON-BORDER-RADIUS;
+      line-height:1.4em;
+      border:1dip solid transparent;
+    }
+        
+    :root:hover                   { background-image:@STD-BUTTON-IMAGE-HOVER; }
+    :root:focus                   { background-image:@STD-BUTTON-IMAGE-DEFAULT; }
+    :root:active                  { background-image:@STD-BUTTON-IMAGE-PRESSED; }
+    :root:disabled                { background-image-transformation: @STD-BUTTON-IMAGE-DISABLED-FILTER; color:@GRAYTEXT; }
+    :root:tab-focus               { outline:@STD-OUTLINE-FOCUS; }  
+  
+    /* caption portion of combobox */
+    :root > caption
+    { 
+      padding:0.25em 0.5em 0.25em 0.5em;
+      min-width : 2em;
+      color:@WINDOWTEXT; 
+    }
+    
+    /* popup select element */
+    :root > popup
+    { 
+      margin:0;
+      padding:0; 
+      border:1dip solid @THREEDBORDER;
+      background: @WINDOW;
+    }
+    
+    option { line-height:1.4em; padding: 1dip 0.5em; }
+    /*:root:not([multiple]) > popup > option { padding: 0 4dip; }*/
+    option:current
+    {
+      background-color:@HIGHLIGHT; color:@HIGHLIGHTTEXT;
+    }
+    
+    optgroup > caption 
+    { 
+      padding:1dip 3dip; 
+      font-weight:bold; 
+      color:@GRAYTEXT;
+    }
+    optgroup > option 
+    { 
+      padding-left:20dip; 
+    }
+    optgroup > option:rtl
+    { 
+      padding-right:20dip; 
+      padding-left:1dip; 
+    }
+    
+    
+    
+    /* dropdown button of the combobox */
+    :root > button
+    {
+      display :block; 
+      width    :1.2em;
+      height  :*;
+      padding  :0; 
+      background-repeat  :stretch; 
+      background-image  :none;
+    }
+    
+    :root[editable] { background:none; border:none; }
+  
+    :root[editable]:owns-popup,
+    :root[editable]:focus            {  text-selection: @HIGHLIGHTTEXT @HIGHLIGHT; }
+    :root[editable]:disabled         {  background:@THREEDFACE;  color:@GRAYTEXT; }
+    
+    :root[editable] > caption {
+      padding:0.25em 0.5em 0.25em 0.5em;
+      text-selection: @WINDOWTEXT @THREEDFACE;
+      background: @WINDOW;
+      border:1dip solid @THREEDBORDER;
+      border-radius: @INPUT-RADIUS 0 0 @INPUT-RADIUS;
+    }
+    :root[editable]:rtl > caption {
+      border-radius: 0 @INPUT-RADIUS @INPUT-RADIUS 0;
+    }
+    
+    :root:owns-popup[editable] > caption,
+    :root[editable] > caption:focus
+    {  text-selection: @HIGHLIGHTTEXT @HIGHLIGHT; }    
+    
+    :root[editable] > button
+    {
+      background:@THREEDFACE;
+      border:1dip solid @THREEDBORDER;
+      border-left:none;
+      border-radius: 0 @INPUT-RADIUS @INPUT-RADIUS 0;
+    }
+    :root[editable]:rtl > button
+    {
+      border:1dip solid @THREEDBORDER;
+      border-left:none;
+      border-radius: @INPUT-RADIUS 0 0 @INPUT-RADIUS;
+    }
+    
+    :root[editable] > button:hover    { transition:none; background:@THREEDHOVER; }
+    :root[editable] > button:active   { background:@THREEDHOVER; }
+    :root[editable] > button:disabled { background:@THREEDDISABLED; }
+  
+    :root[multiple] > popup > option { padding:1dip 1dip 1dip 20dip; }
+    :root:rtl[multiple] > popup > option { padding:1dip 20dip 1dip 1dip; }
+
+    :root[multiple] > span.count 
+    {
+      padding:2dip 2dip 4dip 4dip;
+      margin:2dip;
+      border-left:1px threedshadow solid;
+      border-right:1px threedshadow solid;
+    }
+   
+  }
+
+@set std-htmlarea < std-htmlarea-base
+{
+  :root 
+  {
+    font: 10pt sans-serif;
+    
+    width:*;
+    color:@WINDOWTEXT;
+    background: @WINDOW;
+    border:1dip solid @THREEDBORDER;
+    text-selection: @WINDOWTEXT @THREEDFACE;    
+    padding:0; 
+  }
+  :root:disabled
+  {
+    overflow:hidden; 
+    cursor:default;
+  }
+  
+  :root:focus,
+  :root:owns-popup
+  {
+    text-selection: @HIGHLIGHTTEXT @HIGHLIGHT;
+  }
+}
+
+@set std-textarea < std-textarea-base
+{
+  :root 
+  {
+    color:@WINDOWTEXT;
+    background: @WINDOW;
+    border:1dip solid @THREEDBORDER;
+    text-selection: @WINDOWTEXT @THREEDFACE;    
+  }
+  
+  :root:focus,
+  :root:owns-popup
+  {
+    text-selection: @HIGHLIGHTTEXT @HIGHLIGHT;
+  }
+
+  :root:disabled
+  {
+    background:@THREEDFACE;  color:@GRAYTEXT;
+  }
+  textarea:root
+  {
+    width: auto;
+    height: auto;
+  }
+  plaintext:root
+  {
+    size: *;
+  }
+}
+
+@set std-hslider < std-slider-base
+{
+  :root 
+  {
+    padding:12dip; 
+    width:100dip;
+    height:3dip; 
+    background:@THREEDFACE; 
+    background-clip: content-box;
+  }
+
+  :root > button
+  { 
+    size:16dip;
+    background:image-map(std-radio-check,radio-normal) no-repeat 50% 50%;
+  }
+  
+  :root:focus > button    { background-image-transformation: @STD-BUTTON-PRESSED-FILTER; }
+  :root > button:hover    { background-image:image-map(std-radio-check,radio-normal-hover); }
+  :root > button:active   { background-image-transformation: @STD-BUTTON-PRESSED-FILTER; }
+  :root:disabled > button { background-image-transformation: @STD-BUTTON-DISABLED-FILTER; }
+}
+
+@set std-vslider < std-slider-base
+{
+  :root
+  {
+    display:inline-block;
+    padding:12dip;  
+    height:100dip;
+    width:3dip; 
+    background:@THREEDFACE;     
+    background-clip: content-box;
+  }
+
+  :root > button
+  { 
+    size:16dip;
+    background:image-map(std-radio-check,radio-normal) no-repeat 50% 50%;
+  }
+  
+  :root:focus > button    { background-image-transformation: @STD-BUTTON-PRESSED-FILTER; }
+  :root > button:hover    { background-image:image-map(std-radio-check,radio-normal-hover); }
+  :root > button:active   { background-image-transformation: @STD-BUTTON-PRESSED-FILTER; }
+  :root:disabled > button { background-image-transformation: @STD-BUTTON-DISABLED-FILTER; }
+
+}
+
+@set std-popup-menu < std-popup-menu-base
+{
+  :root, menu
+  {
+    font: system;  
+    padding:1dip;
+    border:1dip solid @THREEDBORDER;
+    background-color: @WINDOW;
+    color:@WINDOWTEXT;
+    margin:0 1dip; /* to offset it from parent li */    
+  }
+
+  /* menu item in popup menus */
+  menu > option, li 
+  {  
+    color:@WINDOWTEXT;
+    padding-left:28dip; /* room for icon */
+    padding-right:12dip; /* room for the arrow */
+    padding-top:5dip; 
+    padding-bottom:5dip;
+    foreground-image-transformation: colorize(#000);
+  }
+  menu > option:rtl, li:rtl 
+  { 
+    padding-right:28dip; /* room for icon */
+    padding-left:12dip; /* room for the arrow */
+  }
+  menu > option:current span.accesskey,
+  li:current span.accesskey
+  {
+    color:brown;
+  }
+
+  /* current menu item */
+  menu > option:current,
+  li:current
+  { 
+    background:@STD-OPTION-BG-FOCUS;
+    foreground-image-transformation: none;
+  }
+  
+  menu > option:disabled, 
+  li:disabled 
+  { 
+     color:@GRAYTEXT; font-weight: normal; 
+     foreground-image-transformation: colorize(#CCC);
+  }
+
+  /* accesskey label (span) */
+  span.accesskey
+  {
+    display:block;
+    width:max-content;
+    margin-left:*; /* spring to attach it to the right */
+    padding-left:1em;
+    color:@GRAYTEXT;
+  }
+
+  menu > option:current span.accesskey,
+  li:current span.accesskey
+  {
+    color:brown;
+  }
+  
+  /* menu separator */
+  hr 
+  {
+    margin:2dip;
+    border:none; 
+    border-bottom:1px solid @THREEDBORDER;
+  }
+  caption
+  {
+    margin:2dip; 
+    color:@GRAYTEXT;
+  }
+  
+  
+}
+ 
+@set std-calendar < std-calendar-base
+{
+  :root
+  {
+    font:system;
+    background:@WINDOW;
+    color:@WINDOWTEXT;
+    padding:1px; 
+    border:1px solid @THREEDBORDER;
+    size: 18em 17em;
+  }
+
+  table
+  { 
+    padding:2dip;
+  }
+ 
+  caption
+  {
+    line-height:1.8em;
+    font-weight:bold;
+    width:*;
+  }
+  
+  caption > div.month
+  {
+    width:max-content;
+  }
+  caption > div.year
+  {
+    width:max-content;
+  }
+  
+  div.nav 
+  {
+    width:2em;
+    height:*;
+    padding-top:0.2em;
+    foreground-position:50% 50%;
+    foreground-size:7dip;
+    foreground-repeat:no-repeat;
+  }
+  div.nav:hover  { background: @STD-TB-BUTTON-BG-HOVER; }
+  div.nav:active { background: STD-TB-BUTTON-BG-PRESSED; }
+
+  td 
+  {
+    size: *;
+    text-align:center;
+    padding:1dip 6dip;     
+    border:1px solid transparent;
+  }
+     
+  th
+  {
+    font-size:8pt; 
+    font-weight:normal;
+    color:@HIGHLIGHT;
+    text-align:center;
+    padding-top:4dip;
+    border-bottom:1px solid @THREEDBORDER;
+  }
+
+  td.month.off, td.day.off
+  {
+    color: brown;
+  }
+  td.day.other-month,
+  td.year.other-year,
+  td.decade.other-decade
+  {
+    color: @GRAYTEXT;
+  }
+
+  td.today
+  {
+    border-color:red;
+    border-radius:2px;
+  }
+  
+  td:current { background: @STD-OPTION-BG-CURRENT; }
+  td:hover   { background: @STD-OPTION-BG-HOVER; }
+ 
+  :root:current td.month:current,
+  :root:focus td.month:current,
+  :root:current td.day:current,
+  :root:focus td.day:current,
+  :root:current td.year:current,
+  :root:focus td.year:current,
+  :root:current td.decade:current,
+  :root:focus td.decade:current   
+  {
+    background: @STD-OPTION-BG-FOCUS;
+  }
+  td:active { background: @STD-OPTION-BG-HOVER; }
+
+  div.button
+  {
+    display:block;
+    padding:* 4dip;
+    text-align:center;
+    height:*;
+  }
+  
+/*  :root:hover         { background: @STD-TB-BUTTON-BG-HOVER; transition:none; }
+  :root:checked       { background: @STD-TB-BUTTON-BG-CHECKED; }
+  :root:checked:hover { background: @STD-TB-BUTTON-BG-CHECKED-HOVER; }
+  :root:active        { background: STD-TB-BUTTON-BG-PRESSED; }
+  :root:disabled      { background: none; color:@GRAYTEXT; }*/  
+  
+  /* these are sensitive to the mouse wheel */
+  div.button:hover  { background: @STD-TB-BUTTON-BG-HOVER; transition:none; }
+  div.button:active { background: STD-TB-BUTTON-BG-PRESSED; }
+     
+  footer 
+  {
+    border-top:1px solid @THREEDBORDER;
+    padding:1dip;
+    line-height:1.4em;
+  }
+  
+  footer > label
+  {
+    display:block;
+    width:max-content;
+  } 
+  footer > div.today 
+  {
+    padding:2px 4px;
+    background-repeat:stretch;      
+  }   
+  
+  footer > div.today:hover  { color:red; background: @STD-TB-BUTTON-BG-HOVER; }
+  footer > div.today:active { background: @STD-TB-BUTTON-BG-PRESSED; }
+  
+} 
+  
+@set std-date < std-date-base
+{
+  :root
+  { 
+    font:system;    
+    padding:0;
+    color:@WINDOWTEXT;
+    text-selection: @WINDOWTEXT @THREEDFACE;
+    background:none; 
+  }
+  
+  :root:disabled         {  color:@GRAYTEXT; }  
+
+  :root:owns-popup,
+  :root:focus            {  text-selection: @HIGHLIGHTTEXT @HIGHLIGHT; }
+  
+  :root:tab-focus        { outline:@STD-OUTLINE-FOCUS; }  
+
+  :root > popup 
+  {
+    background-color: @WINDOW;
+    padding:0;
+    border: none;
+  }
+    
+  :root > caption {
+    padding:0.25em;
+    text-selection: @WINDOWTEXT @THREEDFACE;
+    line-height:1.4em;
+    background: @WINDOW;
+    border:1dip solid @THREEDBORDER;
+    border-radius: @INPUT-RADIUS 0 0 @INPUT-RADIUS;
+  }
+  :root:rtl > caption  { border-radius: 0 @INPUT-RADIUS @INPUT-RADIUS 0; }
+  
+  :root:owns-popup > caption,
+  :root > caption:focus{ text-selection: @HIGHLIGHTTEXT @HIGHLIGHT; }      
+
+  :root > caption > span:current
+  {
+    background-color: transparent;
+    color: @WINDOWTEXT;
+  }
+  :root:owns-popup > caption > span:current,
+  :root:focus > caption > span:current
+  {
+    background-color: @HIGHLIGHT;
+    color: @HIGHLIGHTTEXT;
+  }    
+
+  :root > button 
+  { 
+    width    :1.2em;
+    height  :*;
+    padding  :0;   
+    background:@THREEDFACE;
+    border:1dip solid @THREEDBORDER;
+    border-left:none;
+    border-radius: 0 @INPUT-RADIUS @INPUT-RADIUS 0;
+    foreground-image:url(stock:arrow-down); /* that arrow */
+    foreground-size: 6dip; /* that arrow */
+    foreground-repeat: no-repeat;
+    foreground-position: 50% 50%;    
+  }
+  
+  :root:rtl > button
+  {
+    border:1dip solid @THREEDBORDER;
+    border-left:none;
+    border-radius: @INPUT-RADIUS 0 0 @INPUT-RADIUS;
+  }
+  :root > button:hover    { transition:none; background:@THREEDHOVER; }
+  :root > button:active   { background:@THREEDHOVER; }
+  :root > button:disabled { background:@THREEDDISABLED; }
+}     
+  
+@set std-masked-edit < std-masked-edit-base /* style block for the masked ctl, derived from std-edit */
+{
+  :root {
+    color:@WINDOWTEXT;
+    background: @WINDOW;
+    border:1dip solid @THREEDBORDER;
+    text-selection: @WINDOWTEXT @THREEDFACE;
+    border-radius: @INPUT-RADIUS;
+    line-height:1.4em;
+    padding:0.25em;
+  }
+ 
+  :root > span:current
+  {
+    background-color: transparent;
+    color: @WINDOWTEXT;
+  }
+  
+  :root:owns-popup > span,
+  :root:focus > span:current
+  {
+    background-color: @HIGHLIGHT;
+    color: @HIGHLIGHTTEXT;
+  }
+  
+  :root:owns-popup,
+  :root:focus            {  text-selection: @HIGHLIGHTTEXT @HIGHLIGHT; }
+  :root:disabled         {  background:@THREEDFACE;  color:@GRAYTEXT; }
+  :root:tab-focus        {  outline:@STD-OUTLINE-FOCUS; }    
+
+}
+  
+@set std-time-edit < std-time-edit-base
+{
+  :root
+  {
+    font:system;
+    color:@WINDOWTEXT;
+    text-selection: @WINDOWTEXT @THREEDFACE;
+    padding:0;
+    border-radius: @INPUT-RADIUS; 
+  }
+  
+  :root > caption {
+    width:*;
+    line-height:1.4em;
+    padding:0.25em; 
+    background: @WINDOW;
+    border:1dip solid @THREEDBORDER;
+    border-radius: @INPUT-RADIUS 0 0 @INPUT-RADIUS;  
+  }
+  
+  :root:disabled > caption { background:@THREEDFACE; color:@GRAYTEXT; }  
+
+  :root > caption > span:current
+  {
+    background-color: transparent;
+    color: @WINDOWTEXT;
+  }
+  :root:focus > caption > span:current
+  {
+    background-color: @HIGHLIGHT;
+    color: @HIGHLIGHTTEXT;
+  }    
+
+  :root:invalid
+  {
+    color:red;
+  }
+
+  :root > button
+  {
+    height:0.5*;
+    width:1.2em;
+    background:@THREEDFACE;
+    border:1dip solid @THREEDBORDER;
+    foreground-position:50% 50%;
+    foreground-size:5dip;
+    foreground-repeat:no-repeat;
+  }
+
+  :root > button:hover
+  {
+    transition:none;
+    background:@THREEDHOVER;
+  }
+  :root > button:active
+  {
+    background:@THREEDHIGHLIGHT;
+  }
+  :root > button:disabled
+  {
+    background:@THREEDDISABLED; 
+  }
+
+  :root > button.minus
+  {
+    padding:0;
+    border-radius: 0 0 @INPUT-RADIUS 0;
+    border-top-style: none;
+    border-left-style: none;
+    foreground-image: url(stock:arrow-down); 
+  }
+ 
+  :root > button.plus
+  {
+    padding:0;
+    border-radius: 0 @INPUT-RADIUS 0 0;
+    border-bottom-style: none;
+    border-left-style: none;
+    foreground-image: url(stock:arrow-up);     
+  }
+}
+
+@set std-v-scrollbar
+{
+  .prev 
+  { 
+    background-image:url(theme:v-scrollbar-minus-normal); 
+    background-repeat:stretch; 
+  }
+  .prev:hover 
+  { 
+    background-image:url(theme:v-scrollbar-minus-hover); 
+  }
+  .prev:active 
+  { 
+    background-image:url(theme:v-scrollbar-minus-pressed); 
+  }
+  .prev:disabled 
+  { 
+    background-image:url(theme:v-scrollbar-minus-disabled); 
+  }
+
+  .next 
+  { 
+    background-image:url(theme:v-scrollbar-plus-normal); 
+    background-repeat:stretch; 
+  }
+  .next:hover 
+  { 
+    background-image:url(theme:v-scrollbar-plus-hover); 
+  }
+  .next:active 
+  { 
+    background-image:url(theme:v-scrollbar-plus-pressed); 
+  }
+  .next:disabled 
+  { 
+    background-image:url(theme:v-scrollbar-plus-disabled); 
+  }
+
+  .base
+  {
+    background-image:url(theme:v-scrollbar-base); 
+    background-repeat:stretch; 
+  }
+
+  .prev-page 
+  { 
+    background-image:url( v-scrollbar-page-minus-normal ); 
+    background-repeat:stretch;       
+  }
+  .prev-page:hover 
+  { 
+    background-image:url( v-scrollbar-page-minus-hover ); 
+  }
+  .prev-page:active 
+  { 
+    background-image:url( v-scrollbar-page-minus-pressed ); 
+  }
+  .prev-page:disabled 
+  { 
+    background-image:url( v-scrollbar-page-minus-disabled ); 
+  }
+  
+  .next-page 
+  { 
+    background-image:url( v-scrollbar-page-plus-normal ); 
+    background-repeat:stretch;       
+  }
+  .next-page:hover 
+  { 
+    background-image:url( v-scrollbar-page-plus-hover ); 
+  }
+  .next-page:active 
+  { 
+    background-image:url( v-scrollbar-page-plus-pressed ); 
+  }
+  .next-page:disabled 
+  { 
+    background-image:url( v-scrollbar-page-plus-disabled ); 
+  }
+  
+  .slider 
+  { 
+    background-image:url(theme:v-scrollbar-thumb-normal); 
+    background-repeat:stretch; 
+  }
+  .slider:hover 
+  { 
+    background-image:url(theme:v-scrollbar-thumb-hover); 
+  }
+  .slider:active 
+  { 
+    background-image:url(theme:v-scrollbar-thumb-pressed); 
+  }
+  .slider:disabled 
+  { 
+    background-image:url(theme:v-scrollbar-thumb-disabled); 
+  }
+}
+
+window-caption,
+caption[role="window-caption"]
+{ 
+  behavior:clickable; 
+  display:block;     
+  aspect:StdWindowCaption url(sciter:custom-window.tis); 
+}
+
+window-button[role=window-close],  
+button[role=window-close] { 
+  behavior:clickable; 
+  display:block; 
+  aspect:StdWindowCloseButton url(sciter:custom-window.tis); 
+}
+
+window-button[role=window-minimize],
+button[role=window-minimize] 
+{ 
+  behavior:clickable; 
+  display:block; 
+  aspect:StdWindowMinimizeButton url(sciter:custom-window.tis); 
+}
+
+window-button[role=window-maximize],
+button[role=window-maximize]
+{ 
+  behavior:clickable; 
+  display:block; 
+  aspect:StdWindowMaximizeButton url(sciter:custom-window.tis); 
+}

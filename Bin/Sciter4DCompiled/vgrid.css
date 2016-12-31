@@ -1,0 +1,164 @@
+
+
+@set vgrid {
+
+  table:root {
+    prototype: VGrid url(sciter4d:vlist.tis);  
+    font:system;
+    border:1px solid threedlightshadow; 
+    flow:table-fixed; /* enforce fixed layout on the table 
+                         to avoid column width changes 
+                         when new rows are pumping up */
+    border-spacing:0;
+    padding:0;
+    overflow-x:scroll-indicator;
+  }
+  
+  table:root[resizeable] > thead,
+  table:root[resizeable] > tr.thead {
+    behavior:column-resizer;
+  }
+   
+  table:root > thead, 
+  table:root > tr.thead,
+  table:root > tbody { border-spacing:0; }
+
+  table:root > tbody 
+  { 
+    overflow-y: scroll-indicator;
+    size:*;
+  }
+  
+  table:root  th { 
+    background-color: #F1F1F1; 
+    height: 24dip;
+    padding:2dip 4dip 4dip 4dip; 
+    border-right: 1dip solid #D6D6D6;
+  }
+
+
+  table:root > thead > th,
+  table:root > tr.thead > th { 
+	behavior:clickable; 
+  }
+
+  table > thead th:hover,
+  table > tr.thead th:hover { 
+    background-color: #D9EBF9; 
+  }
+  table > thead th:active,
+  table > tr.thead th:hover{ 
+    background-color: #BCDCF4; 
+  }
+  
+  td {
+    overflow-x:hidden;
+    text-overflow:ellipsis;
+    line-height:1.8em; padding:0 4dip;
+    border-right:1px solid #E4E8EA;
+    border-bottom:1px solid #E4E8EA;
+
+    // these two statements are the must for text editing 
+    flow:text;          // contains text and inlines only
+    white-space:pre;    // white spaces are significant
+  }
+
+
+  table:root > thead > tr > th {
+    border-bottom:1px solid #ddd;
+  }
+
+  table:root  > thead > tr > th[sortType='asc']
+  {
+    foreground-image:url("stock:arrow-up"); 
+    foreground-position-top: 50%;
+    foreground-position-right: 5px;
+    foreground-repeat: no-repeat;
+  }
+  
+  table:root  > thead > tr > th[sortType='desc']
+  {
+    foreground-image:url("stock:arrow-down"); 
+    foreground-position-top: 50%;
+    foreground-position-right: 5px;
+    foreground-repeat: no-repeat;  
+  }
+  
+  td:last-child { border-right:1px solid transparent; }
+  
+  table:root > tbody > tr {
+    behavior:form; /* mission critical: each repeated child is treated as a form so it can accept object values  */
+  } 
+
+  table:root > tbody > tr:nth-child(2n) {
+    background-color: #FAFAFA;
+  }
+
+  table > tbody > tr.highlighted {
+    background-color: #da9;
+  }
+
+  table > tbody > tr:hover {
+    background-color: #E5F7DF;
+  }
+
+  table > tbody > tr:checked {
+    background-color: #DBF1D4;
+  }
+
+  table > tbody > tr:checked:hover {
+    background-color: #D8E6F1;
+  }
+
+  table[rowselect] > tbody > tr:checked {
+    background-color: #D8E6F1;
+  }
+
+  table > tbody > tr > td[type=text] {
+	  cursor:text;
+    //background: #fff;
+	  behavior:edit; 
+  }
+
+  table > tbody > tr > td[type=currency] {
+    behavior: currency;
+  }
+
+  table > tbody > tr > td[type=url] {
+    behavior: url; 
+  }
+
+  table > tbody > tr > td[type=password] {
+    behavior:password;
+  }
+
+  table > tbody > tr > td[type=textarea] {
+    behavior:textarea;
+  }
+
+  table > tbody > tr > td[type=plaintext] {
+    behavior:plaintext;
+  }
+
+  table > tbody > tr > td[type=integer],
+  table > tbody > tr > td[type=decimal],
+  table > tbody > tr > td[type=number] {
+	style-set: std-number-edit;
+	flow:"1 2" 
+		   "1 3";
+  }
+
+  table > tbody > tr > td[type=integer] {
+	behavior: integer;
+  }
+
+  table > tbody > tr > td[type=decimal] {
+    behavior:decimal;
+  }
+
+  table > tbody > tr > td[type=number] {
+    behavior:number;
+  }
+
+
+}

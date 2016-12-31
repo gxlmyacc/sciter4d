@@ -1,0 +1,288 @@
+﻿@const BUSMENU_WIDTH_EXPAND: 193px; 
+@const BUSMENU_WIDTH_CLLOPSE: 40px; 
+@const BUSMENU_ITEMCAPTION_WIDTH_CLLOPSE: 30px; 
+
+.busMenu {
+  width: 40px;
+  height: 100%;
+  background: #F3F3F3;
+  border-right: 1px solid #8E8E8E;
+  transition: width(linear, 300ms);
+}
+
+.busMenu[state=expand] {
+  width: @BUSMENU_WIDTH_EXPAND;
+}
+
+.busMenu[state=cllopse] {
+  width: @BUSMENU_WIDTH_CLLOPSE;
+}
+
+.busMenu > div.busMenuCaption {
+  height: 44px;
+  width: 1*;
+  background-color: #E4EBF5;
+}
+
+.busMenu > div.busMenuCaption .busMenuCaptionTop {
+  background-color: #ACBAC3;
+  height: 35px;
+  vertical-align: middle;
+  padding-left: 4px;
+  flow: horizontal;
+}
+
+.busMenu > div.busMenuCaption .busMenuCaptionTop img {
+  display: block;
+  margin-top: 1*;
+  margin-bottom: 1*;
+}
+
+.busMenu > div.busMenuCaption .busMenuCaptionTop span {
+  display: block;
+  width: 1*;
+  height: 1*;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  vertical-align: middle;
+  position:relative;
+  left:-20px;
+}
+
+.busMenu > div.busMenuCaption .busMenuCaptionBottom {
+  margin: 0px;
+  padding: 0px;
+  display: block;
+  width: 1*;
+  height: 1*;
+  foreground: url(../images/top_tips.png) no-repeat top center;
+}
+
+.busMenu .busMenuContainer {
+  width:  1*;
+  height: 1*;
+  overflow-y: scroll-indicator;
+}
+
+.busMenu .busMenuContainer > ul {
+  width: 1*;
+  overflow-y: scroll-indicator;
+}
+
+.busMenu[state=cllopse] .busMenuContainer > ul {
+  width: @BUSMENU_WIDTH_CLLOPSE;
+}
+
+.busMenu .busMenuContainer > ul .busMenuItem caption.icon {
+  behavior: menuhover; 
+}
+
+menu.popup.busMenuItemDetailsPopup:empty {
+  background-color: #FAFAFAE0;
+  border: none;
+}
+
+.busMenu .busMenuContainer > ul li.busMenuItem > caption {
+  height: 38px;  
+  background-color: #F5F5F5;
+  border-bottom: 1px solid #E5E5E5;
+  flow: horizontal;
+  padding-left: 10px;
+}
+
+.busMenu[state=cllopse] .busMenuContainer > ul li.busMenuItem > caption {
+  width: @BUSMENU_ITEMCAPTION_WIDTH_CLLOPSE;
+}
+
+.busMenu .busMenuContainer > ul li.busMenuItem > caption:hover {
+  color: #3D8BBC;
+}
+
+.busMenu .busMenuContainer > ul li.busMenuItem > caption img {
+  display: block;
+  margin-top: 1*;
+  margin-bottom: 1*;
+  margin-right: 10px;
+}
+
+.busMenu .busMenuContainer > ul li.busMenuItem > caption span {
+  display: block;
+  margin-top: 1*;
+  margin-bottom: 1*;
+}
+
+.busMenu .busMenuItem[state] {
+  prototype: collapsibleByIcon url(collapsible-by-icon.tis);
+}
+
+.busMenu .busMenuItem[state=open] > caption {
+  background: url(../images/menu_cllopse.png) no-repeat 95% center; 
+}
+
+.busMenu .busMenuItem[state=close] > caption {
+  background: url(../images/menu_expand.png) no-repeat 95% center;  
+}
+
+.busMenu .busMenuItem[state=open] .busMenuItemDetails {
+  height: min-content;
+}
+
+.busMenu .busMenuItem[state=close] .busMenuItemDetails {
+  height: 0;
+}
+
+.busMenu .busMenuItem .busMenuItemDetails {
+  background-color: white;
+  border-bottom: 1px solid #E5E5E5;
+  color: #555555;
+  transition: height(back-out, 300ms);
+}
+
+.busMenu .busMenuItem .busSubMenuItem {
+  border-bottom: 1px dashed #D1D1D1;
+  height: 30px;
+  margin-left: 20px;
+  border-left: 1px dashed #D1D1D1;
+  vertical-align: middle;
+  padding-left: 10px;
+  background: url(../images/Icon_Line.png) no-repeat left center;
+}
+
+.busMenu .busMenuItem .busSubMenuItem:hover {
+  background-color: #F0F5F9;
+  color: #3D8BBC;
+}
+
+.busMenu .busMenuItem .busSubMenuItem:nth-last-child(1) {
+  border-bottom: none;
+}
+
+menu.popup.busMenuItemDetailsPopup {
+  padding: 0px;
+}
+
+menu.popup.busMenuItemDetailsPopup > li {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+menu.popup.busMenuItemDetailsPopup > caption {
+  background-color: #E5E5E5;
+  height: 34px;
+  color: #5493CD;
+  vertical-align: middle;
+  border: 1px solid #D4D0C8; 
+}
+
+.busMenu  .MenuSplt {
+  height: 25px;
+  vertical-align: middle;
+  cursor: pointer;
+  prototype: MenuSplit url(menusplit.tis);
+}
+
+.busMenu[state=expand]  .MenuSplt {
+  foreground: url(../images/left_expand.png) no-repeat center center;
+}
+
+.busMenu[state=cllopse]  .MenuSplt {
+  foreground: url(../images/left_cllopse.png) no-repeat center center;
+}
+
+.busMenu  .MenuSplt > .MenuSpltLine {
+  border-bottom: 1px solid #E5E5E5;
+  height: 1px;
+}
+
+.busMenu[state=cllopse] .busMenuItem[state] > caption { 
+  background: none;
+}
+
+.busMenu[state=cllopse] span.caption,
+ .busMenu[state=cllopse] .busMenuItemDetails,
+ .busMenu:animating span.caption,
+ .busMenu:animating .busMenuItemDetails
+ {
+  visibility: none;
+}
+
+
+.clientNavbar {
+  height: 32px;
+  background-color: #F0F0F0;
+  flow: horizontal;
+  vertical-align: middle;
+}
+
+.clientNavbar ul {
+  height: 100%;
+  vertical-align: middle;
+  margin-left: 10px;
+
+}
+
+.clientNavbar ul li {
+  flow: horizontal;
+}
+
+.clientNavbar ul li img {
+  display: block;
+  margin-top: 1*;
+  margin-bottom: 1*;
+}
+
+.clientNavbar ul li span {
+  display: block;
+  margin-top: 1*;
+  margin-bottom: 1*;
+  color: #0088CC;
+  margin-left: 3px;
+
+}
+
+.clientNavbar ul li span:hover {
+  color: #FF7225;
+  text-decoration: underline;
+}
+
+.clientNavbar .hl_ctrl_bar {
+  color: #505050;
+  vertical-align: middle;
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  flow: horizontal;
+}
+
+.clientNavbar .hl_ctrl_bar div {
+  border-radius: 2px;
+  height: 15px;
+  width: 15px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 11px;
+  font-family: Webdings;
+}
+
+.clientNavbar .hl_ctrl_bar .max {
+  font-weight: bold;
+  font-size: 10px;
+  behavior: ~ clickable;
+}
+
+.clientNavbar .hl_ctrl_bar[state=restore] .max {
+  content: "2";
+}
+
+.clientNavbar .hl_ctrl_bar .max:hover {
+  background: #29589C;
+  color: white;
+}
+
+.clientNavbar .hl_ctrl_bar .close:hover {
+  background: #A20721;
+  color: white;
+}
+

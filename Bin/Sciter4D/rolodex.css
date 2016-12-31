@@ -1,0 +1,24 @@
+﻿rolodex {
+  prototype: Rolodex url(sciter4d:rolodex.tis);
+  display: block;
+  size: max-content;
+  overflow: hidden;
+  position: relative;
+}
+
+rolodex > .list { size: 100%; overflow:hidden; flow:stack; size:max-content; }
+rolodex > .list > * {  display:block; visibility:hidden; position: relative; }
+rolodex > .list > .slide { }
+rolodex > .list > .slide > .slide-caption { position:absolute; left:0; right:0; bottom:15dip; text-align:center; color:white; text-shadow:#888 1px 1px; }
+     
+rolodex > .button { stroke:#ccc; stroke-width: 1dip; fill:#fff; size:10dip; behavior:button; background: url(stock:chevron-left-hollow) 50% 50% no-repeat; background-size:10px 10px;  }
+rolodex > .button.prev { background-image:url(stock:chevron-left); position: absolute; left: 10dip; bottom: 50%; }
+rolodex > .button.next { background-image:url(stock:chevron-right); position: absolute; right: 10dip; bottom: 50%; }
+rolodex > .button.prev:hover, rolodex > .button.next:hover { fill:#ccc; }
+rolodex > .button.prev:disabled, rolodex > .button.next:disabled { display: none; }
+
+rolodex > .paging { flow:horizontal; horizontal-align: center; position: absolute; bottom: 10dip; width: 100%; }
+rolodex > .paging > span { font-family:webdings; behavior:clickable;  color:white; text-shadow:#888 1px 1px; }
+rolodex > .paging > span:hover { color:red; }
+rolodex > .paging > span:current { visibility:hidden; }
+

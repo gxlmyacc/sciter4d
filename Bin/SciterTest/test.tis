@@ -1,0 +1,3 @@
+﻿function alert(v) {
+  view.msgbox(#alert, String.printf("%V", v).replace("\t", " "));
+}

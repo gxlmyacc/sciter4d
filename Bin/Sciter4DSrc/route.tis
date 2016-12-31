@@ -1,0 +1,160 @@
+﻿class RouteManager: Behavior {
+
+  this var _routes = [
+    /* { name: "route name", path:"route path" } */
+  ];
+  this var _routeIndex = -1;
+  this var _historys = [];
+  
+  function calcRouteIndex(route) {
+    if (this._routes.length <= 0)
+      return -1;   
+    var index = -1;      
+    if (typeof route == #integer) {
+      if(!route) route = 0;
+      if ( (route >= 0) && (route < this._routes.length) )
+        index = route;  
+    }
+    else if(typeof route == #string) {
+       for (var r in this._routes) {
+         if (r.name == route) {
+           index = this._routes.indexOf(r);
+           break;
+         } 
+       }
+    }
+    if (index != this._routeIndex) 
+      return index;
+    else 
+      return -1;
+  }
+  
+  function canGo(route) {
+    return this.calcRouteIndex(route) >= 0; 
+  }   
+  function go(route, params = undefined, isForward = true) {    
+    //计算路由索引    
+    var routeIndex = this.calcRouteIndex(route); 
+    if (routeIndex < 0)
+      return routeIndex;
+    //非第一次跳转
+    if (this._routeIndex >= 0) {
+      //添加到历史中
+      if (isForward) {
+        var r = this._routes[this._routeIndex];  
+        this._historys.push(r);
+      }
+      //设置动画
+      var animation = routeIndex < this._routeIndex ? this.@#before-animation : this.@#after-animation;
+      this.style#transition = animation;
+    }
+    //加载路由
+    var r = this._routes[routeIndex];  
+    this._routeIndex = routeIndex; 
+    
+    var url = this.url(r.path);
+    this.load(url);
+    return this._routeIndex;
+  }
+  
+  function canBack() {
+    return this._historys.length > 0;
+  }
+  function goBack(params = null) {
+    if (this._historys.length > 0) {
+      var r = this._historys.pop();
+      return this.go(r.index, params, false);
+    }
+    else 
+      return -1;
+  }
+  
+  function canFirst() {
+    return this.canGo(0);
+  } 
+  function isFirst() {
+    return this._routeIndex == 0; 
+  } 
+  function goFirst(params = null) {   
+    return this.go(0, params);  
+  }
+  
+  function canLast() {
+    return this.canGo(this._routes.length - 1); 
+  } 
+  function isLast() {
+    return this._routeIndex == (this._routes.length - 1); 
+  } 
+  function goLast(params = null) {
+    return this.go(this._routes.length - 1, params);
+  }
+  
+  function canPrior() {
+    return this.canGo(this._routeIndex - 1); 
+  } 
+  function goPrior(params = null) {
+    return this.go(this._routeIndex - 1, params);
+  }
+  
+  function canNext() {
+    return this.canGo(this._routeIndex + 1);
+  }   
+  function goNext(params = null) {
+    return this.go(this._routeIndex + 1, params);
+  }
+  
+  function clearHistorys() {
+    this._historys = [];
+  }
+  
+  function reload() {
+    if (this._routeIndex>=0) return; //当路由索引大于等于0时，说明frame的内容已经被替换了，所以无法重新加载路由
+    this._routes = [];
+    this.clearHistorys();
+    var routes = this.$$(route[name][path]);
+    if (!routes) return;
+    for (var (index, route) in routes) 
+      this._routes.push { index: index, name: route.@#name, path: route.@#path }; 
+  }
+  
+  function _init(){
+    this.reload();
+    if (this.value)
+      this.go(this.value); 
+  }
+  
+  function attached() {
+    if (!this.@.exists("each") && !this.$(:has-bound-attributes)) 
+      this._init();  
+  }   
+
+  function repeatCreated(){
+    this._init(); 
+  }  
+  
+  function detached(){
+    this.off("eachReady.plus");
+  }
+  
+  function setBoundValue(newVal) {
+    this.value = newVal;
+  }
+ 
+  property routes(v) {
+    get { return this._routes; }
+  } 
+  
+  property routeIndex(v) {
+    get { return this._routeIndex; }
+  }
+  
+  property historys(v) {
+    get { return this._historys; }
+  }
+  
+  property value(v){
+    get { return this.@#value;  }
+    set { if (this.@#value != v){ this.@#value = v; this.go(v); } }
+  }
+ 
+}

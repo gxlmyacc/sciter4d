@@ -1,0 +1,47 @@
+﻿var jsonData = {
+  "chart" : {
+    "yAxisname" : "销售个数",
+    "caption" : "2012年年度销售情况统计分析",
+    "useRoundedges" : "1",
+    "bgColor" : "FFFFFF,FFFFFF",
+    "showBorder" : "0",
+  },
+  "data" : [{
+      "label" : "一月",
+      "value" : "25000"
+    }, {
+      "label" : "二月",
+      "value" : "35000"
+    }, {
+      "label" : "三月",
+      "value" : "42300"
+    }, {
+      "label" : "四月",
+      "value" : "35300"
+    }, {
+      "label" : "五月",
+      "value" : "31300"
+    }, {
+      "label" : "六月",
+      "value" : "64500"
+    }, {
+      "label" : "七月",
+      "value" : "88900"
+    }, {
+      "label" : "八月",
+      "value" : "42300"
+    }, {
+      "label" : "九月",
+      "value" : "35300"
+    }, {
+      "label" : "10月",
+      "value" : "31300"
+    }, {
+      "label" : "11月",
+      "value" : "25000"
+    }, {
+      "label" : "12月",
+      "value" : "35000"
+    }
+  ]
+};

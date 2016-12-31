@@ -1,0 +1,15 @@
+﻿
+!function() {
+
+  var message = "Hello another world!";
+  try {
+    // 在第二个窗口，这段代码将会执行失败:
+    message = view.helloWorld("nihao");
+  } catch(e) {}
+  
+  $(#message).text = message;
+
+}();
+
+
+

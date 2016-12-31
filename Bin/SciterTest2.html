@@ -1,0 +1,38 @@
+ <html>
+  <head>
+  <style>
+    @import url(sciter4d:vgrid.css);
+    
+    table { style-set: vgrid; 
+            width:*;
+            height:*; } 
+    table th { width:200px; }
+    
+    th[fixed], td[fixed] {
+     // position: fixed; 
+      width: 100px;      
+      background-color: white;
+    }     
+    
+  </style>
+  <script type="text/tiscript">
+  
+  function self.ready() {
+    var records = new Array(200); 
+    for(var i = 0; i < records.length; ++i)
+      records[i] = { col1:i, col2:i, col3:i, col4:i, col5:i, col6:i, col7:i, col8:i  };      
+    $(table).value = records;  
+  } 
+  </script>
+  </head>
+<body>
+  <table>
+    <thead>
+      <tr><th(col1) fixed>列1</th><th(col2) fixed>列2</th><th(col3)>列3</th><th(col4)>列4</th><th(col5)>列5</th><th(col6)>列6</th><th(col7)>列7</th><th(col8)>列8</th></tr>
+    </thead>
+    <tbody>
+      <tr><td(col1) fixed></td><td(col2) fixed></td><td(col3)></td><td(col4)></td><td(col5)></td><td(col6)></td><td(col7)></td><td(col8)></td></tr>
+    </tbody>
+  </table>
+</body>
+</html>

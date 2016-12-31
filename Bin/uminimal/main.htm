@@ -1,0 +1,54 @@
+﻿<html>
+  <head>
+    <title></title>
+    <style>
+    
+      frame {size:*;}
+    
+    </style>
+    <script type="text/tiscript">
+    
+      include "tis/test.tis";
+      
+      // 初始化'本地API' 
+      
+      !function(){
+        if( !view.api )
+          View.api = view.nativeApi(); // 获取本地API，并将它设置到View.api全局变量上，这样所有窗口的都可以访问它了。
+      }();
+     
+      $(#test).on("click", function() {
+        view.window {
+                type: view.FRAME_WINDOW,
+                 url: self.url("main.htm"),
+               state: view.WINDOW_SHOWN,
+               width: 800,
+              height: 600,
+           alignment: 5 // center of the screen  
+        };
+      });      
+      
+      $(form#native-test).on("change", function() {
+        var v = this.value;
+		if (v.a && v.b)
+		{
+          var res = view.api.math.sum(v.a, v.b);
+          this.value = { r: res };
+		}
+        return true;
+      });
+ 
+    </script>
+  </head>
+<body> 
+  <button #test>打开另一个窗口</button>
+  <form #native-test>
+    <text>本地API测试</text>
+    <input|integer(a) /> + <input|integer(b) /> = <output(r) /> (nativeApi.math.sum(int a, int b))
+  </form>
+  
+  <p id="message"></p>
+ <frame src="images/globe.svg" />
+
+</body>
+</html>

@@ -1,0 +1,1198 @@
+﻿/*base classes, common to all themes*/
+
+html { behavior:accesskeys; }
+form { behavior:form; }
+
+/* hyperlinks */
+a:link { text-decoration:underline; color:blue; cursor:pointer; behavior:hyperlink; }
+a:link:focus { text-decoration:underline; }
+a:link:hover { color:red; }
+a:link:active { text-decoration:none; }
+a:link:tab-focus { outline-width:1px; outline-offset:0px; outline-style:dotted; }
+
+svg:incomplete:not(:busy),
+img:incomplete:not(:busy)   
+{
+   background-image :url(sciter:no-image.png);
+   background-repeat: repeat; 
+   min-width:20px; min-height:20px;
+   border:1px solid; border-color: #aaa #eee #eee #aaa; }
+   
+svg:root { size:*; background:#ffffff; overflow:hidden; }
+
+*:drop-marker { visibility:hidden; }
+
+/* edit box and numeric input*/
+/* widget { color:windowtext; } */
+    
+input[type="hidden"], [hidden] 
+{ 
+  visibility:none; 
+}
+
+widget[type="text"],input[type="text"],
+widget[type="password"],input[type="password"],
+widget[type="currency"],input[type="currency"],
+widget[type="url"],input[type="url"],
+input:not([type])
+{
+  style-set: "std-edit";
+}
+
+@image-map std-tree-icons
+{
+    src: url(tree-icons-x1.png) 100dpi,
+         url(tree-icons-x2.png);
+    cells:2 1; /* 2 columns, 1 row */
+    /* logical names of the parts, see radios.png */ 
+    items:
+      plus,
+      minus;
+} 
+
+@set std-edit-base 
+{
+  :root 
+  {
+    behavior:edit;   
+    context-menu:url(sciter:menu-edit.htm);  
+    cursor:text;
+    overflow-x:hidden-scroll;
+    flow:text;
+    white-space:pre;
+    height:auto; 
+    width:auto; 
+    text-align: left;
+  }
+  
+  :root[type="password"] {  behavior:password; }  
+  :root[type="currency"] {  text-align: right; behavior:currency; }
+  :root[type="url"]      {  behavior:url; }
+  
+  :root:rtl              {  text-align:right; } 
+  :root:invalid          {  color:red; }
+  
+}
+
+widget[type="decimal"], input[type="decimal"],
+widget[type="integer"], input[type="integer"],
+widget[type="number"], input[type="number"]
+{
+  style-set: "std-number-edit";
+}
+
+@set std-number-edit-base
+  {
+    :root {
+      behavior:number;   
+      width: auto;
+      height: min-intrinsic;
+      cursor:default;
+      context-menu:url(sciter:menu-edit.htm);
+      white-space: nowrap;
+      flow:"1 2" 
+           "1 3" ;
+    }
+    :root:rtl
+    {
+      flow:"2 1" 
+           "3 1";
+    }
+
+    :root:invalid {  color:red; }
+  
+    :root > caption 
+    { 
+      display:block;
+      flow:text;
+      behavior: edit;      
+      cursor:text;
+      white-space:pre;
+      overflow-x:hidden-scroll;
+      -filter:"-+.,0~9";
+    }
+        
+    :root[type="decimal"] { behavior:decimal; }
+    :root[type="integer"] { behavior:integer; }
+    :root[type="integer"] > caption { -filter: "-+0~9"; }
+    :root > button {  display:block; behavior:clickable; cursor:default; }
+  }
+
+
+/* text button */
+
+widget[type="button"], input[type="button"], 
+input[type="reset"], input[type="submit"], 
+button
+{ 
+  style-set: "std-button";
+}
+
+toolbar > button {
+  display:block;
+  style-set: "std-toolbar-button";
+} 
+
+@set std-button-base
+  {
+    :root
+    { 
+      behavior:button;     
+      flow:vertical;
+      white-space: nowrap;
+      cursor:default;
+      text-align:center;
+    }
+    
+    /*:root:active > *
+    { 
+      transform:translate(1px,1px);
+    }*/
+
+    /* vertical alignment */    
+    :root > :first-child { margin-top:*; }
+    :root > :last-child { margin-bottom:*; }
+  }
+  
+@set std-toolbar-button-base {
+    :root
+    { 
+      behavior:clickable;     
+      display:block;
+      flow:vertical;
+      white-space: nowrap;
+      cursor:default;
+      text-align:center;
+    }
+    
+    :root[type="checkbox"] { behavior:check; }
+    :root[type="radio"] { behavior:radio; }
+    
+    :root:active > *
+    { 
+      transform:translate(1px,1px);
+    }
+    /* vertical alignment */    
+    :root > :first-child { margin-top:*; }
+    :root > :last-child { margin-bottom:*; }
+    
+    
+    :root[type=checkbox] { behavior:check; }
+    :root[type=radio] { behavior:radio; }
+
+    
+} 
+
+widget[type="menu"], button[type="menu"]
+{ 
+  style-set: "std-button-menu";
+}
+   
+button[type="selector"]
+{
+  style-set: "std-selector";
+} 
+
+/* radio button */
+input[type="radio"],
+button[type="radio"],widget[type="radio"]
+{ 
+  style-set:"std-radio";
+}
+
+toolbar > button[type="radio"] {
+  display:block;
+  style-set: "std-toolbar-button";
+} 
+
+
+@set std-radio-base 
+{
+  input:root
+  { 
+    vertical-align:middle;
+    behavior:radio; 
+    cursor:default;
+  }
+  :root:not(input)
+  {
+    behavior:radio; 
+    vertical-align:baseline;
+    text-align:left;
+    white-space:nowrap;
+    cursor:pointer;
+  }
+}
+
+/* checkbox button */
+input[type="checkbox"], widget[type="checkbox"], button[type="checkbox"]
+{ 
+  style-set: "std-checkbox";
+}
+
+toolbar > button[type="checkbox"] {
+  display:block;
+  style-set: "std-toolbar-button";
+} 
+
+
+@set std-checkbox-base
+{
+  input:root
+  {
+    behavior:check;   
+    cursor:default;
+    vertical-align:middle;
+  }
+  :not(input):root
+  {
+    behavior:check; 
+    cursor:pointer;
+    white-space:nowrap;
+    vertical-align:baseline;
+  }
+}
+
+popup 
+{
+  style-set: "std-popup"; /* used to break chain of style-sets so <button><popup><button/></popup></button> will work */
+}
+
+@set std-popup-base
+{
+  :root[role="overflow-tooltip"] 
+  { 
+    white-space:nowrap; 
+    overflow:none; 
+    size:max-content; 
+    text-indent:0; /* override inherited value */
+    popup-position: middle-left middle-left;
+  }
+  :root[role="overflow-tooltip"]:rtl {
+    popup-position: middle-right middle-right;
+  }
+  :root[role="tooltip"] 
+  {
+    font: system;
+    overflow:none;
+    text-overflow:none;
+    size:max-content;
+    text-indent:0; /* override inherited value */
+  }
+}
+
+progress,
+input[type="progress"],
+widget[type="progress"]
+{
+  behavior:progress; 
+}
+
+meter 
+{
+  style-set: "std-meter";
+}
+
+/* select (not dropdown) */
+
+select[size]:not([size="1"]):not([type="select-dropdown"]):not([type="dropdown"]), 
+select[type="select"],
+select[type="list"],
+widget[type="select"],
+widget[type="list"],
+popup[type="select"]
+{
+  style-set: "std-select";
+}
+
+select[type="select"][multiple=checkmarks], 
+select[size]:not([size="1"])[multiple=checkmarks], 
+widget[type="select"][multiple=checkmarks],
+popup[type="select"][multiple=checkmarks]
+{
+  style-set: "std-select-checkmarks";
+}
+
+@set std-select-base
+{
+  :root
+  { 
+    behavior:select; 
+    overflow-x:hidden; 
+    overflow-y:auto; 
+    flow:vertical;
+    size: auto;
+  }
+  
+  :root[multiple] { behavior:select-multiple; }  
+  :root[multiple=checkmarks] { behavior:select-checkmarks; }  
+  
+  :root > popup:empty { content:" "; }
+
+  optgroup > caption 
+  { 
+    white-space:nowrap;
+    width:*;
+  }
+  option 
+  { 
+    min-height:1em;
+    width: *;
+    white-space:pre;
+  }
+  option:empty { min-width:0.6em; height:1.2em; flow:text; }
+
+  /* all elements in the options by default are non-visible */
+  option:has-children-of-type(option) > * { visibility:collapse; }
+  /* elements in open options are visible */
+  option:has-children-of-type(option):expanded > * { visibility:visible; }
+}
+
+
+/* simple multiselect (without check boxes) */
+
+select[type="list"][multiple=""],
+select[type="select"][multiple=""],
+widget[type="select"][multiple=""]
+{
+  style-set: "std-select-multiple";
+}
+
+/* multiselect with check boxes */
+
+select[type="list"][multiple="checks"],
+select[type="select"][multiple="checks"],
+widget[type="select"][multiple="checks"]
+{
+  style-set: "std-select-multiple-checkmarks";
+}
+
+select[type="tree"],
+widget[type="tree"]
+{
+  style-set: std-tree;
+}
+
+@set std-tree-base
+{
+  :root
+  { 
+    behavior: tree-view;
+    overflow:auto; 
+    flow:vertical;
+    padding:2px; 
+    width: 300px;
+    height: 150px;
+    color: windowtext;
+  }
+
+  :root:disabled
+  { 
+    color:graytext;
+  }
+
+  option:not(:node) /*:leaf*/
+  { 
+    flow:default;
+    padding:1dip 5dip;
+    margin-left:16dip;
+    min-height:1.2em;
+    width:*;
+    max-width:max-content;
+    white-space: nowrap;
+  }
+  
+  option:not(:node):rtl {
+    margin-left:0;
+    margin-right:16dip;
+  }
+
+  option:node
+  {
+    flow:vertical;
+    margin:0;
+    padding-right:0;
+    padding-left:16dip;
+    foreground-repeat: no-repeat;
+    foreground-position: 3dip 6dip;
+    foreground-size:7dip;
+    width: *;
+    max-width:auto;
+    min-height:1.2em;
+    foreground-image-cursor:pointer;
+  }
+  option:node:rtl
+  {
+    flow:vertical;
+    margin:0;
+    padding-right:16dip;
+    padding-left:0;
+    foreground-position-right: 3dip;
+    foreground-position-left: auto;
+    width: *;
+    max-width:auto;
+    min-height:1.2em;
+    foreground-image-cursor:pointer;
+  }
+  
+  /* all elements in the options by default are non-visible */
+  option:node > *
+  { visibility:none; }
+
+  /* all option captions */  
+  option:node > text,
+  option:node > caption
+  {
+    min-height:1.2em;
+    white-space: nowrap;    
+    padding:1dip 5dip;
+    visibility:visible; /* always visible */
+    width:max-intrinsic;
+  }
+
+  option:node:collapsed      { foreground-image:url(stock:arrow-e-hollow); }
+  option:node:collapsed:rtl  { foreground-image:url(stock:arrow-w-hollow); }
+
+  option:node:expanded       { foreground-image:url(stock:arrow-se); }
+  option:node:expanded:rtl   { foreground-image:url(stock:arrow-sw); }
+
+
+  /* elements in open options are visible */
+  option:node:expanded > * { visibility:visible; }
+
+  /* tree line support: */
+  :root[treelines] option > option 
+  {
+    display: list-item;
+    list-style-type: tree-line;
+    list-marker-size:1dip;
+    list-marker-color:#ccc;
+    list-marker-style:solid;      
+  }
+  
+  :root[treelines] option:node:collapsed  { foreground-image:image-map(std-tree-icons,plus); foreground-size:11dip; foreground-position: 3dip 4dip; }
+  :root[treelines] option:node:expanded   { foreground-image:image-map(std-tree-icons,minus); foreground-size:11dip; foreground-position: 3dip 4dip; }
+
+  :root[treelines] option:not(:node)     {  margin-left:8dip; }
+  :root[treelines] option:not(:node):rtl {  margin-right:8dip; margin-left:0;}
+
+}    
+
+select[type="tree"][multiple="checkmarks"],
+widget[type="tree"][multiple="checkmarks"]
+{
+  style-set: "std-tree-checkmarks";
+}
+
+input[type="file-path"],
+widget[type="file-path"],
+input[type="folder-path"],
+widget[type="folder-path"],
+input[type="file"],
+widget[type="file"] 
+{ 
+  style-set: "std-file-selector"; 
+}
+
+@set std-file-selector-base
+{
+  :root 
+  {
+    flow:horizontal;
+    width:20em;
+  }
+  
+  :root[type="file-path"],
+  :root[type="folder-path"] { behavior:path-select; }
+
+  :root[type="file"]        { behavior:file; }
+  
+  :root > caption
+  {
+    behavior:file-icon;
+    size:*;
+    overflow-x: hidden;
+    text-overflow:path-ellipsis;
+    foreground-repeat:no-repeat;
+    foreground-position: 2dip 50%;
+  }
+  
+}
+
+
+/* dropdown combobox */
+widget[type="select-dropdown"],
+select[type="dropdown"],
+select[type="select-dropdown"],
+select:not([size]):not([type="select"]),
+select[size=1]:not([type="select"])
+{  
+  style-set: "std-select-dropdown";
+}
+
+@set std-select-dropdown-base
+{
+  :root
+  {  
+    behavior:dropdown-select;
+    padding:0;
+    flow:horizontal;  /* caption, button*/
+    vertical-align:baseline;
+    width: auto;
+    height: max-content;
+    overflow-x:hidden;
+  }
+
+  /* caption portion of the combobox */
+  :root > caption
+  { 
+    behavior:clickable;
+    overflow-x:hidden; 
+    width:*; /* everything left from the button */
+    height:*; /* takes full height */
+    min-height:1.2em;
+    vertical-align:baseline;
+    white-space: pre;
+  }
+      
+  :root[editable] > caption
+  { 
+    flow:text;
+    behavior:edit; 
+    cursor:text;
+    context-menu:url(sciter:menu-edit.htm);
+  }
+
+  /* popup select element */
+  :root > popup
+  { 
+    margin:0;
+    overflow-x:hidden; 
+    overflow-y:auto; 
+    display:block; 
+    visibility:collapse;/* invisible normally */
+    behavior:select; 
+    min-width: max-content;
+    width: *;
+    height: auto;
+    max-height: max-content;
+    white-space:pre;
+  }
+  :root > popup:empty { content:" "; }
+  :root > popup:popup
+  {
+    visibility:visible;/* visible when popup */
+  }
+  :root > popup > option:empty { min-width:0.6em; height:1.2em; flow:text; }
+  
+  /* dropdown button of the combobox */
+  :root > button
+  {
+    display :block; 
+    width    :1em;
+    height  :*;
+    background-image  :none;
+    foreground-image:url(stock:arrow-down); /* that arrow */
+    foreground-size: 6dip; /* that arrow */
+    foreground-repeat: no-repeat;
+    foreground-position: 50% 50%;
+    behavior:clickable; 
+    white-space:nowrap;
+    vertical-align:middle;
+  }
+
+  :root[multiple] {
+    behavior: dropdown-multi-select;
+  }
+  :root[multiple] > popup 
+  {
+    behavior: select-checkmarks;
+    style-set: "std-select-checkmarks";
+  }
+  :root[multiple] > span.count 
+  {
+    display:block;
+    behavior:clickable;
+    white-space:pre;
+    width:2.5em;
+    overflow-x:hidden; 
+    height:*; /* takes full height */
+    line-height:1.2em;
+    min-height:1.2em;
+    vertical-align:baseline;      
+    text-align:center;
+  }
+}
+
+@set std-htmlarea-base
+{
+  :root 
+  {
+    behavior:richtext;
+    width:*;
+    height:150px;
+    overflow-x:auto; 
+    overflow-y:scroll; 
+    cursor:text;
+    context-menu:url(sciter:menu-richtext.htm);
+  }
+}
+
+@set std-textarea-base
+{
+  :root 
+  {
+    behavior:textarea; 
+    context-menu:url(sciter:menu-edit.htm);  
+    flow:text;
+    font: system;
+    size: auto;
+    white-space:pre;
+    cursor:text;
+    overflow-x:auto; 
+    overflow-y:scroll;     
+  }
+  
+  :root:disabled
+  {
+    overflow:hidden; 
+    cursor:default;
+  }
+  
+  :root[wrap="off"]
+  {
+    overflow-x:scroll; 
+    overflow-y:scroll; 
+    white-space:pre;
+  }
+}
+
+textarea, widget[type="textarea"]
+{
+  style-set: "std-textarea";
+}
+
+@set std-plaintext
+{
+  :root {
+    padding:0;
+    flow:vertical;
+    behavior:plaintext;
+    background:#eee; border:1dip solid #eee;
+    overflow:auto;
+    font-family:monospace;
+    font-rendering-mode:snap-pixel;
+    size:*; 
+    context-menu:url(sciter:menu-edit.htm);  
+  }
+  :root > text {
+    white-space: pre-wrap;
+    background:#fff;
+    color:#000;
+    margin-left: 3em;
+    padding-left: 4dip;
+    cursor:text;
+    display:list-item;
+    list-style-type: index;
+    list-marker-color:#aaa;
+  }
+  :root > text:last-child { padding-bottom:*; }    
+  :root > text:nth-child(10n) { list-marker-color:#000; }
+ 
+  :root:disabled
+  {
+    overflow:hidden; 
+    cursor:default;
+  }
+  :root[wrap="off"]
+  {
+    overflow-x:scroll; 
+    overflow-y:scroll; 
+    white-space:pre;
+  }
+}
+
+plaintext
+{
+  style-set: "std-plaintext";
+}
+
+htmlarea, widget[type="htmlarea"]
+{
+  style-set: "std-htmlarea";
+}
+
+@set std-slider-base
+{
+  :root 
+  {
+    behavior:slider;
+    cursor:default;
+    vertical-align:middle;
+    overflow:visible;
+    flow:stack;
+  }
+
+  :root > button
+  { 
+    display:block;
+    behavior:none;
+    margin:0; padding:0;
+  }
+  :root:tab-focus
+  { 
+    outline:1px dotted invert -1px; 
+  }
+}
+
+widget[type="hslider"],
+input[type="hslider"]
+{ 
+  style-set:"std-hslider";
+}
+
+widget[type="vslider"],
+input[type="vslider"]
+{ 
+  style-set: "std-vslider";
+}
+
+widget[type="vscrollbar"],
+input[type="vscrollbar"]
+{
+  behavior: scroll-bar;
+  width:auto;
+  height:*;
+}
+
+widget[type="hscrollbar"],
+input[type="hscrollbar"]
+{
+  behavior: scroll-bar;
+  width:*;
+  height:auto;
+}
+
+frame 
+{ 
+  behavior: frame; 
+  width:*; 
+  height:*;
+}
+iframe 
+{ 
+  behavior: frame; 
+  width:300px; 
+  height:150px;
+}
+
+iframe[history],
+frame[history]
+{
+  behavior: history frame; 
+}
+
+frame[type="pager"]
+{
+  style-set: "std-pager";
+}
+
+@set std-pager
+{
+  :root 
+  {
+    flow:null; /* it will use manual layout */
+    behavior:pager;
+    background: #EEE;
+    size:*;
+    padding:12px;
+    border-spacing:12px;
+  }
+  
+  :root > pagebox
+  {
+    background-color:white;
+    /*border: 1px solid black;*/
+    box-shadow: 2px 2px 6px #888;
+  }
+}
+
+frameset[cols] 
+{
+   behavior: frame-set; 
+   width:*; 
+   height:*;
+   flow:horizontal;
+}
+
+frameset[cols]:not(:has-children-of-type(splitter)):not(:has-children-of-type(hr))
+{
+  border-spacing:3px;
+  background-color:threedface;
+}
+
+frameset[cols] > * { height:*; }
+frameset[cols] > hr,
+frameset[cols] > splitter { width:5px; cursor:e-resize; background-color: threedface; margin:0; border:none; }
+frameset[cols] > hr:hover,
+frameset[cols] > splitter:hover { background-color:threedhighlight threedshadow threedshadow threedhighlight; }
+
+frameset[rows] 
+{
+  behavior: frame-set; 
+  width:*; 
+  height:*;
+  flow:vertical;
+}
+
+frameset[rows]:not(:has-children-of-type(splitter)):not(:has-children-of-type(hr))
+{
+  border-spacing:3px;
+  background-color:threedface;
+}
+frameset[rows] > * { width:*; }
+frameset[rows] > hr,
+frameset[rows] > splitter { height:5px; cursor:n-resize; background-color: threedface; margin:0; border:none; }
+frameset[rows] > hr:hover,
+frameset[rows] > splitter:hover { background-color:threedhighlight threedhighlight threedshadow threedshadow ; }
+
+frameset[history] { behavior: history frame-set; } 
+
+@set std-popup-menu-base
+{
+  :root, menu
+  {
+    behavior:menu; /*is a menu*/
+    flow: vertical;
+    visibility:collapse; 
+    margin:0;  
+    width:max-content;
+    margin:0 1px; /* to offset it from parent li */    
+    font: system;
+    cursor:default;
+  }
+
+  :root:popup, menu:popup 
+  {
+    visibility:visible;
+  }
+
+  /* menu item in popup menus */
+  menu > option, li 
+  {  
+    flow:horizontal;
+    width:*;
+    white-space:nowrap;
+    text-align:left;
+    foreground-repeat: no-repeat;
+    foreground-position: 4dip 50%;
+  }
+  menu > option:rtl, li:rtl 
+  { 
+    text-align:right; 
+  }
+
+  menu > option:has-child-of-type(menu),
+  li:has-child-of-type(menu)
+  {
+    foreground-image:url(stock:arrow-right); /* that arrow */
+    foreground-repeat: no-repeat;
+    foreground-position-top: 50%;
+    foreground-position-left: auto;
+    foreground-position-right: 4dip;
+  }
+  
+  menu > option:has-child-of-type(menu):rtl,
+  li:has-child-of-type(menu):rtl
+  {
+    foreground-image:url(stock:arrow-left); /* that arrow */
+    foreground-position-left: 4dip;
+    foreground-position-right: auto;
+  }
+
+}
+
+
+menu.popup,
+menu.context,
+menu:synthetic,  /* builtin popup menu */
+button[type=menu] > menu
+{
+  style-set: "std-popup-menu";
+}
+
+widget[type="calendar"],
+input[type="calendar"]
+{
+  style-set: "std-calendar";
+}
+
+@set std-calendar-base /* style block for the content of the calendar */
+{
+  :root
+  {
+    behavior:calendar;      
+    overflow:hidden;
+    min-width: max-content;
+    min-height: min-content;
+    white-space: nowrap;
+    cursor:default;
+    font:system;
+  }
+    
+  :root:tab-focus /* :root here is the element with the style-set set */ 
+  {
+    outline:1px dotted windowtext -4px; /* inside */
+  }
+
+  table
+  { 
+    size:*;  
+    border-spacing:0;
+  }
+   
+  caption
+  {
+    flow:horizontal;
+    width:*;
+  }
+    
+  caption > div.month  { width:max-content; }
+  caption > div.year   { width:max-content; }
+    
+  div.nav 
+  {
+    width:2em;
+    height:*;
+    padding-top:0.2em;
+    foreground-position:50% 50%;
+    foreground-size:7dip;
+    foreground-repeat:no-repeat;
+  }
+  
+  div.prev.nav       { margin-right:*; foreground-image:url(stock:arrow-left); }
+  div.prev.nav:rtl   { margin-right:0; margin-left:*; }
+  div.next.nav       { margin-left:*; foreground-image:url(stock:arrow-right); }
+  div.next.nav:rtl   { margin-left:0; margin-right:*; }
+
+  td 
+  {
+    width: *;
+    height: *;
+    text-align:center;
+    vertical-align:middle;
+    overflow:visible;
+  }
+       
+  th             { text-align:center; }
+
+  td.month.off,
+  td.day.off     { color: brown; }
+  
+  td.day.other-month,
+  td.year.other-year,
+  td.decade.other-decade { color: graytext; }
+
+  td.today
+  {
+    border-color:red;
+    border-radius:2dip;
+  }
+   
+  div.button
+  {
+    display:block;
+    padding:* 4dip;
+    text-align:center;
+    height:*;
+  }
+    
+  footer 
+  {
+    line-height:1.4em;
+    flow:horizontal;
+    horizontal-align:right;
+    vertical-align:middle;
+  }
+  footer:rtl
+  {
+    horizontal-align:left;
+  }
+    
+  footer > label
+  {
+    display:block;
+    width:max-content;
+  } 
+}
+
+widget[type="date"],
+input[type="date"]
+{
+    style-set: "std-date";
+}
+
+@set std-date-base /* style block for the date ctl, derived from std-edit */
+{
+  :root
+  { 
+    behavior:date;
+    cursor:default;
+    flow:horizontal;
+    width:max-content;
+    height:min-content;
+  }
+
+  :root > popup 
+  {
+    size:max-content;
+  }
+  :root > caption 
+  { 
+    behavior: masked-edit;      
+    size:*;
+    min-width:max-content;
+    min-height:1.2em;
+    cursor:default;
+    white-space:pre;
+  }
+  :root > caption > span
+  {
+    display:inline-block;
+    cursor:text;
+  }
+  :root > caption > span.day { width:1.3em; text-align:center; }
+  :root > caption > span.month { width:1.3em; text-align:center; }
+  :root > caption > span.year { width:2.6em; text-align:center; }
+  
+  :root > caption > span:current
+  {
+    background-color: transparent;
+    color: windowtext;
+  }
+   
+  :root > button 
+  { 
+    display:block;
+    transition:none;
+    behavior: none;
+    height:*;
+    width: system-scrollbar-width;
+    padding:0; 
+  }
+  
+}     
+  
+input[type="masked"]
+{
+  style-set: "std-masked-edit";
+}
+
+@set std-masked-edit-base
+{
+  :root
+  { 
+    behavior:masked-edit;
+    text-align:center;
+    cursor:auto;
+    white-space:pre;
+    min-height:1em;
+    min-width:1em;
+    width:max-intrinsic;
+    context-menu:url(sciter:menu-edit.htm);
+  }
+  :root > span
+  {
+    font-family:monospace;
+    display:inline-block;
+    text-align:left;
+    white-space:pre;
+    width:max-intrinsic;
+    cursor:text;
+  }
+}
+  
+widget[type="time"],
+input[type="time"]
+{
+  style-set: "std-time-edit";
+}
+
+@set std-time-edit-base
+{
+  :root
+  {
+    behavior:time; 
+    width: max-content;
+    height: min-content;
+    cursor:default;
+    white-space: nowrap;
+    flow:"1 2" 
+         "1 3" ;
+    context-menu:url(sciter:menu-edit.htm);
+  }
+  :root:rtl
+  {
+    flow:"2 1" 
+         "3 1";
+  }
+  
+  :root:invalid
+  {
+    color:red;
+  }
+
+  :root > caption 
+  { 
+    behavior: masked-edit;      
+    width:*;
+    min-width:max-content;
+    line-height:1.2em; 
+    cursor:default;
+    white-space:pre;
+    padding:3dip; 
+  }
+  :root > caption > span
+  {
+    display:inline-block;
+    text-align:center;
+    cursor:text;
+  }    
+  
+  :root > caption > span.hour { width:1.4em; }
+  :root > caption > span.minute { width:1.4em; }
+  :root > caption > span.second { width:1.4em; }
+  :root > caption > span.ampm { width:1.8em; }
+
+  :root > button
+  {
+    behavior:clickable;
+    display:block;
+    cursor:default;
+    height:0.5*;
+    padding:0;
+    width:system-scrollbar-width;
+  }
+}
+
+        h1:content-editable:empty,
+        h2:content-editable:empty,
+        h3:content-editable:empty,
+        h4:content-editable:empty,
+        h5:content-editable:empty,
+        h6:content-editable:empty,
+        dd:content-editable:empty,
+        dt:content-editable:empty,
+         p:content-editable:empty,
+      text:content-editable:empty,       
+       div:content-editable:empty,
+        li:content-editable:empty,
+   section:content-editable:empty,  
+    header:content-editable:empty,  
+    footer:content-editable:empty,  
+        td:content-editable:empty,
+        th:content-editable:empty,
+   caption:content-editable:empty,
+blockquote:content-editable:empty,
+    center:content-editable:empty,
+   address:content-editable:empty { min-width:0.6em; min-height:1.2em; flow:text; }

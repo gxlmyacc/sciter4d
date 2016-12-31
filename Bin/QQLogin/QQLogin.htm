@@ -1,0 +1,154 @@
+﻿<html>
+ <head> 
+  <link r>
+  <style type="text/css">
+    @import url(QQLogin.css);
+  </style> 
+  <script type="text/tiscript">
+    include "QQLogin.tis"  
+  </script>
+ </head>  
+  <popup #userList> 
+    <option> 
+      <img.head src="images/heads/B01.jpg" /> 
+      <div.userArea> 
+        <div.userName>张三</div>
+        <div.userId>000001</div>  
+      </div>
+      <div.delUser>r</div> 
+    </option> 
+    <option>
+      <img.head src="images/heads/B02.jpg" /> 
+      <div.userArea> 
+        <div.userName>李四</div>
+        <div.userId>000002</div> 
+      </div>
+      <div.delUser>r</div>   
+    </option>
+    <option>
+      <img.head src="images/heads/B03.jpg" /> 
+      <div.userArea> 
+        <div.userName>王五</div>
+        <div.userId>000003</div>
+      </div>
+      <div.delUser>r</div>    
+    </option> 
+    <option>
+      <img.head src="images/heads/B04.jpg" /> 
+      <div.userArea> 
+        <div.userName>赵六</div>
+        <div.userId>000004</div> 
+      </div>
+      <div.delUser>r</div>
+    </option>  
+    <option>
+      <img.head src="images/heads/B05.jpg" /> 
+      <div.userArea> 
+        <div.userName>钱七</div>
+        <div.userId>000005</div> 
+      </div>
+      <div.delUser>r</div>      
+    </option>    
+  </popup> 
+  <popup #keyboardPanel> 
+    <div.line>
+      <button>1<sup>!</sup></button>
+      <button>2<sup>@</sup></button>
+      <button>3<sup>#</sup></button>
+      <button>4<sup>$</sup></button>
+      <button>5<sup>%</sup></button>
+      <button>6<sup>^</sup></button>
+      <button>7<sup>&amp;</sup></button>
+      <button>8<sup>*</sup></button>
+      <button>9<sup>(</sup></button>
+      <button>0<sup>)</sup></button>
+      <button>`<sup>~</sup></button>
+      <button.nosup>←</button>
+    </div> 
+    <div.line>
+      <button.nosup type="checkbox">Shift</button>
+      <button>\<sup>|</sup></button>
+      <button>[<sup>}</sup></button>
+      <button>]<sup>}</sup></button>
+      <button>;<sup>:</sup></button>
+      <button>&apos;<sup>&quot;</sup></button>
+      <button>,<sup>&lt;</sup></button>
+      <button>.<sup>&gt;</sup></button>      
+      <button>/<sup>?</sup></button>
+      <button>_<sup>-</sup></button>
+      <button>=<sup>+</sup></button>
+      <button.nosup>Caps Lock</button>
+    </div>
+    <div.line>
+      <button>c</button>
+      <button>d</button>
+      <button>e</button>
+      <button>f</button>
+      <button>g</button>
+      <button>h</button>
+      <button>i</button>
+      <button>j</button>
+      <button>k</button>
+      <button>l</button>
+      <button>m</button>
+      <button>a</button>
+      <button>b</button>
+    </div>
+    <div.line>
+      <button>u</button> 
+      <button>v</button>
+      <button>w</button>
+      <button>x</button>
+      <button>y</button>
+      <button>z</button>
+      <button>n</button>
+      <button>o</button>
+      <button>p</button>
+      <button>q</button>
+      <button>r</button>
+      <button>s</button>
+      <button>t</button>
+    </div>
+  </popup> 
+  <body>
+    <div.client> 
+      <div.header command="window-caption"> 
+        <div.sysControlPanel> 
+          <window-button #window-set .sysControl>6</window-button> 
+          <window-button #window-min .sysControl command="window-min">0</window-button> 
+          <window-button #window-close .sysControl command="window-close">r</window-button> 
+        </div>   
+      </div>
+      <div.footer> 
+        <div.left> 
+          <div.myHead />
+        </div>
+        <form.center #userInput state="login"> 
+          <div.loginPanel>
+            <div.user> 
+              <input.inputBox|text name="userid" novalue="QQ号码/手机/邮箱" /> 
+              <div #popupUserList /> 
+            </div> 
+            <label>注册账号</label> 
+            <div.pwd> 
+              <input.inputBox|password name="password" novalue="密码" /> 
+              <div #popupKeyboard />  
+            </div>
+            <label>找回密码</label> 
+            <button type="checkbox" name="remPwd">记住密码</button> 
+            <button type="checkbox" name="autoLogin">自动登录</button> 
+          </div>
+          <div.addQQPanel>
+            <button name="btnAddQQ">添加QQ账号</button> 
+          </div>
+          <div.ewmLoginPanel>
+            
+          </div>
+          <div #login>登录</div>     
+        </form>
+      </div>
+      <div#multAccount state="addqq" />
+      <div#ewmLogin />
+    </div>
+ </body>
+</html>

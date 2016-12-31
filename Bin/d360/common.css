@@ -1,0 +1,81 @@
+/*提示框样式*/
+popup {
+	background: #fff; color: #575757;
+	font-size: 12px; font-weight: normal;
+	line-height: 15px; padding: 0 5px; height: 16px;
+	border: 1px solid #767676;
+}
+/*菜单样式*/
+menu {
+	display: none; background: #fff; margin: 0; margin-top: 5px; padding: 0; border: 1px solid #aca899;
+	background: #ecf4fa; border: 1px solid #81adce; 
+}
+/* 自定义滚动条 */
+@set mini_scrollbar {
+	.base { width: 9px; }
+	:root { background-color: #f9f9f9; }
+	:root:hover { background-color: #ececec; }
+
+	.base,
+	.prev,
+	.next,
+	.next-page, 
+	.prev-page { 
+		background-color: transparent; border: none;
+	}
+	.slider { 
+		background: transparent url(sider_normal.png);
+		background-position: 3px 0px 3px 0px;
+		background-repeat: expand;
+	}
+	.slider:hover {
+		background-image: url(sider_hover.png);
+	}
+}
+
+/**************************************************************************************************/
+
+/*居中消息*/
+.center_msg { height:100%%;vertical-align:middle;text-align:center; }
+
+/* 通用设置 */
+body, html { background-color: white; overflow:hidden; margin:0; padding:0; height:100%%; width:100%%; font-size: 12px; }
+
+/*布局设置*/
+#hl_content {
+	/*指定自定义的滚动条*/
+	vertical-scrollbar: my-v-scrollbar;
+	height: 100%%; overflow:auto;
+}
+
+/*标题栏*/
+#hl_header { height: 35px; line-height: 35px; background: #124682; flow:horizontal; }
+#hl_icon_title { width: 100%%; font-size: 14px; color: #fff; behavior: windowCommand; }
+
+/*图标样式*/
+#app_icon { width:16px; height:16px; margin: 4px 0px 0 8px; vertical-align:top;}
+
+/*标题样式*/
+#hl_icon_title span { color: #ccc; font-weight: normal;}
+#hl_icon_title strong { font-weight: normal; cursor: pointer; width:190px; vertical-align:top; }
+
+/*窗体控制按钮*/
+#hl_ctrl_bar {width: 75px; padding-right: 5px; }
+#hl_ctrl_bar span {
+	display: block; float: left; color: #fff; line-height: 22px; padding: 0 5px;
+	font-family: Webdings; font-weight: bold; font-size: 13px;
+	behavior: windowCommand;
+}
+/*窗体控制按钮鼠标悬停*/
+#hl_ctrl_bar span:hover { background-color:rgba(255,255,255,0.3); }
+/*窗体关闭按钮背景色红色*/
+#hl_ctrl_bar span#close:hover { background-color: #da3610; }
+/*窗体最大化还原按钮*/
+#hl_ctrl_bar span[command="window-restore"] {
+	content: "2"; /*变成还原图标*/
+	//assigned!:$1(body)::margin = 0;
+}
+/*还原回最大化前状态，恢复外边距*/
+#hl_ctrl_bar span[command="window-max"] {
+	//assigned!:$1(body)::margin = 5px;
+}

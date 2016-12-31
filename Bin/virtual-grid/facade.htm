@@ -1,0 +1,71 @@
+﻿<html>
+  <head>
+    <script type="text/tiscript">
+      //include "commondataprovider.tis";
+      include "data-source.tis"; //数据源
+      //include "vgrid.tis";
+      
+      function self.ready()
+      {
+        function onCurrentChange1( grid, row )
+        {
+          self#status1.text = String.printf("当前行是 %d", grid.index);
+        }
+        function onCurrentChange2( grid, row )
+        {
+          self#status2.text = String.printf("当前行是 %d", grid.index);
+          stdout.printf("当前行是 %d\n", grid.index);
+        }
+        
+		//绑定事件
+        self#the-grid.onCurrentRowChanged.push(onCurrentChange1);
+        self#the-grid.onCurrentRowChanged.push(onCurrentChange2);
+        
+        //var td = self#the-grid.select("thead th:first-child");
+        //td.style#width = pr(60);        
+      }
+      
+      self.select("input#test-col-width").onValueChanged = function()
+      {
+        var td = self.select("table thead th:nth-child(1)");
+        td.style#width = px(this.value);
+        stdout.$n(width={ this.value });
+      }          
+      
+    </script>
+    <style>
+      @import "vgrid.css"; /* 引入表格样式 */
+
+      widget.vgrid 
+      {
+        style-set: "virtual-grid"; /* 为widget.vgrid指定表格样式 */
+        width:*;
+        height:*;
+      }
+                  
+      div.panel { background-image:url(theme:edit-normal); 
+                  background-repeat:stretch; }
+      p.status  { height:1.2em; border:1px solid red; 
+                  overflow:hidden; /* to prevent remeasure on el.text = "something"; */ }
+                  
+      widget.vgrid tr.odd { background: #f6f6ff; }   
+                  
+    </style>
+  </head>
+<body>
+  <frameset cols="200px,*">
+    <div .panel>
+      <p>这是的frameset用于测试(重定义元素尺寸)。右边的表格显示了一个数据源，这个数据源有10,000条记录。</p>
+      <p>修改第3列的宽度为: <input #test-col-width type="number" step=10 min=60 max=160/> px。</p>
+      <p>虚拟表格支持排序功能。</p>
+    </div>
+    <widget.vgrid data-source="DataSource" #the-grid >
+      <!-- <table></table>
+           <widget type="vscrollbar" /> 
+	  -->
+    </widget>
+  </frameset>  
+  <p #status1 .status>&nbsp;</p>
+  <p #status2 .status>&nbsp;</p>
+</body>
+</html>

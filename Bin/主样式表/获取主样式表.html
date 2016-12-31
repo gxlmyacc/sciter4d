@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <title></title>
+    <style>
+
+        textarea { display:block; size:*; }
+    
+    </style>
+    <script type="text/tiscript">
+    
+
+      self.on("change", "[name=what]", function(){
+        var res = self.request(0, #get, this.text );
+        $(textarea#out).value = res.toString().replace("\t","  ");
+      });
+    
+    </script>
+  </head>
+<body>
+  Show: <button|radio(what)>sciter:win-master.css</button>
+        <button|radio(what)>sciter:ux-master.css</button>
+        <button|radio(what)>sciter:master-base.css</button>
+	      <button|radio(what)>sciter:menu-edit.htm</button>
+        <button|radio(what)>sciter:msgbox.css</button>
+        <button|radio(what)>sciter:msgbox.htm</button>
+        <button|radio(what)>sciter:debug-peer.tis</button>
+  <textarea #out></textarea>
+</body>
+</html>

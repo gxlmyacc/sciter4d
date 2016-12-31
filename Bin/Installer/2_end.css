@@ -1,0 +1,49 @@
+html, body {
+  background-color: transparent;
+}
+
+#logo {
+  position: absolute;
+  left: 10dip;
+  top: 10dip;
+  size: 220dip 60dip;
+}
+
+#prompt {
+  margin: *;
+  height: 60dip;
+  width: max-content;
+  padding-left: 60dip;
+  color: #009663;
+  font-size: 35dip;
+  vertical-align:middle;
+  foreground-image: url(Images/u44.png);
+  foreground-repeat: no-repeat;
+  background-clip: 
+}
+
+#toUse {
+  border: 1px solid #009663;
+  color: #009663;
+  font-size: 22dip;
+  display: block;
+  width: 270dip;
+  height: 45dip;
+  text-align: center;
+  vertical-align: middle;  
+  border-radius: 5dip;
+  margin: 10dip;
+  cursor: pointer;
+  behavior:clickable;
+  margin-left: *;
+  margin-right: *;
+}
+
+#toUse:hover {
+  color: white;
+  background-color: #009663;
+}
+
+#bottom {
+  height: 60dip;
+}

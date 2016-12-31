@@ -1,0 +1,40 @@
+﻿<html window-frame="transparent">
+ <head> 
+  <style type="text\css">
+  html {   
+    background-color:transparent; /*网页背景透明*/
+    context-menu:selector(menu#menuId);
+  } 
+  menu{
+  	width: max-intrinsic; /*内容的最大宽度,可以超出屏幕*/      
+  	background: url(res:menu_back_office.png) expand;
+  	background-position: 0 0 0 24;
+  	text-align:left;
+  }
+  </style> 
+ </head> 
+ <body style=""> 
+  <div id="myTab">
+   <img src="res:daddy_left.png" />
+  </div> 
+  <menu class="context" id="menuId"> 
+   <li>
+    桌面图标 
+    <menu> 
+     <li id="i1">隐藏图标</li> 
+     <li id="i2">显示图标</li> 
+    </menu> 
+   </li> 
+   <li>
+    选择鲸鱼 
+    <menu> 
+     <li id="i5">鲸鱼爸爸</li> 
+     <li id="i6">鲸鱼妈妈</li> 
+     <li id="i6">鲸鱼宝宝</li> 
+    </menu> 
+   </li> 
+   <li id="i7">关于虎鲸</li> 
+   <li id="i8">退出</li>    
+  </menu>
+ </body>
+</html>

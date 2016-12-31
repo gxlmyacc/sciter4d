@@ -1,0 +1,184 @@
+﻿<html aria-label="Sciter Frame" aria-description="Main Sciter Frame">
+  <head>
+    <title>Sciter</title>
+    <style>
+      
+      @const BUTTON_FORE_NORMAL: none;
+      @const BUTTON_FORE_HOVER: url(res:toolbar-button-hover.png);
+	    @const BUTTON_FORE_ACTIVE: url(res:toolbar-button-pressed.png);
+	    @const BUTTON_FORE_CHECKED: url(res:toolbar-button-checked.png);
+	    @const BUTTON_FORE_CHECKED_HOVER: url(res:toolbar-button-checked-hover.png);
+	    @const BUTTON_FORE_DISABLED: none;
+
+      @image-map icons {
+        src: url(res:icons-n.png) 160dpi,
+             url(res:icons-h.png) ;
+        cells:3 2; /* 3 columns, 2 rows */
+        /* logical names of the parts, see toolbar-icons.png */ 
+        items:  open,
+                refresh,
+                inspector,
+                help,
+                glass,
+                open-in-view;   
+      }
+            
+      html { background-color:#5C4C4C; overflow:hidden; } 
+      
+      body { flow:horizontal; margin:0; }
+   
+      div#toolbar  
+      {
+        flow:vertical; 
+        width:max-content; 
+        padding:3dip; 
+        height:*;
+      }
+      div#toolbar > button                   
+      {
+        foreground-position: 4 4 4 4; 
+        foreground-repeat : expand stretch-left stretch-right stretch-middle;
+        foreground-image: @BUTTON_FORE_NORMAL; 
+        display:block; 
+        background-repeat:no-repeat; 
+        background-position:50% 50%; 
+        background-size:38dip 38dip;
+        padding:0;
+        size:46dip; 
+      }
+	    div#toolbar > button:hover          {  foreground-image: @BUTTON_FORE_HOVER; transition:none; }
+	    div#toolbar > button:active         {  foreground-image: @BUTTON_FORE_ACTIVE; foreground-position:53% 53%; }
+	    div#toolbar > button:checked	      {  foreground-image: @BUTTON_FORE_CHECKED;  }
+	    div#toolbar > button:checked:hover  {  foreground-image: @BUTTON_FORE_CHECKED_HOVER; }
+	    div#toolbar > button:disabled       {  foreground-image: @BUTTON_FORE_DISABLED; opacity:0.5; }
+	    frame#content{ size:*; 
+	                   background :url(res:no-color.png) repeat; }
+      frame#content > div#intro
+      { 
+        font: system;
+        background-color:window; padding:3px; 
+        size:*;
+      }
+      frame#content > div#intro > img#arrow { vertical-align:middle; size:0.8em; color:brown; }
+      
+      frame#content[allow-drop]
+      {
+          outline:2px orange solid -2px;
+      }
+
+      div#toolbar > button#open         { background-image:image-map(icons,open); }
+      div#toolbar > button#reload       { background-image:image-map(icons,refresh); }
+      div#toolbar > button#help         { background-image:image-map(icons,help); }
+      div#toolbar > button#inspector    { background-image:image-map(icons,inspector); }
+      div#toolbar > button#open-in-view { background-image:image-map(icons,open-in-view); }
+      div#toolbar > button#glass        { background-image:image-map(icons,glass); margin-top:*; }
+      
+            
+      /*div#intro { behavior:htmlarea; }*/
+      
+      @media on-glass 
+      {
+         html { background-color:transparent; }
+         frame#content { background-image:none; }
+      }
+      
+      hr { margin:0; padding:0; height:0; border:none; border-top: 1px dashed #999; }
+      
+    </style>
+
+    <script type="text/tiscript">
+
+      const content = $(frame#content);
+      const inspectorButton = $(button#inspector);
+
+	    var filename = null;
+      const file_filter = "文件 *.htm,*.html,*.svg,*.zip,*.scapp|*.HTM;*.HTML;*.SVG;*.ZIP;*.SCAPP|"
+				 "仅HTML文件(*.htm,*.html)|*.HTM;*.HTML|"
+				 "仅SVG文件(*.svg)|*.SVG|"
+				 "仅SCAPP文件(*.zip,*.scapp)|*.ZIP;*.SCAPP|"
+				 "所有文件(*.*)|*.*";
+         
+      var debugIsActive = false; 
+
+      $(button#glass).onClick = function()
+      {
+		    view.glass(this.value);
+      }
+      
+      $(button#help).onClick = function()
+      {
+		    //view.open("file://" + System.home("../doc/main.htm"));
+        view.window 
+        {
+          url: "file://" + System.home("../doc/main.htm").toUrlString(),
+          type: View.FRAME_WINDOW,
+          state: View.WINDOW_SHOWN,
+          alignment:5,
+          width: 1024,
+          height: 800
+        };
+      }
+
+      function content.onExchange(evt)
+      {
+         if( evt.type == Event.X_DRAG_ENTER && evt.draggingDataType == #file)
+         {
+           this.@#allow-drop = true;
+           return true;
+         }
+         else if( evt.type == Event.X_DRAG_LEAVE )
+         {
+           this.@#allow-drop = undefined;
+           return true;
+         }
+         else if( evt.type == Event.X_DRAG && evt.draggingDataType == #file)
+         {
+           return true;
+         }
+         else if( evt.type == Event.X_DROP && evt.draggingDataType == #file)
+         {
+           this.@#allow-drop = undefined;
+           var fn;
+           if(typeof evt.dragging == #array)
+             fn = evt.dragging[0];
+           else
+  		       fn = evt.dragging;
+           loadFile(fn);
+           return true;
+         }
+      }
+
+      $(button#inspector).onClick = function()
+      {
+        view.launchDebugView();
+      }
+
+      function self.onKey(evt)
+      {
+        if( evt.type == Event.KEY_DOWN 
+         && evt.keyCode == Event.VK_F12 
+         && !$(button#inspector).state.disabled )
+        {
+          view.launchDebugView();
+          return true;
+        }
+      }
+      
+           
+    </script>
+
+  </head>
+  <body aria-label="Sciter Frame Body">
+    <div #toolbar role="toolbar">
+      <button #open title="加载HTML" aria-label="Load Document" />
+      <button #open-in-view title="在视图中加载HTML" aria-label="Load Document in View" />
+      <button #reload title="重新加载" disabled aria-label="Reload Document" />
+      <button #help title="浏览帮助" aria-label="Help" />
+      <hr>
+      <button #inspector title="DOM监视器" aria-label="DOM inspector" />
+      <button|checkbox #glass title="毛玻璃模式" aria-label="Set Glass Mode"/> 
+
+    </div>
+    <frame #content src="res:sys-info.html" aria-label="Content" ></frame>
+  </body>
+</html>

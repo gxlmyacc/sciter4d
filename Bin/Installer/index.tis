@@ -1,0 +1,20 @@
+const body = $(body);
+
+function self.ready()
+{
+  body.timer(1, :: this.attributes.addClass("shown"));
+}
+
+function closeApp(){
+  body.onAnimationEnd = ::view.close();
+  body.attributes.removeClass("shown");
+}
+
+$(#window-close).onClick = function()
+{
+  closeApp();
+}
+
+
+  
+  

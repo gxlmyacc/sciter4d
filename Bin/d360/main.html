@@ -1,0 +1,183 @@
+<html window-frame="transparent" window-shadow="18">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link type="text/css" rel="stylesheet" href="common.css" />
+  <style>
+    body {behavior: windowSizer; }
+
+    /* 主界面样式 */
+    #hl_header { height: 100px; background-color: #55B844; behavior: windowCommand; }
+    #hl_icon_title { font-size: 12px; line-height: 30px; line-height: 24px; text-indent: 15px; flow:horizontal; }
+    //#hl_icon_title img { display: none; }
+
+    /* 主界面菜单 */
+    #main_menu {
+      position: absolute; left: 12px; top: 30px; width: 100%%; height: 70px;
+      flow: horizontal; 
+    }
+
+    #main_menu div {
+      width: 78px; height: 100%; text-align: center; color: #fff; cursor: pointer;
+      text-align: center; behavior: menutab;
+    }
+    /* 菜单悬停 */
+    #main_menu div[selected],
+    #main_menu div:hover { background: url(icon_bg.png) no-repeat right bottom; }
+    #main_menu div img {
+      display: block; width: 48px; height: 48px; margin-left:auto; margin-right:auto; 
+    }
+    /* 菜单文字 */
+    #main_menu div span {
+      display: block;
+      line-height: 18px;
+    }
+    /* 选项卡 */
+    #main_menu div[selected] {
+      assigned!: $([name=<self.target>])::visibility = "visible",;
+    }
+    /* 内容区 */
+    #hl_content {
+      vertical-scrollbar: mini_scrollbar;
+    }
+    #hl_content div[name] {
+      display: block; padding: 0; margin: 0; 
+      position: absolute; top: 0; right: 250px; bottom: 0; left:0;
+      overflow: auto; vertical-scrollbar: mini_scrollbar;
+      visibility: hidden; background: #fff;
+    }
+    #hl_content div#user_panel {
+      position: absolute; top: 0; right: 0; bottom: 0;
+      width: 249px; border-left:1px solid #dadada;
+      background: #fafafa;
+    }
+    /* 用户头像 */
+    #hl_content .my_info {
+      border-bottom: 1px solid #dadada; height: 130px;
+    }
+    #hl_content .my_info .face {
+      width: 53px; height: 53px; overflow: clip;
+      border: 1px solid #d4d5d0; border-radius:50%;
+      background: #fff url(noavatar2.gif) no-repeat center;
+      background-repeat:stretch keep-ratio;
+      background-position: 50% 50%;
+      cursor: pointer; margin: 10px;
+    }
+    #hl_content .my_info .face:hover {
+       border: 1px solid green;
+      //outline:2px glow green 1px;
+    }
+    #hl_content .my_info .info {
+      margin-left: 75px; margin-top: -65px;
+      color: #333; line-height: 14px;
+    }
+    #hl_content .my_info .info strong span {
+      font-weight: normal; font-size: 10px; color: #666;
+      font-family: "微软雅黑",SimSun; display: inline-block;
+      margin-left: 3px;
+    }
+    #install_model {
+      padding-top:3px;
+      padding-left:5px;
+    }
+    /* 我的等级 */
+    #hl_content .my_info .info span[level] {
+      display: inline-block; width:14px; height: 18px;
+      background: url(star.png) repeat-x;
+      assigned!: self::width = self.level * 14,;
+    }
+    #hl_content .my_info .status {
+      height: 100%%; margin-top: 15px; padding: 10px;
+      border-top: 1px dotted #ccc; color: #666;
+    }
+    #install_model strong { margin: 10px; color: #666; }
+
+    .panel_content { font-size: 16px; margin: 10px; }
+    </style>
+  <script type="text/tiscript">
+    function myFunc(v) {
+      alert(v.@#target);
+      return true;
+    }
+  </script>
+</head>
+<body  >
+	<div id="hl_header" command="window-caption">
+		<div id="hl_icon_title" command="window-caption">
+			<img id="app_icon" src="favicon.ico" />
+			<strong>职称计算机模拟考试练习软件</strong>
+		</div>
+		<div id="hl_ctrl_bar">
+			<span id="min" command="window-min">0</span>
+			<span id="max" command="window-max">1</span>
+			<span id="close" command="window-close">r</span>
+		</div>
+		<div id="main_menu"  command="no-window-caption">
+			<div target="panel_rss" selected><img src="rss.png" title="考试信息、考试指南" /><span>资讯订阅</span></div>
+			<div target="panel_xp"><img src="xp.png" title="Windows XP" /><span>操作系统</span></div>
+			<div target="panel_ie"><img src="ie.png" title="Internet Explorer" /><span>上网浏览</span></div>
+			<div target="panel_word"><img src="word.png" title="Word 2003" /><span>电子文档</span></div>
+			<div target="panel_excel" trigger="hover"><img src="excel.png" title="Excel 2003" /><span>电子表格</span></div>
+			<div target="panel_ppt"><img src="ppt.png" title="PowerPointer 2003" /><span>幻灯片</span></div>
+			<div target="panel_db"><img src="db.png" title="管理、操作数据库" /><span>数据管理</span></div>
+			<div target="panel_feed" onselect="myFunc(this)"><img src="feed.png" title="提交您的建议与反馈" /><span>用户反馈</span></div>
+		</div>
+	</div>
+	<div id="hl_content">
+		<div id="user_panel">
+			<div class="my_info">
+				<div class="face" title="进入个人中心"></div>
+				<div class="info">
+					<strong>多多洛<span>(江西,南昌)</span></strong>
+					<p>等级：<span level="5"></span></p>
+				</div>
+				<div class="status">
+					<strong>我的进度</strong>
+				</div>
+			</div>
+			<div id="install_model">
+				<strong>已安装的模块</strong>
+			</div>
+		</div>
+		<div name="panel_rss">
+			<div class="panel_content">
+				<h5>最新订阅资讯</h5>
+			</div>
+		</div>
+		<div name="panel_xp">
+			<div class="panel_content">
+				<h5>操作系统</h5>
+			</div>
+		</div>
+		<div name="panel_ie">
+			<div class="panel_content">
+				<h5>上网浏览</h5>
+			</div>
+		</div>
+		<div name="panel_word">
+			<div class="panel_content">
+				<h5>电子文档</h5>
+			</div>
+		</div>
+		<div name="panel_excel">
+			<div class="panel_content">
+				<h5>电子表格</h5>
+			</div>
+		</div>
+		<div name="panel_ppt">
+			<div class="panel_content">
+				<h5>幻灯片</h5>
+			</div>
+		</div>
+		<div name="panel_db">
+			<div class="panel_content">
+				<h5>数据库管理</h5>
+			</div>
+		</div>
+		<div name="panel_feed">
+			<div class="panel_content">
+				<h5>意见与反馈</h5>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

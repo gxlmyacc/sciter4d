@@ -1,0 +1,47 @@
+﻿// 本脚本仅能在设计期引用(include)，用于生成翻译统计信息
+// 注意: 本脚本仅能在include "lang.tis"后面引入(include)。
+
+!function() { // 参见 http://stackoverflow.com/questions/5827290/javascript-function-leading-bang-syntax/5827420#5827420
+
+  // 获得统计函数
+  var (notFoundItemsFn, notUsedItemsFn) = Lang.initStats();
+  
+  function handler(evt) {
+  
+    if(!evt.ctrlKey || !evt.shiftKey || (evt.keyCode != Event.VK_F11))
+      return false;
+    
+    var nf = notFoundItemsFn();
+    var nu = notUsedItemsFn();
+    
+    if( nf.length == 0 && nu.length == 0) {
+      view.msgbox(#information, "当前良好，所有项都在使用，并且没有未知项");
+      return;
+    }
+    
+    function f1(k,v) { return v == #text ? "?" : "function (v){ return \"?\" }"; }
+    function f2(k,v) { return typeof v == #function ? "{function}" : v; }
+    
+    var out = "";
+    
+    if( nf.length == 0 ) 
+      out += "// 正常，所有项都找到\n";
+    else
+      out += "// 未找到项:\n" + JSON.stringify(nf,f1,"\n") + "\n"; 
+      
+    if( nu.length == 0 )  
+      out += "// 正常, 没有未使用项\n";
+    else 
+      out += "// 未使用项:\n" + JSON.stringify(nu,f2,"\n");
+        
+    view.clipboard(#put,out);   
+    view.msgbox(#alert, "翻译报告已经放到剪切板中");
+    
+  }
+  
+  self.subscribe("~keydown", handler);
+  
+  stdout.println("lang-tool");
+  
+
+}();

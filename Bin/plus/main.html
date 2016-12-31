@@ -1,0 +1,106 @@
+<html width=570 height=451>
+  <head>
+    <title>Plus 基本示例</title>
+    <style>
+      @import url(sciter4d:plus.css);    /* 仅需引入Plus框架 */ 
+      @import url(note.css); 
+      
+      html { font:system; }
+
+	  input:empty { color: gray;}
+      
+      table { border-spacing:1px;}
+      table th,
+      table td { border:1px solid #BBB; padding:3px 6px; }
+      
+      table tbody input[type=decimal] { text-align:right; }
+      table tbody td:last-child { background:white; padding-left:4px; padding-right:4px; text-align:right;}
+      
+      table > tbody td { padding:0; }
+      table > tbody.new td,
+      table > tbody.new td > input { background:#f0f0f0; }
+      table > tbody.new td > input:focus { background:white; }
+      
+      table td > input { display:block; width:*; background:white; padding:2px;}
+      table td > input[name="item.name"] { width: 120px; }
+      
+            
+    </style>
+    
+    <script type="text/tiscript">
+      
+      include "sciter4d:plus.tis"; // 因为要使用@observing，所以需要引入plus.tis
+  
+      namespace Basket // 我们的模型
+      {  
+        var items = [{name:"苹果", price:1.2, quantity:2},
+                     {name:"橘子", price:1.0, quantity:4}];
+      
+        var total = 0;
+        
+        
+		// items数组的修改、数组中任意项的.price、.quantity字段的修改
+		// 都会导致调用calcTotal来重新计算
+        @observing "items[]",                                     
+                   "items[].price",   
+                   "items[].quantity" 
+          function calcTotal()        
+          {
+            try {
+              total = items.reduce( :sum, item: sum + item.price * item.quantity , 0.0);
+            } catch(e) {}
+              
+          }
+        
+        var newName = undefined;
+        var newPrice = undefined;
+        var newQuantity = undefined;
+
+        function addNewBy(el) { // 被下面的<tbody enter="addNew()">按钮调用 
+          if(newName && newPrice && newQuantity) { 
+			// 向fruits数组中添加一项, 注意: 下面的table元素会相应的更新列表
+            items.unshift {name:newName,price:newPrice,quantity:newQuantity };
+            self.state.focus = true;
+            newPrice = "";
+            newName = "";
+            newQuantity = "";
+            return true;
+          }
+        }
+      }    
+    
+    </script>
+  </head>
+
+<body model="Basket"> <!-- 定义我们要观察的数据模型 -->
+
+  <note>下面的表格绑定到了<code>Basket.items</code>数组上。表格是可编辑的。<br />
+  下面的输入框用于输入新项，在[价格]列按Enter键即可新增项。</note>
+
+  购物篮:
+  <table>
+    <thead><tr><th>名称</th><th>数量</th><th>价格</th><th>合计</th></tr></thead>
+    <tbody.new>
+      <tr>
+        <td><input(newName) novalue="新项"></td>
+        <td><input|integer(newQuantity)></td>
+        <td><input|decimal(newPrice) enter="addNewBy(this)" /></td>
+      </tr>
+    </tbody>
+	<!-- 重复部分 -->
+    <tbody each="item in items">
+      <tr>
+        <td><input(item.name)></td>
+        <td><input|integer(item.quantity)></td>
+        <td><input|decimal(item.price) /></td>
+        <td><output|currency(item.price * item.quantity) /></td>
+      </tr>
+    </tbody>
+    <tfoot><tr><td colspan=3>总计:</td>
+               <td><output|currency(total)></td></tr></tfoot>
+  </table>
+
+  <button #getitem>获取值</button>
+  <button #setitem>设置值</button>
+</body>
+</html>

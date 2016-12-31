@@ -1,0 +1,67 @@
+﻿<html>
+  <head>
+    <title></title>
+    <style>
+
+    //@import "plugin://sciter4d/Plugins/SciterCef"; 
+  
+    html {
+	    background-image: url(main_bg.png);
+	    background-repeat: stretch;
+	  }
+
+    widget[type=cef] {
+	    display: inline-block;
+      behavior: cef focusable;
+ 
+      width: *;
+      height: *;
+	    margin: 10px;
+      border:1px solid black;
+      foreground-size:contain;
+    } 
+    
+    #out {
+      height: 1em;
+    }
+
+	  #container { flow:horizontal; size:*; }
+    </style>
+    <script type="text/tiscript">
+
+      var cef = null;
+      function self.ready() {
+        cef = $(widget[type=cef]);
+        var out = $(#out);
+        
+        cef.config { silent: true };
+      
+        cef.onStatusTextChange = function(text){
+          out.value = text;
+        };
+        cef.onGetMessage = function(msg){
+          out.value = "接收到消息：" + msg;
+          return "已接收到消息！";
+        };
+        
+        //cef.go("cef.html");
+      }
+      
+      function self#test.onClick(){ 
+        var out = $(#out);
+        if (cef.postEnable()) 
+          out.value = "CEF返回值：" + cef.postMessage("哈哈！");
+        else 
+          out.value = "不支持postMessage";
+      }
+    </script>
+  </head>
+<body>
+  <button type="button" id="test">向CEF发消息</button>
+  <div #container>
+    <widget type="cef" src="http://www.baidu.com" />
+  </div>
+  <p id="out" />
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+﻿/*让窗体背景透明*/
+html, body {background: transparent; margin:0; padding:0; font-size: 12px; font-family: verdana; behavior:~windowSizer; }
+
+/*title提示框*/
+popup { color: #575757; font-size: 12px; font-weight: normal; line-height: 15px; padding: 0 5px; height: 16px; border: 1px solid #767676; }
+/*容器*/
+#wapper {
+	position:relative; width: 100%%; height: 100%%; background: #dce5ee; border: 1px solid #06263f; border-radius: 5px;
+	background: #1667a5 url(../images/bg.jpg) repeat-x;text-align: left; overflow: clip;
+}
+/*头部*/
+#header {
+	position:relative; height: 108px; border: 1px solid #4684b4; border-color: #4683b3 #2d77af #0585c0 #2d77af; border-radius: 4px 4px 0 0; behavior:windowCommand;
+}
+/*标题栏*/
+#header h5 { clear: both; height: 24px; margin: 0; border-radius: 4px 4px 0 0;}
+/*标题*/
+#header h5 strong { display: block; float: left; line-height: 24px; color: #7fc4f4; margin-left: 10px; font-size: 11px; }
+/*控制按钮*/
+#header h5 .ctrl {
+	float: right; flow:horizontal; width: 150px; height: 22px; margin-right: 0px; position:relative; top: 5px; cursor: pointer;
+}
+#header h5 .ctrl a { display: block; margin-top:-8px; height: 20px; width: 34px; text-indent: -9999px; }
+#header h5 .ctrl a.menu { background: url(../images/menu.png) no-repeat; behavior:menu-button;}
+#header h5 .ctrl a.min { background: url(../images/min.png) no-repeat; behavior:windowCommand;}
+#header h5 .ctrl a[command="window-max"] { background: url(../images/max1.png) no-repeat; behavior:windowCommand;}
+#header h5 .ctrl a[command="window-restore"] { background: url(../images/max2.png) no-repeat; behavior:windowCommand;}
+#header h5 .ctrl a.close { width: 47px; background: url(../images/close.png) no-repeat; }
+#header h5 .ctrl a:hover { background-position: -33px 0; }
+#header h5 .ctrl a.close:hover { background-position: -47px 0; }
+
+/*功能按钮*/
+#header ul { position:absolute; width: 100%; height: 78px; padding: 0; flow:horizontal;}
+#header ul li {
+	width: 68px; height: 76px; margin-left: 6px; overflow:hidden;
+	border: 1px solid transparent; border-radius: 2px; behavior:cmd-button; 
+}
+#header ul li:hover { border-color: #61bfed; background: url(../images/icons_bg.png) center; background-image-transformation: opacity(0.7); cursor: pointer; }
+#header ul li[selected="true"] { border-color: #61bfed; background: url(../images/icons_selected_bg.png) center; cursor: pointer; }
+#header ul li img { display: block; margin: 3px auto 0 auto; }
+#header ul li span { display: block; margin-top:10px; width:100%; color: #fff; text-align:center; }
+/*360商标*/
+#header .360_logo { display:block; position:absolute; top:25px; right: 0px; width:140px; height:67px; behavior:logo-button; cursor:pointer;}
+/*主区域*/
+#main { background: #ecf7fc url(../images/main_bg.png) repeat-x; height: 100%%;}
+
+/*底部*/
+#footer {
+	position:relative; height: 20px; border: 1px solid #4684b4; padding-top:4px;
+	border-color: #0c4275 #2d77af #276da6 #27659f; border-radius: 0 0 4px 4px;
+}
+#footer span {behavior:htmlarea;  color: #d0edff; }
+#footer span.version { margin-left: 6px; margin-right: 16px; }
+#footer span.online { display: block; flow:horizontal; margin:0px; position:absolute; top:4px; right: 30px; line-height: 1em; }
+#footer span.online img { vertical-align: middle; margin-right: 5px; }
+
+/*还原回最大化前状态，恢复外边距*/
+body[maximize="true"] {
+	assigned!:$1(#wapper)::border-radius=0px;
+}
+/*窗体最大化还原按钮*/
+body[maximize="false"] {
+	assigned!:$1(#wapper)::border-radius=5px;
+}

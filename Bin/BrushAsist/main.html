@@ -1,0 +1,127 @@
+﻿<html custom-frame="layered">
+<head>
+  <style>
+    html { margin: 0; padding: 0; background:transparent;}
+    body {
+      background-image: url(img/main_bg.png);
+      background-repeat: no-repeat;
+      margin: 0; padding: 0;
+      width:987px; height:654px;
+    }
+    #wapper {  margin: 7px 8px 7px 7px; height: 635px; width:980px; }
+    #status {
+      color: #fff; position: absolute; left: 15px; top: 625px; font-size: 12px;
+      background: url(img/i.png) no-repeat left center; text-indent: 24px;
+      width: 135px; 
+    }
+
+    /*标题栏*/
+    #title-bar { position: relative; height:28px; behavior: windowCommand;} 
+    #title-bar span.title { font: system; margin:6px 0 0 10px; color: #fff; margin-top:8px; display:inline-block; } 
+    #title-bar .ctrl-bar { position: absolute; top: 0; right: 0; flow: horizontal; }
+    #title-bar .ctrl-bar a { display: block; height: 20px; padding:0; margin: 0; }
+
+    /*关闭按钮*/
+    #title-bar a[command=window-close] { width: 38px; background: url(img/close_a.png) no-repeat; }
+    #title-bar a[command=window-close]:hover { background: url(img/close_b.png) no-repeat; }
+    #title-bar a[command=window-close]:active { background: url(img/close_c.png) no-repeat; }
+
+    /*最小化按钮*/
+    #title-bar a[command=window-min] { width: 28px; background: url(img/min_a.png) no-repeat; }
+    #title-bar a[command=window-min]:hover { background: url(img/min_b.png) no-repeat; }
+    #title-bar a[command=window-min]:active { background: url(img/min_c.png) no-repeat; }
+
+    /*配置菜单*/
+    #title-bar a#cfg-menu { width: 28px; background: url(img/menu_a.png) no-repeat; }
+    #title-bar a#cfg-menu:hover { background: url(img/menu_b.png) no-repeat; }
+    #title-bar a#cfg-menu:active { background: url(img/menu_b.png) no-repeat; }
+
+    /*问题反馈*/
+    #title-bar a#qa-btn { width: 28px; background: url(img/qa.png) no-repeat; }
+    #title-bar a#qa-btn:hover { background: url(img/qb.png) no-repeat; }
+
+    /*主内容选项卡*/
+    #content { height: *; flow: horizontal;}
+    #content .strip { width: 160px; height: max-content; }
+    #content .strip [target] { cursor: pointer; height: 61px; }
+    #content .strip [target]:hover { color: #a55f00; }
+    #content .strip [target][selected] { 
+      background-color: #fff; color: #000;
+    }
+    #content > [name] {
+      display: none; background: #eee; width: *; height: *;
+    }
+    #content > [name] h1 { margin: 20px; color:#666; }
+    #content > [name][selected] { 
+      display: block; background-color: #fff;
+    }
+
+
+    #content .strip [target] { behavior: menutab; }
+    /*列表*/
+    #content .strip [target="panel1"] { background: url(img/1a.png) no-repeat; }
+    #content .strip [target="panel2"] { background: url(img/2a.png) no-repeat; }
+    #content .strip [target="panel3"] { background: url(img/3a.png) no-repeat; }
+    #content .strip [target="panel4"] { background: url(img/4a.png) no-repeat; }
+    #content .strip [target="panel5"] { background: url(img/5a.png) no-repeat; }
+    #content .strip [target="panel6"] { background: url(img/6a.png) no-repeat; }
+    #content .strip [target="panel7"] { background: url(img/7a.png) no-repeat; }
+    #content .strip [target="panel8"] { background: url(img/8a.png) no-repeat; }
+    /*悬停*/
+    #content .strip [target="panel1"]:hover { background: url(img/1b.png) no-repeat; }
+    #content .strip [target="panel2"]:hover { background: url(img/2b.png) no-repeat; }
+    #content .strip [target="panel3"]:hover { background: url(img/3b.png) no-repeat; }
+    #content .strip [target="panel4"]:hover { background: url(img/4b.png) no-repeat; }
+    #content .strip [target="panel5"]:hover { background: url(img/5b.png) no-repeat; }
+    #content .strip [target="panel6"]:hover { background: url(img/6b.png) no-repeat; }
+    #content .strip [target="panel7"]:hover { background: url(img/7b.png) no-repeat; }
+    #content .strip [target="panel8"]:hover { background: url(img/8b.png) no-repeat; }
+    /*选中*/
+    #content .strip [target="panel1"][selected] { background: url(img/1c.png) no-repeat; }
+    #content .strip [target="panel2"][selected] { background: url(img/2c.png) no-repeat; }
+    #content .strip [target="panel3"][selected] { background: url(img/3c.png) no-repeat; }
+    #content .strip [target="panel4"][selected] { background: url(img/4c.png) no-repeat; }
+    #content .strip [target="panel5"][selected] { background: url(img/5c.png) no-repeat; }
+    #content .strip [target="panel6"][selected] { background: url(img/6c.png) no-repeat; }
+    #content .strip [target="panel7"][selected] { background: url(img/7c.png) no-repeat; }
+    #content .strip [target="panel8"][selected] { background: url(img/8c.png) no-repeat; } 
+  </style>
+</head>
+<body>
+	<div id="wapper">
+		<div id="title-bar" command="window-caption">
+			<span class="title">仿甜椒刷机助手</span>
+			<div class="ctrl-bar">
+				<a id="qa-btn"></a><a id="cfg-menu"></a><a command="window-min"></a><a command="window-close"></a>
+			</div>
+		</div>
+		<div id="content">
+			<div class="strip">
+				<div target="panel1"></div>
+				<div target="panel2"></div>
+				<div target="panel3"></div>
+				<div target="panel4"></div>
+				<div target="panel5"></div>				
+				<div target="panel6"></div>				
+				<div target="panel7" selected></div>
+				<div target="panel8"></div>
+			</div>
+			<!--对应面板-->
+      <div class="panels">
+        <div name="panel1"><h1>欢迎使用</h1></div>
+        <div name="panel2"><h1>甜椒刷机</h1></div>
+        <div name="panel3"><h1>ROM商城</h1></div>
+        <div name="panel4"><h1>应用商城</h1></div>
+        <div name="panel5"><h1>任务管理</h1></div>
+        <div name="panel6"><h1>应用游戏</h1></div>
+        <div name="panel7">
+          <!--为了省事,就不继续写详细的界面了,子界面请自己实现-->
+          <img style="margin-left: 40px;" src="img/demo.png" />
+        </div>
+        <div name="panel8"><h1>应用管理</h1></div>
+      </div>
+		</div>
+		<div id="status">设备连线中</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+﻿<!DOCTYPE HTML>
+<html lang="zh-CN" window-frame="transparent">
+<head>
+	<meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="sciter4d:plus.css" media="all" />
+  <link rel="stylesheet" type="text/css" href="sciter4d:route.css" media="all" />
+  <link rel="stylesheet" type="text/css" href="index.css" media="all" />
+  <script type="text/tiscript" src="SYInstall.tis"></script>  
+  <script type="text/tiscript" src="index.tis"></script>
+  <script type="text/tiscript" >
+    
+  </script>
+</head>
+<body command="window-caption" model="SYInstall">
+  <div.window-buttons>
+    <window-button #window-close command="no-window-caption">r</window-button> 
+  </div>
+  <route-view name="currentRoute" before-animation="blend(cubic-in-out,500ms)" after-animation="blend(cubic-in-out,500ms)" >
+    <!--route name="start" path="0_start.html"  />
+    <route name="install" path="1_install.html"  />
+    <route name="end" path="2_end.html"  /-->
+     <routes each="route in routes">
+       <route @name="route.name" @path="route.path"  />
+     </routes>
+  </route-view> 
+</body>
+</html>

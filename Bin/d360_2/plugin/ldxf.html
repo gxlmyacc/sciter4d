@@ -1,0 +1,35 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />  
+  <style type="text/css"> 
+    @import "plugin://sciter4d/Plugins/SciterIE"; 
+    body {
+      font-family: Tahoma;
+      font-size: 9pt;
+      line-height: 18px;
+    }
+    
+    widget[type=ie] {
+	    display: block;
+      behavior: ie;
+ 
+      width: *;
+      height: *;
+	    margin: 10px;
+      border:1px solid black;
+      foreground-size:contain;
+    } 
+  </style>
+    <script type="text/tiscript">
+      var ie = null;
+      function self.ready() {
+        ie = $(widget[type=ie]);
+        ie.config { silent: true };  
+        ie.go("http://www.baidu.com");
+      }
+    </script>
+</head>
+<body>
+  <widget type="ie" />
+</body>
+</html>

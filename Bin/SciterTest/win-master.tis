@@ -1,0 +1,17 @@
+﻿function customSlider() {
+  this.paintBackground = function(gfx){
+    var hslider = this.@#type == "hslider";
+    var (width,height) = this.box(#dimension, #inner);
+    gfx.fillColor(this.style["background-color"]);
+    gfx.rectangle(0,0, width,height, 5);   
+    gfx.fillColor(this.style["-background-select-color"]);
+    if (hslider) 
+      gfx.rectangle(0,0, (this.value.toFloat() / this.sliderMax().toFloat()) * width,height, 5);
+    else {
+      var h = (this.value.toFloat() / this.sliderMax().toFloat()) * height;
+      gfx.rectangle(0, height - h, width, h, 5); 
+    }     
+    return true;
+  }
+}
+

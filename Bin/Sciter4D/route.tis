@@ -1,0 +1,192 @@
+﻿class RouteManager: Behavior {
+  this var _routes;
+  this var _client;
+  this var _historys = [];
+  this var _lastRouteSelector = "route[name][path]:nth-last-child(1)";
+  
+  function attached() {
+    this._routes = this.$(routes);
+    if (!this._routes) {this._routes = this; this._lastRouteSelector = "route[name][path]:nth-last-child(2)"};
+    this._client = this.$(frame.route-client);
+    if (!this._client) {
+      this._client = Element.create { frame, class: "route-client" };
+      this.append(this._client);
+    }
+    this._client.router = this;
+    if (this.value) this.go(this.value); 
+  }  
+
+  function detached(){
+  } 
+
+  function findRouteElement(route) { 
+    if (typeof route == #integer) {
+      if (route >= 0) return this._routes.$(route:nth-child({route+1}));
+    } else if(typeof route == #string) 
+      return this._routes.$(route[name={route}]);
+    else if(route instanceof Element) 
+      return route;
+  } 
+  
+  function findRoute(route) {
+    var toEl = this.findRouteElement(route);
+    if (!toEl)
+      return (undefined, undefined);
+    else
+      return ({ index: toEl.index, name:toEl.@#name, path: toEl.@#path, value: toEl.value, current: toEl.state.current }, toEl);
+  }
+  
+  function canGo(route) {
+    return !!this.findRoute(route); 
+  }   
+  function go(route, params = undefined, isForward = true) {  
+    //计算路由索引    
+    var (r, toEl) = this.findRoute(route); 
+    if (!r) return false;
+    if (r.current) {
+      if (this._client.length > 0)
+        this._client[0].postEvent("route-active", r);
+      return true;
+    }
+    //非第一次跳转
+    var current = this.currentRoute;
+    if (current && this._client.length > 0) {
+      //添加到历史中
+      if (isForward) 
+        this._historys.push({ index: current.index, name: current.name, path: current.path});
+      //设置动画
+      var animation = "";
+      if (toEl) 
+        animation = r.index < current.index ? toEl.@#before-animation : toEl.@#after-animation;
+      if (!animation)
+        animation = r.index < current.index ? this.@#before-animation : this.@#after-animation;
+      this._client.style#transition = animation;
+    }
+    //加载路由
+    this.@#value = r.name;
+    if (current) {
+      var fromEl = this.findRouteElement(current.name);
+      if (fromEl) fromEl.state.current = false;
+    }
+    toEl.state.current = true;
+   
+    var url = this.url(r.path);
+    this._client.load(url);
+    
+    this.postEvent("route-change", r, current);
+    return true;
+  }
+  
+  function _gcHistorys(){
+    for (var i = this._historys.length - 1; i >= 0; i--){
+      var r = this._routes.$(route[name={this._historys[i].name}][path]);
+      if (!r) this._historys.remove(i);
+    }
+    if (this._historys.last && this._historys.last.name == this.value)
+      this._historys.remove(this._historys.length-1);
+  }
+  
+  function canBack() {
+    this._gcHistorys();
+    return this._historys.length > 0;
+  }
+  function goBack(params = null) {
+    this._gcHistorys();
+    if (this._historys.length > 0) {
+      var r = this._historys.pop();
+      return this.go(r.index, params, false);
+    }
+    else 
+      return -1;
+  }
+  
+  function canFirst() {
+    return this.canGo(0);
+  } 
+  function isFirst() {
+    return this.currentRoute && this.currentRoute.index == 0; 
+  } 
+  function goFirst(params = null) {   
+    return this.go(0, params);  
+  }
+  
+  function canLast() {
+    var el = this._routes.select(this._lastRouteSelector);
+    return el && !el.state.current && this.canGo(el); 
+  } 
+  function isLast() {
+    var el = this._routes.select(this._lastRouteSelector);
+    return el && this.currentRoute && this.currentRoute.index == el.index; 
+  } 
+  function goLast(params = null) {
+    var el = this._routes.select(this._lastRouteSelector);
+    return el && this.go(el, params);
+  }
+  
+  function canPrior() {
+    return this.currentRoute && this.canGo(this.currentRoute.index - 1); 
+  } 
+  function goPrior(params = null) {
+    return this.currentRoute && this.go(this.currentRoute.index - 1, params);
+  }
+  
+  function canNext() {
+    return this.currentRoute && this.canGo(this.currentRoute.index + 1);
+  }   
+  function goNext(params = null) {
+    return this.currentRoute && this.go(this.currentRoute.index + 1, params);
+  }
+  
+  function clearHistorys() {
+    this._historys = [];
+  }
+
+  function repeatCreated(){
+    if (this.value) this.go(this.value); 
+  }  
+  
+  function setBoundValue(newVal) {
+    this.value = newVal;
+  }
+  
+  
+  property rootRoute(v) {
+    get { return self.parent && self.parent.router ? self.router.rootRoute : this }
+  }
+  
+  property parentRoute(v) {
+    get { return self.parent && self.parent.router ? self.parent.router : this }
+  }
+  
+  property currentRoute(v) {
+    get { 
+      var el = this._routes.$(route[name][path]:current);
+      if (!el) return;
+      return { index: el.index, name: el.@#name, path: el.@#path, value: el.value, current: true };
+    }
+  }
+   
+  property routes(v) {
+    get { 
+      var ret = [];
+      var rs = this._routes.$$(route[name][path]);
+      if (!rs) return ret;
+      for (var (index, el) in rs) {
+        var o = { index: index, name: el.@#name, path: el.@#path, value: el.value };
+        if (el.state.current) o.current = true;
+        ret.push(o); 
+      } 
+      return ret;
+    }
+  } 
+  
+  property historys(v) {
+    get { return this._historys; }
+  }
+  
+  property value(v){
+    get { return this.@#value;  }
+    set { if (this.@#value != v){ this.go(v); } }
+  }
+ 
+}

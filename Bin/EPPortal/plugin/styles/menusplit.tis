@@ -1,0 +1,15 @@
+class MenuSplit: Element {
+  function onMouse(event) {
+    if( event.type == Event.MOUSE_CLICK ) { 
+      if (!event.isOnIcon) return;
+      var busMenu = $(.busMenu);
+      if (busMenu) {
+       if (busMenu.@#state == "expand")
+         busMenu.@#state = "cllopse"
+      else
+         busMenu.@#state = "expand"
+      }
+      return true;
+    }
+  }
+}

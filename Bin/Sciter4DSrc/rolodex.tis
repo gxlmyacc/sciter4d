@@ -1,0 +1,119 @@
+﻿class Rolodex : Behavior 
+{
+  this var slideDuration = 800ms;
+  this var pauseDuration = 4s;
+  this var animation = "translate";
+  this var list;
+  this var prev;
+  this var next;
+  this var paging;
+  
+  function _init(){
+    this.prev = this.$(:root>.prev);
+    this.next = this.$(:root>.next);
+    this.paging = this.$(:root>.paging);
+    var me = this;
+    
+    if (this.prev) this.prev.onClick = function(){ return me.prevSlide(); };
+    if (this.next) this.next.onClick = function(){ return me.nextSlide(); };
+    this.checkState();
+    
+    this.slideNo = 0;
+    if (this.list[this.slideNo])
+      this.list[this.slideNo].style["visibility"] = "visible";
+    this.timer(this.pauseDuration, this.nextSlide );
+  }
+
+  function attached() { 
+    this.list = this.$(:root>.list);
+    assert this.list : "缺少.list元素！";   
+    if (this.@#slide-duration) this.slideDuration = this.@#slide-duration.toInteger(800); 
+    if (this.@#pause-duration) this.pauseDuration = this.@#pause-duration.toInteger(4000); 
+    if (this.@#animation) {
+      this.animation = this.@#animation;
+      if (!this.animation) this.animation = "translate";
+    }
+    assert (this.animation == "translate") || (this.animation == "opacity") : "animation属性值不正确！";   
+    if (!this.list.@.exists("each") && !this.$(:has-bound-attributes)) 
+      this._init()
+    else {
+      var me = this;
+      this.list.repeatCreated = function(){ me.repeatCreated() }; 
+    }       
+  }
+  
+  function repeatCreated(){
+    this._init(); 
+  }  
+  
+  function checkState() {
+    var me = this;
+    if (this.prev) this.prev.state.disabled = this.slideNo == 0;
+    if (this.next) this.next.state.disabled = this.slideNo == this.list.length - 1;   
+    if (this.paging) {
+      var pages = this.list.length;
+      this.paging.clear();
+      for( var n = 0; n < pages; ++n ) {
+        var page = this.paging.$append(<span>=</span>);
+        page.@#slideNo = page.slideNo = n;
+        page.state.current = page.slideNo == this.slideNo;
+        page.onClick = function(){ me.goSlide(this.slideNo); }
+      }       
+    }    
+  }
+  
+  function goSlide(idx) {
+    if (idx < 0) idx = this.list.length;
+    
+    var idx0 = this.slideNo;
+    this.slideNo = idx % this.list.length;
+    var idx1 = this.slideNo;
+    if (idx0 == idx1) return;
+        
+    var prevBox = this.list[idx0];
+    var currBox = this.list[idx1];
+    if (!prevBox || !currBox) return;
+    
+    this.timer(0, this.nextSlide);
+    
+    function quadOut( t, b = 0.0, c = 1.0, d = 1.0)     { return -c *(t/=d)*(t-2) + b; }
+    function cubicOut( t, b = 0.0, c = 1.0, d = 1.0)    { return c*((t=t/d-1)*t*t + 1) + b; }
+    
+    prevBox.style["visibility"] = "visible";
+    currBox.style["visibility"] = "visible";
+    
+    function step(progress) {
+      progress = quadOut(progress);
+      if (this.animation == "translate") {
+        if (idx0 < idx1) {
+          prevBox.style["transform"] = [translate: pr( (0.0 - progress) * 100 ), pr(0) ];
+          currBox.style["transform"] = [translate: pr( (1.0 - progress) * 100 ), pr(0) ];
+        } else {
+          prevBox.style["transform"] = [translate: pr( (0.0 + progress) * 100 ), pr(0) ];
+          currBox.style["transform"] = [translate: pr( (progress - 1.0) * 100 ), pr(0) ];
+        }
+      } else {
+        prevBox.style["opacity"] = 1.0 - progress;
+        currBox.style["opacity"] = progress;
+      }
+      return true;
+    }
+    
+    function end() {
+      prevBox.style["visibility"] = "hidden";
+      this.checkState();
+      this.timer(this.pauseDuration, this.nextSlide );
+      return false;
+    }
+    
+    this.animate( step, end, this.slideDuration );
+  }
+ 
+  function nextSlide() {
+    this.goSlide(this.slideNo+1);
+  }
+  
+  function prevSlide() {
+    this.goSlide(this.slideNo-1);
+  }
+}

@@ -1,0 +1,74 @@
+﻿<html>
+<head>
+    <meta name="generator" content="microsoft visual studio 8.0">
+    <title>plain-api demo</title>
+    <script type="text/tiscript">
+      //$(#test).onClick = function() { stdout.println("click"); }
+
+      namespace Test {
+        function add(n1,n2) { return n1+n2; }
+      }
+      
+      $(#test).onClick = function() {
+        var data = self.request(5000, #get, "res:test.json");
+        $(pre#out).text = data.toString();
+      };
+
+      $(#testpost).onClick = function() {
+	    var params = {
+		        key1: "value1",
+            key2: "value2"
+		  };
+        var data = self.request(5000, #post, "res:test.json", params);
+        $(pre#out).text = data.toString();
+      };
+
+    </script>
+    <style>
+        html { background:white; font:system; }
+        /*
+        p.test { font:18pt "Arial Unicode MS"; margin:20px; }
+        p.test span.large { font-size:14pt; }
+        p.test span.back { background:gold; }
+        p.test span.over { text-decoration:overline; }
+        body { border:red 2px solid; behavior:htmlarea; }
+        button { display:block; }
+        p.ellipsis  { text-overflow:ellipsis; white-space:nowrap; overflow-x:hidden; }
+        p.path-ellipsis  { text-overflow:path-ellipsis; white-space:nowrap; overflow-x:hidden; } */
+        
+        frameset { border:3dip solid; }
+        frameset > div { background:#fff; }
+    </style>
+</head>
+<body>
+
+  <img src="res:go.png">
+
+  <em>测试</em>文档的内容。
+  
+  测试Element.request(#get)请求本地资源: 
+
+  <p>代码：</p>
+  <pre>var data = self.request(5000, #get, &quot;res:test.json&quot;); 
+$(pre#out).text = data.toString();
+  </pre>
+
+  <button #test>测试#get</button>
+
+
+  <button #testpost>测试#post</button>
+  
+  <p>
+    CTRL+F8: <input|time id=time />
+  </p>
+
+  <pre#out /> 
+  
+  frameset demo:
+  <frameset cols="200dip,*">
+    <div #first>1</div>
+    <div #second>2</div>
+  </frameset>
+
+</body>
+</html>

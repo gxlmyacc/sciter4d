@@ -1,0 +1,4 @@
+function EditableCaption() {
+  this.on("focusin", :: this.parent.attributes.addClass("focused") )
+    .on("focusout", :: this.parent.attributes.removeClass("focused") )
+}

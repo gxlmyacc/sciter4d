@@ -1,0 +1,221 @@
+<html>
+  <head>
+    <title>Demo of Formation + Repeatable</title>
+    <style>
+    
+      div { flow:row(label,input); font:system; border-spacing:4px; margin:4px; }
+      div > label { vertical-align: baseline; }
+      section[name=person] { border:1px solid; padding:4px; margin:4px; }
+
+      pre {
+        padding: 10px;
+        min-height: 40px;
+        width: 1*;
+        overflow-x: scroll-indicator;
+
+        border: 1px dotted #999999;
+        background-color: #FFFFCC;
+      }
+
+     pre.code {
+       padding: 10px;
+       margin: 10px;
+       font-family: "Courier New";
+       font-size: 9pt;
+     }
+
+     div#nativeButton {
+       height: 30px;
+       width: 200px;
+     }
+    
+    </style>
+    <script type="text/tiscript">
+    
+      include "sciter4d:formation.tis";
+      
+      var root = formation( self );
+
+      function setDataToView(data) { 
+          root.value = parseData(data);
+      }
+
+      function getDataFromView() { 
+          return String.printf("%V", root.value ).replace("\t","  ");
+      }  
+
+      $(#test1setname).onClick = function() {
+       Test1.Name = "ddd";
+       view.msgbox(#alert,"Set Succ!");
+      }
+
+      $(#test1getname).onClick = function() {
+       $(#out).text = Test1.Name;
+      }
+
+      $(#test1showmsg).onClick = function() {
+       Test1.ShowMessage("hello world!", "张三");
+      }
+
+      $(#test2setname).onClick = function() {
+       Test2.Name = "ddd";
+       view.msgbox(#alert,"Set Succ!");
+      }
+
+      $(#test2getname).onClick = function() {
+       $(#out).text = Test2.Name;
+      }
+
+      $(#test2showmsg).onClick = function() {
+        Test2.ShowMessage("hello world!", "张三");
+      }
+
+      function self#cmdNavObj.onClick() {
+        var Test1 = NativeObject("Test1", "Test2", "test3");
+        //for(var name in Test1.prototype) 
+        //  stdout.println( name );
+        Test1.ShowMessage("hello world!!", "张三");
+          // freeNativeObject(Test1);
+        Test1 = null;
+        gc();
+      }
+
+      function self#cmdMSXML.onClick() {
+        var doc = ActiveXObject("MSXML2.DOMDocument");
+        doc.loadXML("<div />");
+        var root = doc.documentElement;  
+        for (var i = 0; i < 10; i++)
+        {
+          var heading = root.appendChild(doc.createElement("h"));
+          var textNode = heading.appendChild(doc.createTextNode("Heading " + i));
+        }  
+
+        $(#oleOut1).text = doc.xml;
+        doc = null;
+      }
+      
+      function self#close.onClick(){
+        view.close(11);
+      }
+
+    </script>
+  </head>
+<body>
+
+  <h1>Demo of Formation + Repeatable</h1>
+
+  <section(person)>
+    <div(details)>
+      <label for=name.first >First</label> <input(name.first)>
+      <label for=name.last >Second</label> <input(name.last)>
+      <label for=age >Age</label> <input|integer(age)>
+    </div>
+    Friends: <!-- repeatable, sic! -->
+    <ol(friends)>
+      <li><output|text(name) /></li>
+    </ol>
+  </section>
+  
+  <button #get>Get</button>
+  <button #set>Set</button>
+  <button #show>Formation structure</button>
+  
+  <pre #out></pre>
+
+  <button #test1setname>测试Test1的setname</button>
+  <button #test1getname>测试Test1的getname</button>
+  <button #test1showmsg>测试Test1的showmsg</button>
+  <button #test2setname>测试Test2的setname</button>
+  <button #test2getname>测试Test2的getname</button>
+  <button #test2showmsg>测试Test2的showmsg</button>
+  <button #close modal="ok">关闭窗口</button>
+  <br />
+  <br />
+
+<!--************************************************************************-->  
+  <section>
+    <h2>Example 1. Native Button</h2>
+    <pre class="code">
+pDivContainer := Layout.RootElement.FindFirst('#nativeButton');
+if pDivContainer &lt;&gt; nil then
+begin
+  FButton := TButton.Create(Self);
+  FButton.Parent := Self;
+  FButton.Caption := 'Native Button';
+  FButton.OnClick := OnNativeButtonClick;
+  FButton.Font.Color := clGreen;
+  pDivContainer.AttachHwnd(FButton.Handle);
+end;
+    </pre>
+    <div id="nativeButton"></div>
+  </section>
+<!--************************************************************************--> 
+
+<!--************************************************************************-->  
+  <section>
+    <h2>OLE Example 1. Creating a Native Object</h2>
+    <pre class="code">
+var Test1 = NativeObject("Test1", "Test2", "test3");
+Test1.ShowMessage("hello world!!", "张三");
+// freeNativeObject(Test1);  
+Test1 = null;
+gc();  //Invokes garbage collector
+    </pre>
+    <button id="cmdNavObj">Run Native Obj</button>
+  </section>
+<!--************************************************************************--> 
+
+<!--************************************************************************-->  
+  <section>
+    <h2>OLE Example 2. Creating and manipulating XML document using MSXML</h2>
+    <pre class="code">
+var doc = ActiveXObject("MSXML2.DOMDocument");
+doc.loadXML("&lt;div /&gt;");
+var root = doc.documentElement;  
+for (var i = 0; i &lt; 10; i++)
+{
+  var heading = root.appendChild(doc.createElement("h"));
+  var textNode = heading.appendChild(doc.createTextNode("Heading " + i));
+}  
+$(#oleOut1).text = doc.xml;
+doc = null;
+    </pre>
+    <button id="cmdMSXML">Run MSXML</button>
+    <pre id="oleOut1" class="out">
+    
+    </pre> 
+  </section>
+<!--************************************************************************--> 
+
+  <section>
+    <h2>Request demo</h2>
+    <button id="cmdRequest">Perform HTTP request</button>
+    <div id="divRequest" class="out">
+    </div>
+  </section>
+  
+<!--************************************************************************-->  
+  <section>
+    <h2>Custom URL protocol handler</h2>
+	<span>delphi code:</span>
+    <pre class="code">
+if Pos('scide://', sUrl) = 1 then
+begin
+  sFileName := ExtractFilePath(ParamStr(0)) + 'Repeatable\' + StringReplace(sUrl, 'scide://', '', []);
+  pMemStm := TMemoryStream.Create;
+  pMemStm.LoadFromFile(sFileName);
+  pMemStm.Position := 0;
+  Layout.DataReady(sUrl, pMemStm.Memory, pMemStm.Size);
+  pMemStm.Free;
+  Result := LOAD_OK;
+  Exit;
+end;
+    </pre>
+	<span>html code:</span>
+    <pre class="code">
+      &lt;img src="scide://scide.png" /&gt;
+    </pre>
+    <img src="scide://scide.png" />
+  </section>
+</body>
+</html>

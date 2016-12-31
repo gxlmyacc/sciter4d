@@ -1,0 +1,37 @@
+
+class collapsibleByIcon: Behavior
+{
+
+  function attached()
+  {
+    
+  }
+
+  function onMouse(evt)
+  {
+    if( (evt.type != Event.MOUSE_DOWN) && (evt.type != Event.MOUSE_DCLICK) )
+        return false;
+    
+    if(!evt.mainButton) 
+        return false;
+    
+   
+    // find first element with class "icon"
+    var eleIcon = this.$(.icon); //{css selector, sic!}
+    
+    if (eleIcon != evt.target)
+      return false; // event is not targeted to element having class "icon"
+
+    // ok, we've got here targeted to icon. then get open/closed state.
+    var is_closed = this.@#state == "close"; 
+    
+    // toggle value of attribute "state" and
+    // correspondent state flag - this is needed to play animation
+    if (is_closed)
+      this.@#state = "open";
+    else
+      this.@#state = "close";
+       
+    return true; // as it is always ours then stop event bubbling
+  }
+}

@@ -1,0 +1,43 @@
+/*提示框样式*/
+popup {
+	background: #fff; color: #575757;
+	font-size: 12px; font-weight: normal;
+	line-height: 15px; padding: 0 5px; height: 16px;
+	font-family: '微软雅黑','宋体';
+	border: 1px solid #767676;
+}
+
+/* 通用设置 */
+body, html { overflow:hidden; margin:0; padding:0; height:100%%; width:100%%; font-size: 12px; }
+/* 带阴影边框 */
+html { background: transparent; }
+body { margin:0; outline: none; background-color:rgba(0,0,0,0.7); 
+}
+
+/*窗体控制按钮*/
+#hl_ctrl_bar { max-width: max-intrinsic; padding-right: 5px; position: absolute; right:0; top:0; padding: 0; z-index:10;}
+#hl_ctrl_bar span {
+	display: block; float: left; color: #fff; line-height: 22px; padding: 0 5px;
+	font-family: Webdings; font-weight: bold; font-size: 13px;
+	behavior: windowCommand;
+}
+#hl_ctrl_bar #close {
+	width: 40px; height: 40px; padding:0; overflow: clip;
+	line-height: 28px; text-indent: 16px; font-size: 14px;
+	background-color:#666; border-radius:0 0 0 100%;
+}
+/*窗体关闭按钮背景色红色*/
+#hl_ctrl_bar span#close:hover { background-color: #da3610; }
+
+#simulate_area {
+	position: absolute; width: 800px; height: 571px;
+	outline:15px glow #000 0px; 
+	transition: size(cubic-in-out,800ms);
+	behavior: draggable;
+}
+#simulate_area[pos="center"] {
+	top: 50%%; left: 50%%; right: 50%%; bottom: 50%%;
+	foreground-image: url(demo.jpg);
+	foreground-repeat:stretch keep-ratio;
+	foreground-position: 100% 100%;
+}

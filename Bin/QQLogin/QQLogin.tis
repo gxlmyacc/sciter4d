@@ -1,0 +1,59 @@
+﻿function self#login.onClick() {
+  if ($(#userInput).@#state != "ewmlogin") {
+    $(#userInput).style#visibility = "collapse";
+    $(div.header).attributes.addClass("logining");
+    $(div.left).attributes.addClass("logining");
+  } else {
+    $(div.left).style#visibility = "visible";
+    $(div.header).attributes.removeClass("ewmlogining");
+    $(#userInput).attributes["state"] = "login";
+    $(#ewmLogin).@#state = "";
+    $(div#multAccount).@#state = "addqq";
+    $(div#login).text = "登录";      
+  }
+
+}
+
+function self#popupUserList.onClick() {
+  var divUser = $(div.user);
+  var userList = $(#userList);
+  //var checkedItem = userList.$(option:checked);
+  //if (!checkedItem)
+  //  userList.$(option:nth-child(1)).state.checked = true;
+  
+  
+  var (x,y) = divUser.box(#position, #inner, #view);  
+  divUser.popup(userList, x - 1, y + 26);
+}
+
+function self#popupKeyboard.onClick() {
+  var divPwd = $(div.pwd);
+  var keyboardPanel = $(#keyboardPanel);
+  var (x,y) = divPwd.box(#position, #inner, #view);  
+  divPwd.popup(keyboardPanel, x - 25, y + 26);
+}
+
+function self#ewmLogin.onClick() {
+  $(div.left).style#visibility = "collapse";
+  $(div.header).attributes.addClass("ewmlogining");
+  $(#userInput).attributes["state"] = "ewmlogin";
+  this.@#state = "ewmlogining";
+  $(div#multAccount).@#state = "ewmlogining";
+  $(div#login).text = "返回";
+}
+
+function self#multAccount.onClick() {
+  if (this.@#state == "addqq") {
+    $(div.left).style#visibility = "collapse";
+    $(div.header).attributes.addClass("logining");
+    $(#userInput).attributes["state"] = "addqq";
+    this.@#state = "backlogin";
+  }
+  else
+  if (this.@#state == "backlogin") {
+    $(div.left).style#visibility = "visible";
+    $(div.header).attributes.removeClass("logining");
+    $(#userInput).attributes["state"] = "login";
+    this.@#state = "addqq";
+  }
+}

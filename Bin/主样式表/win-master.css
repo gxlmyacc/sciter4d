@@ -1,0 +1,1469 @@
+﻿@import url(master-base.css);
+
+fieldset 
+{
+  background-image:url(theme:groupbox-normal); 
+  background-repeat:stretch; 
+}
+
+fieldset > legend 
+{
+  background-color:threedhighlight; 
+  padding: 2px 4px;
+}
+fieldset > legend:rtl
+{
+  margin-right:*;
+} 
+
+@set std-edit < std-edit-base
+{
+  :root {
+    font:system;
+    color:windowtext;
+    padding:3px; 
+    background-image:url(theme:edit-normal); 
+    background-repeat:stretch; 
+    text-align: left;
+    text-selection: windowtext threedface;
+  }
+  
+  :root:owns-popup,
+  :root:focus            {  text-selection: highlighttext highlight; }
+  
+  :root:disabled         {  background-image:url(theme:edit-disabled);  color:graytext; }
+}
+
+@set std-number-edit < std-number-edit-base
+{
+  :root
+  {
+    font:system;
+    font-rendering-mode: snap-pixel;
+    color:windowtext;
+    background-image:url(theme:edit-normal); 
+    background-repeat:stretch; 
+    padding:system-border-width; 
+    /*overflow:hidden;*/
+    text-selection: windowtext threedface;
+  }
+
+  :root:focus { text-selection: highlighttext highlight; }
+
+  :root > caption 
+  { 
+    height:*; width:*;
+    padding:2px; 
+  }
+  :root:disabled
+  { 
+    background-image:url(theme:edit-disabled); 
+    color:graytext;
+    /*cursor:default;*/
+  }
+
+  :root > button
+  {
+    height:0.5*;
+    min-height:10dip;
+  }
+
+  :root > button.minus
+  {
+    padding:0;
+    margin: 0 -2px -2px 0;
+    background-image:url(theme:v-spin-minus-normal); 
+    background-repeat:stretch; 
+    width:system-scrollbar-width;
+    height:50%%;
+  }
+ 
+  :root > button.minus:hover
+  {
+    transition:none;
+    background-image:url(theme:v-spin-minus-hover); 
+  }
+  :root > button.minus:active
+  {
+    background-image:url(theme:v-spin-minus-pressed); 
+  }
+  :root > button.minus:disabled
+  {
+    background-image:url(theme:v-spin-minus-disabled); 
+  }
+  :root > button.plus
+  {
+    padding:0;
+    margin: -2px -2px -1 0;
+    background-image:url(theme:v-spin-plus-normal); 
+    background-repeat:stretch; 
+    width:system-scrollbar-width;
+    height:50%%;
+  }
+  
+  :root > button.plus:hover
+  {
+    transition:none;
+    background-image:url(theme:v-spin-plus-hover); 
+  }
+  :root > button.plus:active
+  {
+    background-image:url(theme:v-spin-plus-pressed); 
+  }
+  :root > button.plus:disabled
+  {
+    background-image:url(theme:v-spin-plus-disabled); 
+  }
+}
+
+/* text button */
+
+@set std-button < std-button-base
+{
+  :root
+  { 
+    font:system;
+    font-rendering-mode:snap-pixel;
+    color:windowtext;
+    padding:0 8dip 1dip 8dip; 
+    background-repeat:stretch; 
+    background-image:url(theme:button-normal); 
+    line-height:1.9em;
+  }
+      
+  :root[role="default-button"]    { background-image:url(theme:button-defaulted); }
+  :root:hover                     { background-image:url(theme:button-hover);  }
+  :root:focus                     { background-image:url(theme:button-defaulted); }
+  :root:active                    { background-image:url(theme:button-pressed); }
+  :root:disabled                  { background-image:url(theme:button-disabled); color:graytext; }
+  :root:tab-focus                 { outline:1px dotted windowtext -4px; /* inside */ }
+
+  :root.light  { 
+    behavior:clickable; 
+    background-image:none; 
+  }
+  :root:hover.light
+  {
+    background-image:url(theme:toolbar-button-hover); 
+    transition:none;
+  }
+  :root:active.light
+  {
+    background-image:url(theme:toolbar-button-pressed); 
+  }
+  :root:disabled.light
+  {
+    background-image:none; 
+  }
+}
+ 
+@set std-toolbar-button < std-toolbar-button-base
+{
+  :root
+  { 
+    font:system;
+    font-rendering-mode:snap-pixel;
+    color:windowtext;
+    padding:4px; 
+    background-image:none;
+    background-repeat:stretch;
+  }
+  :root:hover     { background-image:url(theme:toolbar-button-hover); transition:none; }
+  :root:active    { background-image:url(theme:toolbar-button-pressed); }
+  :root:disabled  { background-image:none; color:graytext; }
+}
+
+@set std-button-menu < std-button
+{
+  :root
+  {
+    behavior:button popup-menu; 
+  }
+  :root:owns-popup /* button when popup is shown */
+  {
+    background-image:url(theme:button-pressed); /* ?? */  
+  }
+}
+
+/* radio button */
+@set std-radio < std-radio-base
+{
+  input:root
+  { 
+    padding:0px; 
+    height:system-small-icon-height; 
+    width:system-small-icon-width; 
+    background-repeat:no-repeat; 
+    background-position:50% 50%;
+    background-image:url(theme:radio-normal);  
+  }
+  :not(input):root
+  {
+    padding:4px 4px 4px system-small-icon-width; 
+    background-repeat:no-repeat; 
+    background-position:1px 50%;
+    background-image:url(theme:radio-normal);  
+  }
+  :not(input):root:rtl
+  {
+    padding:4px system-small-icon-width 4px 4px; 
+    background-position-right:1px;
+    background-position-left:auto;
+  }
+  :root:hover    { background-image:url(theme:radio-hover);  }
+  :root:active   { background-image:url(theme:radio-pressed);  }
+  :root:disabled { background-image:url(theme:radio-disabled);  color :graytext; }
+  :root:checked  { background-image:url(theme:radio-checked-normal); }
+  :root:checked:hover    { background-image:url(theme:radio-checked-hover);  }
+  :root:checked:active   { background-image:url(theme:radio-checked-pressed);  }
+  :root:checked:disabled { background-image:url(theme:radio-checked-disabled);  color:graytext; }
+  :root:tab-focus        { outline:1px dotted invert -1px; }
+}
+
+/* checkbox button */
+@set std-checkbox < std-checkbox-base
+{
+  input:root
+  {
+    padding:0px; 
+    height:system-small-icon-height; 
+    width:system-small-icon-width; 
+    background-repeat:no-repeat; 
+    background-position:50% 50%;
+    background-image:url(theme:check-normal);  
+  }
+  :not(input):root
+  {
+    padding:4px 4px 4px system-small-icon-width; 
+    background-repeat:no-repeat; 
+    background-position:1px 50%;
+    background-image:url(theme:check-normal);  
+  }
+  :not(input):root:rtl
+  {
+    padding:4px system-small-icon-width 4px 4px; 
+    background-position-right:1px;
+    background-position-left:auto;
+  }
+  :root:hover     { background-image:url(theme:check-hover); }
+  :root:active    { background-image:url(theme:check-pressed); }
+  :root:disabled  { background-image:url(theme:check-disabled); color:graytext; }
+  :root:checked   { background-image:url(theme:check-checked-normal); }
+  :root:checked:hover    { background-image:url(theme:check-checked-hover); }
+  :root:checked:active   { background-image:url(theme:check-checked-pressed);  }
+  :root:checked:disabled { background-image:url(theme:check-checked-disabled); color:graytext; }
+   
+  :root[mixed]:empty          { background-image:url(theme:check-mixed-normal); }
+  :root[mixed]:empty:hover    { background-image:url(theme:check-mixed-hover);  }
+  :root[mixed]:empty:active   { background-image:url(theme:check-mixed-pressed);  }
+  :root[mixed]:empty:disabled { background-image:url(theme:check-mixed-disabled);  color:graytext; }
+    
+  :root:tab-focus { outline:1px dotted windowtext -1px; }
+}
+
+@set std-popup < std-popup-base
+{
+  :root[role="overflow-tooltip"] 
+  { 
+    background-color: infobackground;
+    color:infotext;
+  }
+  :root[role="tooltip"] 
+  {
+    font: system;
+    background-repeat:stretch;
+    background-image:url(theme:tooltip-standard);
+    color:infotext;
+    padding:2px 4px; 
+  }
+}
+
+@set std-selector 
+  {
+    :root
+    { 
+      font:system;
+      color:windowtext;
+      white-space: nowrap;
+      background-repeat:stretch; 
+      background-image:url(theme:button-normal); 
+      cursor:default;
+      text-align:center;
+      padding:4px 14px 4px 8px; /* + room for the arrow */
+      behavior:popup-selector;
+      foreground-image:url(stock:arrow-down); /* that arrow */
+      foreground-repeat: no-repeat;
+      foreground-position-top: 50%;
+      foreground-position-right: 3px;
+      overflow: hidden;
+      height:min-intrinsic;
+    }
+    
+    :root > caption { margin-top:*; margin-bottom:*; }    
+   
+    :root:hover
+    { 
+      background-image:url(theme:button-hover);  
+      //transition:blend-atop(linear,200ms);
+    }
+    :root:focus
+    {
+      background-image:url(theme:button-defaulted); 
+    }
+    :root:active 
+    { 
+      background-image:url(theme:button-pressed);  
+    }
+        
+    :root:active > caption
+    { 
+      position:relative;
+      left:1px;
+      top:1px;
+    }
+    :root:disabled
+    { 
+      background-image:url(theme:button-disabled);
+      color:graytext;
+    }
+    :root:tab-focus
+    {
+      outline:1px dotted -4px; /* inside */
+    }
+    :root:active
+    { 
+      foreground-position-top: 55%;
+      foreground-position-right: 2px;
+    }
+    :root > menu,
+    :root > popup
+    { 
+      style-set: "std-popup-menu";
+      display:block; 
+      visibility:collapse;/* invisible normally */
+      border:none;
+      min-width: max-intrinsic;
+      width: *;
+      height: max-intrinsic;
+      transition:window-slide-ttb;
+    }
+    :root > menu:popup,
+    :root > popup:popup
+    {
+      visibility:visible;/* visible when popup */
+    }
+
+  }
+
+
+@media new-themes 
+{
+  progress,
+  input[type="progress"],
+  widget[type="progress"]
+  {
+    background-repeat:stretch; 
+    background-image:url(theme:h-progress-back);  
+
+    height:1.2em;
+    width:8em;
+    padding:0;
+  
+    foreground-repeat:stretch;  
+    foreground-image:url(theme:h-progress-fill);  
+    foreground-clip:content-box;
+  
+    list-style-image: url(theme:h-progress-move-overlay);
+  }
+}
+    
+@media old-themes 
+{
+  input[type="progress"],
+  widget[type="progress"]
+  {
+    behavior:progress; 
+    background-repeat:stretch; 
+    background-image:url(theme:h-progress-back);  
+
+    height:1em;
+    width:8em;
+    padding:4px;
+  
+    foreground-repeat:stretch;  
+    foreground-image:url(theme:h-progress-chunk);  
+    foreground-clip:content-box;
+  
+    /*list-style-image: url(theme:h-progress-move-overlay);*/
+  }
+}
+
+@set std-meter
+{
+  :root 
+  {
+    display: inline-block;
+    vertical-align:middle;
+    behavior:progress; 
+    background-repeat:stretch; 
+    background-image:url(theme:h-progress-back);  
+
+    height:1.2em;
+    width:8em;
+    padding:0;
+  
+    foreground-repeat:stretch;  
+    foreground-image:url(theme:h-progress-fill);  
+    foreground-clip:content-box;
+    flow:vertical;
+  }
+  
+  :root > text { display:none; }
+  
+  @media old-themes 
+  {
+    :root 
+    {
+        height:0.8em;
+        width:8em;
+        padding:3px;
+  
+        foreground-repeat:stretch;  
+        foreground-image:url(theme:h-progress-chunk);  
+        foreground-clip:content-box;    
+    }
+  } 
+}
+
+@set std-select < std-select-base
+{
+  :root
+  { 
+    font:system;
+    font-rendering-mode: classic;
+    padding:2px; 
+    background-repeat:stretch; 
+    background-image:url(theme:edit-normal); 
+  }
+  
+  :root:disabled
+  { 
+    background-image:url(theme:edit-disabled); 
+    color:graytext;
+  }
+
+  optgroup > caption 
+  { 
+    padding:1px 3px; 
+    font-weight:bold; 
+    color: graytext;
+  }
+
+  option 
+  { 
+    padding:1px 1px 1px 3px; 
+    color: windowtext;
+  }
+  option:rtl 
+  { 
+    padding:1px 3px 1px 1px; 
+  }
+
+  option:checked:not(:has-children-of-type(option)),
+  option:current:not(:has-children-of-type(option)) 
+  { 
+    background-color:threeddarkshadow; color:highlighttext;
+  }
+
+  :root:focus option:current:not(:has-children-of-type(option)),
+  popup:root option:current:not(:has-children-of-type(option))
+  { 
+    background-color:highlight; color:highlighttext; 
+  }
+
+  optgroup > option 
+  { 
+    padding-left:20dip; 
+  }
+  optgroup > option:rtl
+  { 
+    padding-right:20dip; 
+    padding-left:1px; 
+  }
+}
+
+@set std-select-checkmarks < std-select-base
+{
+  :root
+  { 
+    font:system;
+    font-rendering-mode: classic;
+    padding:2px; 
+    background-repeat:stretch; 
+    background-image:url(theme:edit-normal); 
+  }
+  
+  :root:disabled
+  { 
+    background-image:url(theme:edit-disabled); 
+    color:graytext;
+  }
+
+  option 
+  { 
+    padding:2px; 
+    color: windowtext;
+    min-height:1.2em;
+    width:*;
+    padding-left:20dip; 
+    foreground-image:url(theme:check-normal);
+    foreground-repeat: no-repeat;
+    foreground-position: 3px 50%;
+    foreground-image-cursor: pointer;
+    
+    
+  }
+  option:rtl 
+  { 
+    padding:2px; 
+    padding-left:2px; 
+    padding-right:20dip;
+    foreground-position-right: 3px;
+    foreground-position-left: auto;    
+  }
+
+  option:checked
+  {
+    /*color:windowtext;*/
+    /*text-decoration:underline;*/
+    foreground-image:url(theme:check-checked-normal);
+  }
+  
+  option:checked:not(:has-children-of-type(option))
+  { 
+    background-color:infobackground; color:windowtext;
+  }
+
+  :root:focus option:current:not(:has-children-of-type(option)),
+  popup:root option:current:not(:has-children-of-type(option))
+  { 
+    background-color:highlight; color:highlighttext; 
+  }
+  
+  
+  option:incomplete  { foreground-image:url(theme:check-mixed-normal);  }
+
+}
+
+/* simple multiselect (without check boxes) */
+@set std-select-multiple < std-select
+{
+  option
+  {
+    background-color:transparent; color:windowtext;
+  }
+  option:checked
+  {
+    background-color:threeddarkshadow; color:highlighttext;
+  }
+  :root:focus option:checked
+  {
+    background-color:highlight; color:highlighttext;
+  }
+} 
+
+@set std-select-multiple-checkmarks < std-select
+{
+  option
+  {
+    padding: 1px 1px 1px system-small-icon-width; 
+    foreground-repeat:no-repeat; 
+    foreground-position:1px 50%;
+    foreground-image:url(theme:check-normal);  
+    background-color:transparent; color:windowtext;
+  }
+  option:checked
+  {
+    foreground-image:url(theme:check-checked-normal);  
+    background-color:transparent; color:windowtext;
+  }
+  option:rtl
+  {
+    padding: 1px system-small-icon-width 1px 1px; 
+    foreground-position-right:1px;
+    foreground-position-left:auto;
+  }
+}
+
+@set std-tree < std-tree-base
+{
+  :root
+  { 
+    padding:2dip; 
+    background-repeat:stretch; 
+    background-image:url(theme:edit-normal); 
+    color: windowtext;
+  }
+
+  :root:disabled
+  { 
+    background-image:url(theme:edit-disabled); 
+    color:graytext;
+  }
+  
+  /* :current hightlighting */
+  option:not(:node):current,
+  option:node:current > text,
+  option:node:current > caption
+  { 
+    background-image: url(theme:list-view-item-selected-not-focus);
+    background-repeat:stretch;
+  }
+  
+  :root:focus option:not(:node):current,
+  :root:focus option:node:current > text,
+  :root:focus option:node:current > caption
+  { 
+    background-image: url(theme:list-view-item-selected);
+  }
+}    
+
+@set std-tree-checkmarks < std-tree
+{
+    :root { behavior: tree-checkmarks; }
+    
+    option:not(:node),
+    option:node > text,
+    option:node > caption
+    {
+      padding-left:21dip;
+      foreground-image:url(theme:check-normal);
+      foreground-repeat: no-repeat;
+      foreground-position: 2px 50%;
+      foreground-image-cursor: pointer;
+    }
+    
+    option:not(:node):rtl,
+    option:node > text:rtl,
+    option:node > caption:rtl
+    {
+      padding-left:3px;
+      padding-right:21dip;
+      foreground-position-right:2px;
+      foreground-position-left:auto;
+    }    
+    
+    option:not(:node):incomplete,
+    option:node:incomplete > text,
+    option:node:incomplete > caption 
+      { foreground-image:url(theme:check-mixed-normal);  }
+      
+    option:not(:node):checked,
+    option:node:checked > text,    
+    option:node:checked > caption
+      { foreground-image:url(theme:check-checked-normal); }      
+}
+
+@set std-file-selector < std-file-selector-base
+{
+  :root 
+  {
+    padding:0;
+    font:system;
+    flow:horizontal;
+    width:20em;
+    background-repeat:stretch; 
+    background-image:url(theme:edit-normal); 
+  }
+  :root:disabled 
+  {
+    background-image:url(theme:edit-disabled);       
+  }
+  :root > caption
+  {
+    padding:4dip 4dip 4dip system-small-icon-width;
+    foreground-position: 2dip 50%;
+  }
+  :root:empty > caption
+  {
+    color:graytext;
+  }
+  :root:disabled > caption
+  {
+    color:graytext;
+  }
+  :root > button
+  {
+    margin:1px;
+    padding:3dip 6dip;
+    width:max-intrinsic;
+    height:*;
+  }
+}
+
+
+/* dropdown combobox */
+@set std-select-dropdown < std-select-dropdown-base
+  {
+    :root
+    {  
+      font:system;
+      font-rendering-mode:classic;      
+      background-repeat  :stretch;  
+      background-image: url(theme:button-normal); 
+      padding:0;
+      line-height:1.2em; 
+    }
+    :root:not([editable]):focus { background-image:url(theme:button-defaulted); }
+    :root:not([editable]):hover { background-image:url(theme:button-hover); }
+
+    :root[editable]             { background-image:url(theme:combobox-normal); }
+    :root[editable]:hover       { background-image:url(theme:combobox-normal); }
+    :root[editable]:disabled    { background-image:url(theme:combobox-disabled); }
+    
+    :root:not([editable]):active,
+    :root:not([editable]):owns-popup { background-image:url(theme:button-pressed); }
+  
+    :root:disabled            { background-image:url(theme:button-disabled); color:graytext; }
+    :root[editable]:disabled  { background-image:url(theme:combobox-disabled); }
+  
+    /* caption portion of combobox */
+    :root > caption
+    { 
+      padding:2dip 2dip 4dip 4dip;
+      margin:2dip;
+      min-width : system-scrollbar-width;
+      color:windowtext; 
+    }
+    :root:focus:not([editable]) > caption,
+    :root:tab-focus > caption
+    {
+      outline:1px dotted windowtext -1px; 
+    }
+    
+    :root[editable] > caption {
+      padding:1dip 0px 2dip 1dip;
+      text-selection: windowtext threedface;
+    }
+    
+    :root:owns-popup[editable] > caption,
+    :root[editable] > caption:focus
+    {  text-selection: highlighttext highlight; }    
+    
+    /* popup select element */
+    :root > popup
+    { 
+      margin:0;
+      padding:2dip; 
+      border:1px solid threedshadow;
+      background:window;
+    }
+    
+     option { line-height:1.4em; }
+    :root:not([multiple]) > popup option { padding: 0 4dip; }
+    option:current
+    {
+      background-color:highlight; color:highlighttext;
+    }
+    optgroup > caption 
+    { 
+      padding:1dip 3dip; 
+      font-weight:bold; 
+      color:@GRAYTEXT;
+    }
+    optgroup > option 
+    { 
+      padding-left:20dip; 
+    }
+    optgroup > option:rtl
+    { 
+      padding-right:20dip; 
+      padding-left:1dip; 
+    }
+    
+    /* dropdown button of the combobox */
+    :root > button
+    {
+      display :block; 
+      line-height:1.2em;
+      min-height:1.2em;
+      width    :system-scrollbar-width;
+      height  :*;
+      padding  :0; 
+      background-repeat  :stretch; 
+      background-image  :none;
+    }
+    
+    :root[editable] > button            { background-image :url(theme:combobox-button-normal); foreground-image:none; }    
+    :root[editable] > button:hover      { transition :none; background-image:url(theme:combobox-button-hover); }
+    :root[editable] > button:active     { background-image:url(theme:combobox-button-pressed); }
+    :root[editable]:disabled > button   { background-image:url(theme:combobox-button-disabled); color:graytext; }
+
+    :root[multiple] > span.count 
+    {
+      padding:2dip 2dip 4dip 4dip;
+      margin:2dip;
+      border-left:1px threedshadow solid;
+      border-right:1px threedshadow solid;
+    }
+    
+    @media old-themes
+    {
+      :root, 
+      :root[editable] { background-image: url(theme:edit-normal); }
+      :root:hover, 
+      :root[editable]:hover { background-image: url(theme:edit-normal); }
+      :root:active, 
+      :root[editable]:active { background-image: url(theme:edit-normal); }
+      :root:focus, 
+      :root[editable]:focus { background-image: url(theme:edit-normal); }
+      :root:disabled, 
+      :root[editable]:disabled { background-image: url(theme:edit-disabled); }
+      
+      :root:not([editable]):active,
+      :root:not([editable]):owns-popup { background-image: url(theme:edit-normal); }      
+      
+      :root > button,
+      :root[editable] > button { background-image :url(theme:combobox-button-normal); margin:2px; }
+      :root > button:hover,
+      :root[editable] > button:hover { background-image :url(theme:combobox-button-hover); }
+      :root > button:active,
+      :root[editable] > button:active { background-image :url(theme:combobox-button-pressed); }
+      :root > button:disabled,
+      :root[editable] > button:disabled { background-image :url(theme:combobox-button-disabled); }
+    }
+    
+  }
+
+@set std-htmlarea < std-htmlarea-base
+{
+  :root 
+  {
+    font: 10pt sans-serif;
+    width:*;
+    padding:3px; 
+    background-image:url(theme:edit-normal); 
+    background-repeat:stretch; 
+    text-selection: windowtext threedface;
+  }
+  :root:disabled
+  {
+    overflow:hidden; 
+    cursor:default;
+  }
+  
+  :root:focus,
+  :root:owns-popup
+  {
+    text-selection: highlighttext highlight;
+  }
+}
+
+@set std-textarea < std-textarea-base
+{
+  :root 
+  {
+    padding:system-3d-border-width; 
+    background-image:url(theme:edit-normal); 
+    background-repeat:stretch; 
+    text-selection: windowtext transparent;
+  }
+  
+  :root:focus,
+  :root:owns-popup
+  {
+    text-selection: highlighttext highlight;
+  }
+
+  :root:disabled
+  {
+    background-image:url(theme:edit-disabled); 
+  }
+  textarea:root
+  {
+    width: auto;
+    height: auto;
+  }
+  plaintext:root
+  {
+    size: *;
+  }
+}
+
+@set std-hslider < std-slider-base
+{
+  :root 
+  {
+    padding:0.8em 0.4em; 
+    width:100px;
+    height:3px; 
+    background-image:url(theme:h-trackbar-back); 
+    background-repeat:stretch; 
+    background-clip: content-box;
+  }
+
+  :root > button
+  { 
+    width:0.8em;
+    height:1.6em;    
+    foreground-image:url(theme:h-trackbar-thumb-normal); 
+    foreground-repeat:stretch; 
+  }
+  
+  :root:focus > button    { foreground-image:url(theme:h-trackbar-thumb-focus); }
+  :root > button:hover    { foreground-image:url(theme:h-trackbar-thumb-hover); }
+  :root > button:active   { foreground-image:url(theme:h-trackbar-thumb-pressed); }
+  :root:disabled > button { foreground-image:url(theme:h-trackbar-thumb-disabled); }
+}
+
+@set std-vslider < std-slider-base
+{
+  :root
+  {
+    display:inline-block;
+    padding:0.4em 0.8em; 
+    height:100px;
+    width:3px; 
+    background-image:url(theme:v-trackbar-back); 
+    background-repeat:stretch; 
+    background-clip: content-box;
+  }
+
+  :root > button
+  { 
+    width:1.6em;
+    height: 0.8em;
+    foreground-image:url(theme:v-trackbar-thumb-normal); 
+    foreground-repeat:stretch;
+  }
+
+  :root:focus > button    { foreground-image:url(theme:v-trackbar-thumb-focus); }
+  :root > button:hover    { foreground-image:url(theme:v-trackbar-thumb-hover); }
+  :root  > button:active  { foreground-image:url(theme:v-trackbar-thumb-pressed); }
+  :root:disabled > button  { foreground-image:url(theme:v-trackbar-thumb-disabled); }
+}
+
+@set std-popup-menu < std-popup-menu-base
+{
+  :root, menu
+  {
+    margin:0;  
+    padding:1px;
+    border:1px solid threedshadow;
+    background-color: window;
+    color:windowtext;
+    margin:0 1px; /* to offset it from parent li */    
+    font: system;
+  }
+
+  /* menu item in popup menus */
+  menu > option, li 
+  {  
+    color:windowtext;
+    padding-left:28dip; /* room for icon */
+    padding-right:12dip; /* room for the arrow */
+    padding-top:5dip; 
+    padding-bottom:5dip;
+    foreground-image-transformation: colorize(#000);
+  }
+  menu > option:rtl, li:rtl 
+  { 
+    padding-right:28dip; /* room for icon */
+    padding-left:12dip; /* room for the arrow */
+  }
+  menu > option:current span.accesskey,
+  li:current span.accesskey
+  {
+    color:brown;
+  }
+
+  /* current menu item */
+  menu > option:current,
+  li:current
+  { 
+    background:url(theme:list-view-item-selected) stretch;
+    foreground-image-transformation: none;
+  }
+  
+  menu > option:disabled, 
+  li:disabled 
+  { 
+     color:threedshadow; font-weight: normal; 
+     foreground-image-transformation: colorize(#CCC);
+  }
+
+  /* accesskey label (span) */
+  span.accesskey
+  {
+    display:block;
+    width:max-content;
+    margin-left:*; /* spring to attach it to the right */
+    padding-left:1em;
+    color:threeddarkshadow;
+  }
+
+  menu > option:current span.accesskey,
+  li:current span.accesskey
+  {
+    color:brown;
+  }
+  
+  /* menu separator */
+  hr 
+  {
+    margin:2dip;
+    border:none; 
+    border-bottom:1px solid threedshadow;
+  }
+  caption
+  {
+    margin:2dip; 
+    color:graytext;
+  }
+  
+  
+}
+ 
+@set std-calendar < std-calendar-base
+{
+  :root
+  {
+    font:system;
+    background:window;
+    color:windowtext;
+    padding:1px; 
+    border:1px solid threedshadow;
+    size: 200dip 196dip;
+  }
+  
+  :root:tab-focus /* :root here is the element with the style-set set */ 
+  {
+    outline:1px dotted invert -4px; /* inside */
+  }
+
+  table
+  { 
+    padding:2px;
+  }
+ 
+  caption
+  {
+    line-height:1.8em;
+    font-weight:bold;
+    width:*;
+  }
+  
+  caption > div.month
+  {
+    width:max-content;
+  }
+  caption > div.year
+  {
+    width:max-content;
+  }
+  
+  div.nav 
+  {
+    width:2em;
+    height:*;
+    padding-top:0.2em;
+    foreground-position:50% 50%;
+    foreground-size:7dip;
+    foreground-repeat:no-repeat;
+  }
+  div.nav:hover {
+    background-image:url(theme:toolbar-button-hover);
+    background-repeat:stretch;
+  }
+  div.nav:active
+  {
+    background-image:url(theme:toolbar-button-pressed);
+    background-repeat:stretch;
+  }
+
+  td 
+  {
+    size: *;
+    text-align:center;
+    padding:1dip 6dip;     
+    border:1px solid transparent;
+  }
+     
+  th
+  {
+    font-size:8pt; 
+    font-weight:normal;
+    color:highlight;
+    text-align:center;
+    padding-top:4dip;
+    border-bottom:1px solid threedshadow;
+  }
+
+  td.month.off, td.day.off
+  {
+    color: brown;
+  }
+  td.day.other-month,
+  td.year.other-year,
+  td.decade.other-decade
+  {
+    color: graytext;
+  }
+
+  td:current
+  {
+    background:url(theme:toolbar-button-hover) stretch;
+  }
+
+  td.today
+  {
+    border-color:red;
+    border-radius:2px;
+  }
+  
+  td:current 
+  {
+    background:url(theme:toolbar-button-hover) stretch;
+  }
+  
+  td:hover
+  {
+    background:url(theme:list-view-item-hover) stretch;
+  }
+ 
+  :root:current td.month:current,
+  :root:focus td.month:current,
+  :root:current td.day:current,
+  :root:focus td.day:current,
+  :root:current td.year:current,
+  :root:focus td.year:current,
+  :root:current td.decade:current,
+  :root:focus td.decade:current   
+  {
+    background:url(theme:list-view-item-selected) stretch;
+  }
+  td:active {
+    background:url(theme:list-view-item-hover) stretch;
+  }    
+  div.button
+  {
+    display:block;
+    padding:* 4dip;
+    text-align:center;
+    height:*;
+  }
+  
+  /* these are sensitive to the mouse wheel */
+  div.button:hover
+  {
+    background-image:url(theme:toolbar-button-hover);
+    background-repeat:stretch;
+  }
+  div.button:active
+  {
+    background-image:url(theme:toolbar-button-pressed);
+  }
+     
+  footer 
+  {
+    border-top:1px solid threedshadow;
+    padding:1dip;
+    line-height:1.4em;
+  }
+  
+  footer > label
+  {
+    display:block;
+    width:max-content;
+  } 
+  footer > div.today 
+  {
+    padding:2px 4px;
+    background-repeat:stretch;      
+  }   
+  
+  footer > div.today:hover 
+  {
+    color:red;
+    background-image:url(theme:toolbar-button-hover);
+  }
+  
+  footer > div.today:active {
+    background-image:url(theme:toolbar-button-pressed);
+  }
+  
+} 
+  
+@set std-date < std-date-base
+{
+  :root
+  { 
+    font:system;    
+    padding:0;
+    color:windowtext;
+    text-selection: windowtext threedface;
+    background-image:url(theme:edit-normal); 
+    background-repeat:stretch; 
+  }
+  
+  :root:disabled         {  background-image:url(theme:edit-disabled);  color:graytext; }  
+
+  :root:owns-popup,
+  :root:focus            {  text-selection: highlighttext highlight; }
+
+  :root > popup 
+  {
+    background-color: window;
+    padding:0;
+    border: none;
+  }
+  
+  :root > caption {
+    margin:3dip; 
+  }
+  
+  :root > caption > span:current
+  {
+    background-color: transparent;
+    color: windowtext;
+  }
+  :root:owns-popup > caption > span:current,
+  :root:focus > caption > span:current
+  {
+    background-color: highlight;
+    color: highlighttext;
+  }    
+  
+  :root > button 
+  { 
+    width: system-scrollbar-width;
+    padding:0; 
+    background-repeat:stretch; 
+    background-image:url(theme:combobox-button-normal);
+  }
+  :root > button:hover 
+  { 
+    transition:none;
+    background-image:url(theme:combobox-button-hover);
+  }
+  :root > button:active 
+  {
+    background-image:url(theme:combobox-button-pressed);
+  }
+  :root > button:disabled 
+  {
+    background-image:url(theme:combobox-button-disabled);
+  }
+  @media old-themes
+  {
+    :root > button { margin:2px; }
+  }    
+}     
+  
+@set std-masked-edit < std-masked-edit-base /* style block for the masked ctl, derived from std-edit */
+{
+  :root {
+    color:windowtext;
+    padding:3px; 
+    background-image:url(theme:edit-normal); 
+    background-repeat:stretch; 
+    text-align: left;
+    text-selection: windowtext threedface;
+  }
+  
+  :root:disabled         {  background-image:url(theme:edit-disabled);  color:graytext; }    
+  
+  :root > span:current
+  {
+    background-color: transparent;
+    color: windowtext;
+  }
+  
+  :root:owns-popup > span,
+  :root:focus > span:current
+  {
+    background-color: highlight;
+    color: highlighttext;
+  }
+}
+  
+@set std-time-edit < std-time-edit-base
+{
+  :root
+  {
+    font:system;
+    font-rendering-mode:classic;
+    color:windowtext;
+    background-image:url(theme:edit-normal); 
+    background-repeat:stretch; 
+    padding:system-border-width; 
+    text-selection: highlighttext highlight;
+  }
+
+  :root > caption > span:current
+  {
+    background-color: transparent;
+    color: windowtext;
+  }
+  :root:focus > caption > span:current
+  {
+    background-color: highlight;
+    color: highlighttext;
+  }    
+    
+  :root:disabled
+  { 
+    background-image:url(theme:edit-disabled); 
+    color:graytext;
+  }
+
+  :root:invalid
+  {
+    color:red;
+  }
+
+  :root > button
+  {
+    height:0.5*;
+    padding:0;
+    width:system-scrollbar-width;
+  }
+
+  :root > button.minus
+  {
+    background-image:url(theme:v-spin-minus-normal); 
+    background-repeat:stretch; 
+  }
+ 
+  :root > button.minus:hover
+  {
+    transition:none;
+    background-image:url(theme:v-spin-minus-hover); 
+  }
+  :root > button.minus:active
+  {
+    background-image:url(theme:v-spin-minus-pressed); 
+  }
+  :root > button.minus:disabled
+  {
+    background-image:url(theme:v-spin-minus-disabled); 
+  }
+  :root > button.plus
+  {
+    background-image:url(theme:v-spin-plus-normal); 
+    background-repeat:stretch; 
+  }
+  
+  :root > button.plus:hover
+  {
+    transition:none;
+    background-image:url(theme:v-spin-plus-hover); 
+  }
+  :root > button.plus:active
+  {
+    background-image:url(theme:v-spin-plus-pressed); 
+  }
+  :root > button.plus:disabled
+  {
+    background-image:url(theme:v-spin-plus-disabled); 
+  }
+}
+
+@set std-v-scrollbar
+{
+  .prev 
+  { 
+    background-image:url(theme:v-scrollbar-minus-normal); 
+    background-repeat:stretch; 
+  }
+  .prev:hover 
+  { 
+    background-image:url(theme:v-scrollbar-minus-hover); 
+  }
+  .prev:active 
+  { 
+    background-image:url(theme:v-scrollbar-minus-pressed); 
+  }
+  .prev:disabled 
+  { 
+    background-image:url(theme:v-scrollbar-minus-disabled); 
+  }
+
+  .next 
+  { 
+    background-image:url(theme:v-scrollbar-plus-normal); 
+    background-repeat:stretch; 
+  }
+  .next:hover 
+  { 
+    background-image:url(theme:v-scrollbar-plus-hover); 
+  }
+  .next:active 
+  { 
+    background-image:url(theme:v-scrollbar-plus-pressed); 
+  }
+  .next:disabled 
+  { 
+    background-image:url(theme:v-scrollbar-plus-disabled); 
+  }
+
+  .base
+  {
+    background-image:url(theme:v-scrollbar-base); 
+    background-repeat:stretch; 
+  }
+
+  .prev-page 
+  { 
+    background-image:url( v-scrollbar-page-minus-normal ); 
+    background-repeat:stretch;       
+  }
+  .prev-page:hover 
+  { 
+    background-image:url( v-scrollbar-page-minus-hover ); 
+  }
+  .prev-page:active 
+  { 
+    background-image:url( v-scrollbar-page-minus-pressed ); 
+  }
+  .prev-page:disabled 
+  { 
+    background-image:url( v-scrollbar-page-minus-disabled ); 
+  }
+  
+  .next-page 
+  { 
+    background-image:url( v-scrollbar-page-plus-normal ); 
+    background-repeat:stretch;       
+  }
+  .next-page:hover 
+  { 
+    background-image:url( v-scrollbar-page-plus-hover ); 
+  }
+  .next-page:active 
+  { 
+    background-image:url( v-scrollbar-page-plus-pressed ); 
+  }
+  .next-page:disabled 
+  { 
+    background-image:url( v-scrollbar-page-plus-disabled ); 
+  }
+  
+  .slider 
+  { 
+    background-image:url(theme:v-scrollbar-thumb-normal); 
+    background-repeat:stretch; 
+  }
+  .slider:hover 
+  { 
+    background-image:url(theme:v-scrollbar-thumb-hover); 
+  }
+  .slider:active 
+  { 
+    background-image:url(theme:v-scrollbar-thumb-pressed); 
+  }
+  .slider:disabled 
+  { 
+    background-image:url(theme:v-scrollbar-thumb-disabled); 
+  }
+}

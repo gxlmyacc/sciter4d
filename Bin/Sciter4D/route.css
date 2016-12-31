@@ -1,0 +1,7 @@
+route-view {
+  display: block;
+}
+
+route-view, [role=route-view] {
+  prototype: RouteManager url(route.tis);
+}

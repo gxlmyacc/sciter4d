@@ -1,0 +1,56 @@
+.ligthbox-overlay
+{
+	flow: horizontal;
+	horizontal-align: center;
+  vertical-align: middle;
+	padding: 10px;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+
+	background: rgba(0,0,0,0.4);
+	opacity: 0;
+}
+.ligthbox-overlay.show
+{
+	opacity: 1;
+	transition: opacity(cubic-in-out, 350ms);
+}
+
+.ligthbox
+{
+	position: relative;	
+	transform: scale(0.8);
+}
+.ligthbox-overlay.show .ligthbox
+{
+	transform: scale(1);
+	transition: transform(linear, 350ms);
+}
+
+.ligthbox-close { 
+  position: absolute;
+  right: -20px;
+  top: -20px;
+  text-align: center; 
+  vertical-align: middle;
+  font-family: webdings;
+  font-size: 28px;
+  size: 37px;
+	border: solid 2px black;
+	border-radius: 50%;
+	cursor: pointer;
+}
+
+.ligthbox-close:hover {
+  color: red;
+  border-color: red;
+}
+
+.ligthbox-body {
+  box-shadow:0 0 10px rgba(0,0,0,0.4);
+}
+  

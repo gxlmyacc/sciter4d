@@ -1,0 +1,55 @@
+html, body {
+  background-color: transparent;
+  margin: 0;
+}
+
+#logo {
+  position: absolute;
+  left: 10dip;
+  top: 10dip;
+  size: 220dip 60dip;
+  z-index: 10;
+}
+
+#bottom {
+  position: absolute;
+  bottom: 0dip;
+  left: 0dip;
+  right: 0dip;
+  visibility: none;
+}
+
+#bottom[step=download] {
+  visibility: visible;
+}
+
+#bottom[step=install] {
+  visibility: visible;
+}
+
+#label {
+  margin-left: 20dip;
+  height: 25dip;
+  color: #666666;
+  vertical-align: middle;
+}
+
+
+#progress {
+  display: block;
+  width: *;
+  margin: 0dip;
+  border:none; 
+  border-radius:none;
+  background: #009DDA;
+  foreground: #FF9900;
+}
+
+rolodex {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  horizontal-align: center;
+}

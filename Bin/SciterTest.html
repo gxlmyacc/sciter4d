@@ -1,0 +1,75 @@
+﻿<html>
+ <head>
+  <style>
+     body {
+     }
+     
+  .test1 {
+    border: 1px solid green;
+  }
+  .test {
+    border: 1px solid red;
+    opacity: 0.6;
+  }
+  
+.animation:not(.hidden) {
+  opacity: 1.0; 
+  height: max-content;
+}
+.animation.hidden {
+  opacity: 0.0;
+  height: 0px;
+  transition: 
+    opacity( linear, 400ms)
+    size( linear, 400ms);  
+}
+  
+  </style>
+  <script type="text/tiscript">
+
+     function self#test.onClick(){
+       //view.msgbox {type: #question, content: "Be or not to be?", title: "Huh?", buttons: [ {id:#yes, text:"To be"}, {id:#no, text:"Not to be"} ] };
+       prompt("");
+       //alert(JSON.stringify(getCommandLine()));
+       //false || alert(JSON.stringify(getCommandLine()));
+       
+       //$(.test).toggle();
+       var token_match = /{[A-Z_]+[0-9]*}/ig; 
+     }
+     
+     function self#test1.onClick(){
+       alert(compile( "file://D://test.tis", "file://D://test1.tis" ));
+     }
+  </script>
+ </head>
+ <body >
+   <input|button #test value="测试" />
+   <input|button #test1 value="测试1" />
+   <input|button role="default-button" value="测试" />
+   <input|button class="primary" value="primary" />
+   <input|button class="success" value="success" />
+   <input|button class="info" value="info" />
+   <input|button class="warning" value="warning" />
+   <input|button class="danger" value="danger" />
+   <input|button role="default-button" disabled value="测试" />
+   <input|button class="primary" disabled value="primary" />
+   <input|button class="success" disabled value="success" />
+   <input|button class="info" disabled value="info" />
+   <input|button class="warning" disabled value="warning" />
+   <input|button class="danger" disabled value="danger" />
+   <button|toggler ></button>
+   <input|text style="display:block;width:1*;">
+   <input|text class="success" novalue="ddddd" style="display:block;width:1*;"/>
+   <input|text class="warning" style="display:block;width:1*;"/>
+   <input|text class="danger" style="display:block;width:1*;"/>
+   <input|number step=10 min=40 max=160 value=0 style="display:block;width:1*;">
+   <div class="test1">
+   <div class="test animation">
+     dd<br/>
+     dd<br/>
+     dd<br/>
+     dd<br/>   
+   </div>
+   </div>
+ </body>
+</html>

@@ -1,0 +1,32 @@
+﻿
+@font-face {
+	font-family: hakuyoxingshu7000;
+	src: url(hakuyoxingshu7000.ttf);
+}
+
+html { background: none; }
+body, html { margin:0; padding:0; }
+body { margin:0; outline: none; }
+
+#lrc_area {
+	position: relative; 
+	top: 80%%; 
+	margin:0 *; 
+	width: max-intrinsic; 
+	padding: 0 10px;
+	font: 75px hakuyoxingshu7000;
+	text-align: center; 
+	color: #195697;
+	behavior: windowCommand;
+}
+#lrc_area:hover {
+	background-color:rgba(0,0,0,0.1);
+}
+#lrc_area_copy {
+	position: absolute; 
+	top: 0; 
+	color: #ff6e00; 
+	white-space:nowrap;
+	width: 77%; 
+	overflow: hidden;
+}

@@ -1,0 +1,46 @@
+﻿  var vstDatas = {
+    id: "vstdata",
+
+    options: {
+    },
+
+    columnOptions: {
+      height: 25;
+      background: #fff;
+
+      visible: true;
+    },
+    
+    columns: [
+      {text: "列1", width: 200, fixed: true, align: "center" },
+      {text: "列2", width: 200 },
+      {text: "列3", width: 300 },
+      {text: "列4", width: 400 }
+    ],
+
+    dataOptions: {
+    },
+    
+    datas: [
+      {
+        row: [{text: "[c1, r1]"}, {text: "[c1, r2]"}, {text: "[c1, r3]"}, {text: "[c1, r4]"} ],
+
+        childOptions: { },
+        
+        childs: [
+          { row: [{text: "[cc1, c1, r1]"}, {text: "[cc1, c1, r2]"}, {text: "[cc1, c1, r3]"}, {text: "[cc1, c1, r4]"} ] },
+          { row: [{text: "[cc1, c2, r1]"}, {text: "[cc1, c2, r2]"}, {text: "[cc1, c2, r3]"}, {text: "[cc1, c2, r4]"} ] },
+          { row: [{text: "[cc1, c3, r1]"}, {text: "[cc1, c3, r2]"}, {text: "[cc1, c3, r3]"}, {text: "[cc1, c3, r4]"} ] }
+        ]
+      },
+      {
+        row: [{text: "[c2, r1]"}, {text: "[c2, r2]"}, {text: "[c2, r3]"}, {text: "[c2, r4]"} ]
+      },
+      {
+        row: [{text: "[c3, r1]"}, {text: "[c3, r2]"}, {text: "[c3, r3]"}, {text: "[c3, r4]"} ]
+      },
+      {
+        row: [{text: "[c4, r1]"}, {text: "[c4, r2]"}, {text: "[c4, r3]"}, {text: "[c4, r4]"} ]
+      }
+    ]
+  };

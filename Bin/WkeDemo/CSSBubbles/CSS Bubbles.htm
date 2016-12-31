@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title>CSS Bubbles</title>
+<style>
+html, body
+{
+	border: none;
+	overflow: hidden;
+	height: 100%;
+}
+
+body {
+	background-color: transparent;/*background: url(BG.jpg) bottom*/
+}
+</style>
+</head>
+
+<body onload="Demo()">
+<script src="./Bubbles_files/Bubbles.js"></script>
+<script>
+var MAX = 5;
+var i = 0;
+
+function Demo()
+{
+	CreateBubble();
+
+	if(++i < MAX)
+		setTimeout(Demo, 1000);
+}
+</script>
+</body>
+</html>

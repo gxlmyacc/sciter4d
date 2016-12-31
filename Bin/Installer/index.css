@@ -1,0 +1,53 @@
+
+html {
+  background-color: transparent;
+}
+
+@const MARGIN_SHADOW: 6dip;
+@const MARGIN_SHADOW2: 5dip;
+@const SIZE_RADIUS: 2dip;
+
+body {
+  margin:  @MARGIN_SHADOW; 
+  outline: @MARGIN_SHADOW glow #666 0dip;
+  outline-shift: 3dip;
+  background-color: #F8F8F8;
+  border-radius: @SIZE_RADIUS;
+  overflow: clip;  
+  opacity: 0;
+  behavior: windowCommand;
+}
+
+body.shown 
+{
+ opacity: 1;
+ transition: opacity(linear,100ms); 
+}
+
+body.hidden 
+{
+ opacity: 0;
+ transition: opacity(linear,100ms); 
+}
+
+.window-buttons {
+  position: absolute;
+  right: @MARGIN_SHADOW;
+  top: @MARGIN_SHADOW;
+}
+
+window-button {
+  display: inline-block;
+  font-family: webdings;
+  font-size: 18dip;
+  padding: 5dip;
+}
+
+#window-close:hover {
+  background-color: #A62A15;
+  color: white;
+}
+
+route-view {
+  size: * *;
+}

@@ -1,0 +1,65 @@
+input[type="color-chooser"]
+{
+    prototype: ColorChooser url(sciter4d:color-chooser.tis); 
+    flow:horizontal;
+    vertical-align:middle;
+}
+
+input[type="color-chooser"] > button[role="popup"]
+{
+    display:block;
+    width: 15dip;
+    padding:0; 
+    foreground-image: url(stock:arrow-down);
+    foreground-position:50% 50%;
+    foreground-repeat:no-repeat;
+    foreground-size:5dip;
+    margin-left:0;
+    height:*;
+}
+input[type="color-chooser"] > button[role="apply"]
+{
+    display:block;
+    padding:5dip;
+    margin-right:0;
+    height:*;
+}
+
+input[type="color-chooser"] > button[role="apply"] > .current-color
+{
+    display:block;
+    width: 10dip; height: 10dip;
+    border: 1dip solid threedshadow;
+    overflow:hidden;
+}
+
+
+/* popup with colors */
+popup.color-selector 
+{
+  margin-top:1dip; /* distance from the buttom */
+  padding:2dip;
+  background-color:scrollbar;
+  border:1dip solid threedshadow;
+}
+
+popup.color-selector table
+{
+  border-spacing:1dip;
+}
+
+popup.color-selector td /* cell of the color table */
+{
+  width:10dip; height:10dip;
+  border:1dip solid transparent;
+}
+
+popup.color-selector td:hover 
+{
+  outline: 2dip dashed highlight -1dip;
+}  
+
+popup.color-selector td:current 
+{
+  outline: 2dip solid threedshadow -1dip;
+}  

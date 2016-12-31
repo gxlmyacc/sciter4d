@@ -1,0 +1,221 @@
+﻿/*让窗体背景透明*/
+html {
+  behavior: ~windowSizer; 
+}
+
+html, body {
+  background: transparent; 
+  font-family: 微软雅黑; 
+  text-shadow:none; 
+  margin:0; 
+  padding:0; 
+  font-size: 12px; 
+ }
+
+
+/*title提示框*/
+popup { 
+  color: #575757; 
+  font-size: 12px; 
+  font-weight: normal; 
+  line-height: 15px; 
+  padding: 0 5px; 
+  height: 16px; 
+  border: 1px solid #767676; 
+}
+
+popup#dyn-tooltip {
+  popup-position: top-center bottom-center;
+  background-color: transparent;
+  background-image: url(../images/icon_nav_tooltip.png);
+  background-repeat: expand stretch-top stretch-left stretch-middle stretch-right stretch-bottom;
+  background-position: 9px 3px 4px 3px;
+  padding: 10px;
+  color: white;
+  border: none;
+  padding-bottom: 1px;
+}
+
+/*容器*/
+#wapper {
+	position:relative; width: 100%%; height: 100%%; background: #dce5ee; border: 1px solid #06263f; 
+	background: #1667a5 url(../images/header/bg.png) stretch;text-align: left; 
+}
+/*头部*/
+#header {
+	position:relative; 
+	height: 95px; 
+	border: 1px solid #4684b4; 
+	border-color: #4683b3 #2d77af #0585c0 #2d77af; 
+	border-radius: 4px 4px 0 0; 
+	behavior:windowCommand;
+	overflow: hidden;
+}
+/*标题栏*/
+#header h5 { clear: both; height: 20px; margin: 0; border-radius: 4px 4px 0 0;}
+/*控制按钮*/
+#header h5 .ctrl {
+	float: right; flow:horizontal; width: min-intrinsic; height: 22px; margin-right: 0px; margin-top:2px; position:relative; top: 4px; cursor: pointer; 
+}
+#header h5 .ctrl span { display: block; margin-top:-8px; height: 20px; width: 22px;  }
+#header h5 .ctrl span.menu { background: url(../images/header/icon_set_normal.png) no-repeat; behavior:popup-menu; width: 34px;}
+#header h5 .ctrl span.min { background: url(../images/header/icon_min_normal.png) no-repeat; }
+#header h5 .ctrl span[command="window-max"] { background: url(../images/header/icon_max_normal.png) no-repeat; }
+#header h5 .ctrl span[command="window-restore"] { background: url(../images/header/icon_restore_normal.png) no-repeat; }
+#header h5 .ctrl span.close { background: url(../images/header/icon_close_normal.png) no-repeat; }
+
+#header h5 .ctrl span.menu:hover { background: url(../images/header/icon_set_hover.png) no-repeat; }
+#header h5 .ctrl span.min:hover { background: url(../images/header/icon_min_hover.png) no-repeat; }
+#header h5 .ctrl span[command="window-max"]:hover { background: url(../images/header/icon_max_hover.png) no-repeat; }
+#header h5 .ctrl span[command="window-restore"]:hover { background: url(../images/header/icon_restore_hover.png) no-repeat;}
+#header h5 .ctrl span.close:hover { background: url(../images/header/icon_close_hover.png) no-repeat; }
+
+menu#sysmenu { 
+  width:120px;  
+  color:black;
+  border: 1px solid #6A94B5;
+  background-color: #FAFAFAE0;
+  border-radius: 3px;
+}
+
+menu#sysmenu li { 
+  padding-left:10px; 
+  height:25px; 
+  vertical-align: middle; 
+  margin: 1px;
+ }
+
+menu#sysmenu li:hover { 
+  background-color:#4EA9E9E0; 
+  color:#fff; 
+}
+
+menu#sysmenu li.blend:hover 
+{
+  transition: blend(linear, 400ms);
+}
+
+.headerClient { flow: horizontal; height: 78px; padding: 0;  }
+
+#header .logo { foreground-repeat: no-repeat; height:100%; width: min-widthmin-intrinsic; vertical-align:middle; }
+
+/*导航按钮*/
+#header ul.navbar, #moreapp-popup { 
+  height: 100%; 
+  padding: 0; 
+  flow:horizontal; 
+  overflow:scroll-indicator; 
+  font-size:12px;
+}
+
+#moreapp-popup {
+  background: #1667a5 url(../images/header/bg.png) stretch;
+  vertical-align: middle;
+  display: none;
+}
+
+#header ul.navbar li, #moreapp-popup li {
+	width: 68px; 
+	height: 70px; 
+	margin-left: 6px; 
+	overflow:hidden;
+	cursor: pointer; 
+	border: 1px solid transparent; 
+	border-radius: 2px; 
+	//behavior: frame-tab;
+	behavior: menutab;
+	aspect: DynTip;
+}
+#header ul.navbar li:hover, #moreapp-popup li:hover { 
+  background: url(../images/header/navbar/icon_bg_hover.png) center no-repeat; 
+  background-image-transformation: opacity(0.7);  
+ }
+
+#header ul.navbar li:active, #moreapp-popup li:active { 
+  background: url(../images/header/navbar/icon_bg_down.png) center no-repeat; 
+  background-image-transformation: opacity(0.7);  
+}
+#header ul.navbar li[selected], #moreapp-popup li[selected] { 
+  background: url(../images/header/navbar/icon_bg_down.png) center no-repeat; 
+  cursor: default; 
+}
+#header ul.navbar li img, #moreapp-popup li img { 
+  display: block; 
+  margin: 3px auto 0 auto; 
+}
+#header ul.navbar li span, #moreapp-popup li span { 
+  display: block; 
+  margin-top:10px; 
+  width:100%%; 
+  color: #fff; 
+  font-size:13px; 
+  text-align:center; 
+}
+
+#moreapp-popup li {
+  flow: vertical;
+}
+
+#header ul.navbar li:hover img, #moreapp-popup li:hover img {
+  transform: scale(1.2);
+  transition: transform(linear, 200ms);
+}
+
+#header ul.navbar li.moreapp {
+  width: min-intrinsic;
+  behavior: more-button;
+}
+
+  
+/*操作按钮*/
+#header ul.operabar {position:absolute; right:10px; bottom:10px; flow:horizontal;}
+#header ul.operabar li {
+	width: 35px; height: 30px; margin-left: 3px; overflow:hidden; cursor: pointer;
+	aspect: DynTip;
+}
+
+#header ul.operabar li:hover {
+  background: url(../images/header/operabar/icon_bg_hover.png) center no-repeat; 
+  background-image-transformation: opacity(0.7);  
+  transform: scale(1.2);
+  transition: transform(linear, 200ms)
+}
+
+#header ul.operabar li.blend:hover {
+  transition: blend(linear, 200ms);
+}
+
+#header ul.operabar li:active {background: url(../images/header/operabar/icon_bg_down.png) center no-repeat; background-image-transformation: opacity(0.7);}
+
+#obMsgCount {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: red;
+  color: white;
+  padding: 2px 5px;
+  border-radius: 50%;
+  font-size: 8pt;
+  vertical-align: middle;
+}
+
+/*主区域*/
+.main-frame { background: #EEF1F8; height: 100%%;}
+
+/*底部*/
+#footer {
+	position:relative; height: 20px; padding-top:4px; background-color: #EAEDEF; color: #464545;
+}
+
+#footer span.Enterprise { display: inline-block; background: url(../images/icon_qy_normal.png) no-repeat; margin-left:6px; padding-left:20px; margin-right: 16px; }
+#footer span.about { 
+  display: inline-block; 
+  margin:0px 4px; 
+  float: right;
+  line-height: 1em; 
+  text-decoration:underline; 
+  color:#00AAE3; 
+  behavior: clickable;
+}
+#footer span.about:hover { color: #FF7225; }
+

@@ -1,0 +1,12 @@
+﻿rolodex {
+  prototype: Rolodex url(rolodex.tis);
+  display:block;
+  flow:stack;
+  size:max-content;
+  overflow:hidden;
+}
+
+rolodex > * { 
+  display:block;
+  visibility:hidden;
+}

@@ -1,0 +1,40 @@
+
+NO_COLOR                        PNG                     "res\\no-color.png"
+
+TOOLBAR_BUTTON_CHECKED          PNG                     "res\\toolbar-button-checked.png"
+TOOLBAR_BUTTON_CHECKED_HOVER    PNG                     "res\\toolbar-button-checked-hover.png"
+TOOLBAR_BUTTON_HOVER            PNG                     "res\\toolbar-button-hover.png"
+TOOLBAR_BUTTON_PRESSED          PNG                     "res\\toolbar-button-pressed.png"
+
+ICONS_N                         PNG                     "res\\icons-n.png"
+ICONS_H                         PNG                     "res\\icons-h.png"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// JPG
+//
+
+STARFIELD               JPG                     "res\\starfield.jpg"
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// HTML
+//
+
+DEFAULT                 HTML                    "res\\default.htm"
+SYS_INFO                HTML                    "res\\sys-info.htm"
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_SCITER              ICON                    "res\\sciter.ico"
+IDI_SMALL               ICON                    "res\\sciter-small.ico"
+

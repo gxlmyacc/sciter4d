@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html  custom-round="5">
+ <head>
+  <meta charset="utf-8" />
+  <title>主界面</title> 
+  <link type="text/css" rel="stylesheet" href="styles/reset.css" /> 
+  <link type="text/css" rel="stylesheet" href="styles/skin.css" /> 
+ </head> 
+ <body> 
+  <div id="wapper"> 
+   <div id="header" command="window-caption"> 
+    <h5>
+	  <strong>360安全卫士 8.8 Beta</strong> 
+	  <span class="ctrl"> 
+	    <a class="menu" title="菜单" command="no-window-caption">&nbsp;</a>
+	    <a class="min" title="最小化" command="window-min">&nbsp;</a>
+	    <a class="max" title="最大化" command="window-max">&nbsp;</a>
+	    <a class="restore" title="还原" command="window-restore">&nbsp;</a>
+	    <a class="close" title="关闭" command="window-close">&nbsp;</a> 
+	  </span> 
+	</h5> 
+    <ul command="no-window-caption"> 
+     <li title="电脑体检" url="plugin/dntj.html" selected="true">
+	   <img src="images/icon_1.png" /><span>电脑体检</span>
+	  </li> 
+     <li title="木马查杀" url="plugin/mmcs.html" selected="false">
+	   <img src="images/icon_2.png" /><span>木马查杀</span>
+	  </li> 
+     <li title="漏洞修复" url="plugin/ldxf.html" selected="false">
+	   <img src="images/icon_3.png" /><span>漏洞修复</span>
+	  </li> 
+     <li title="系统修复" url="plugin/xtxf.html" selected="false">
+	   <img src="images/icon_4.png" /><span>系统修复</span>
+	  </li> 
+     <li title="电脑清理" url="plugin/dnql.html" selected="false">
+	   <img src="images/icon_5.png" /><span>电脑清理</span>
+	  </li> 
+     <li title="优化加速" url="plugin/yhjs.html" selected="false">
+	   <img src="images/icon_6.png" /><span>优化加速</span>
+	  </li> 
+     <li title="手机杀毒" url="plugin/sjsd.html" selected="false">
+	   <img src="images/icon_7.png" /><span>手机杀毒</span>
+	  </li> 
+     <li title="软件管家" url="plugin/rjgj.html" selected="false">
+	   <img src="images/icon_8.png" /><span>软件管家</span>
+	  </li> 
+     <li title="功能大全" url="plugin/gndq.html" selected="false">
+	   <img src="images/icon_9.png" /><span>功能大全</span>
+	  </li> 
+    </ul> 
+    <img command="no-window-caption" class="360_logo" title="点击进入官网" url="http://www.360.cn" src="images/360_logo.png"/> 
+   </div> 
+     <widget id="main" type="webbrowser" data-url="plugin/dntj.html" style="width:100%%;height:100%%;"></widget>
+   <div id="footer"> 
+    <span class="version">主程序版本:8.8.0.1003</span>
+    <span>备用木马库:2012-11-02</span>
+    <span title="您的版本已是最新">检查更新</span> 
+    <span class="online"><img src="images/online.png" />已成功连接至360安全中心</span> 
+   </div> 
+  </div> 
+</div>
+ </body>
+</html>

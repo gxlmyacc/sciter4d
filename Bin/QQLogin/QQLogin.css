@@ -1,0 +1,497 @@
+﻿html {
+  background-color: transparent;
+}
+ 
+@const MARGIN_SHADOW: 6dip;
+@const MARGIN_SHADOW2: 5dip;
+@const SIZE_RADIUS: 2dip;
+ 
+body {
+  margin:  @MARGIN_SHADOW; 
+  outline: @MARGIN_SHADOW glow #666 0dip;
+  outline-shift: 3dip;
+  background-color: #EBF2F9;
+  border-radius: @SIZE_RADIUS;
+  overflow: clip;  
+}
+ 
+div.client {
+  size: *;
+}
+ 
+div.header {
+  size: * 180dip;
+  background-image: url(images/header_bg.png);
+  //background-repeat: stretch;
+  border-top-left-radius: @SIZE_RADIUS;
+  border-top-right-radius: @SIZE_RADIUS;
+  overflow: clip;  
+  transition: height(linear, 200ms);
+}
+
+div.header.logining {
+  height: 160dip;
+}
+
+div.header.ewmlogining {
+  transition: none;
+  height: 30dip;
+}
+ 
+div.sysControlPanel {
+  position: absolute;
+  right: @MARGIN_SHADOW2;
+  top: @MARGIN_SHADOW;
+  width: max-intrinsic;
+  height: 30dip;
+  padding: 0dip;
+  border: 0dip;
+}
+ 
+window-button {
+  display: inline-block;
+}
+ 
+div.header, .sysControl {
+  behavior: windowCommand;
+}
+ 
+window-button.sysControl {
+  font-family: Webdings; 
+  font-size: 18dip;
+  color: white;
+  width: *;
+  height: *;
+  padding: 5dip;
+}
+ 
+#window-close {
+  border-top-right-radius: @SIZE_RADIUS;
+  border: 0;
+}
+ 
+#window-min:hover, #window-set:hover {
+  background-color: #FFFFFF44;
+}
+ 
+#window-close:hover {
+  background-color: #A62A15;
+}
+ 
+div.footer {
+  size: *;
+  flow: horizontal;
+}
+ 
+div.left  {
+  height: *;
+  width: 30%;
+}
+
+div.left.logining {
+  width: 100%;
+  transition: size(linear, 200ms);
+}
+ 
+div.left > .myHead {
+  width: 82dip;
+  height: 82dip;
+  margin-left: 42dip;
+  margin-top: 14dip;
+  background: url(images/heads/myHead.png) stretch keep-ratio;
+  transition: margin-left(linear, 200ms);
+}
+
+div.left.logining > .myHead {
+  margin-left: 180dip;
+}
+ 
+#userInput {
+  height: *;
+  width: *;
+  padding-bottom: 14dip;
+}
+
+#userInput > div.loginPanel {
+  margin-top: 14dip;
+  flow: "1 1 2" "3 3 4" "5 6 0";
+  height: *;
+  visibility: collapse;
+}
+
+#userInput > div.addQQPanel {
+  vertical-align: middle;
+  horizontal-align: center;
+  visibility: collapse;
+  height: 100dip;
+}
+
+#userInput > div.ewmLoginPanel {
+  background-image: url(images/qqewm.png);
+  background-repeat: no-repeat;
+  margin: 0;
+  visibility: collapse;
+  transition: height(linear, 200ms);
+}
+
+#userInput > div.addQQPanel > button[name="btnAddQQ"] {
+  display: block;
+  width: 100dip;
+  height: 26dip;
+  vertical-align: middle;
+  background-image: none;
+  border: 1px solid #999DA2;
+  border-radius: 2dip;
+  background-color: #F4F4F4;
+  outline: 2dip glow #aaa 0dip;
+  outline-shift: 1dip;
+}
+
+#userInput > div.addQQPanel > button[name="btnAddQQ"]:hover {
+  border-color: #4FADD8;
+}
+
+#userInput[state="login"] > div.loginPanel {
+  visibility: visible;
+}
+
+#userInput[state="addqq"] > div.addQQPanel {
+  visibility: visible;
+}
+
+#userInput[state="ewmlogin"] > div.ewmLoginPanel {
+  visibility: visible;
+  height: 243dip;
+}
+
+label {
+  width: 5em;
+  display: block;
+  margin-left: 10dip;
+  color: #2786E4;
+  vertical-align: middle;
+  font-size: 11.5dip;
+}
+ 
+label:hover {
+  color: #62B4F7;
+  cursor: pointer;
+}
+ 
+ 
+div.user {
+  flow: horizontal;
+  margin: 0 5 0 0;  
+  border: 1px solid #D1D1D1;   
+  border-top-left-radius: @MARGIN_SHADOW;
+  border-top-right-radius: @MARGIN_SHADOW;
+  background-color: white;        
+}  
+div.user:hover {
+  border-color: #278CDE;
+} 
+ 
+div.pwd {
+  flow: horizontal;
+  margin: 0 5 0 0;  
+  border: 1px solid #D1D1D1;   
+  border-bottom-left-radius: @MARGIN_SHADOW;
+  border-bottom-right-radius: @MARGIN_SHADOW;
+  background-color: white;
+}  
+div.pwd:hover {
+  border-color: #278CDE
+} 
+ 
+.inputBox {
+  display: block;  
+  height: 26dip;
+  line-height: 26dip; 
+  vertical-align: middle;
+  font-size: 13dip;
+  background-color: white; 
+  width: 159dip;
+  padding: 0 0 0 6dip;
+  vertical-align: middle;
+  background-image: none;
+}
+ 
+input[name="userid"] {
+  border-top-left-radius: @MARGIN_SHADOW;
+ }
+      
+input[name="userid"]:empty {
+  color: #7E7E7E;
+}
+ 
+input[name="userid"]:hover {
+  border-color: #278CDE;
+}
+
+div#popupUserList {
+  vertical-align: middle;
+  text-align: center;
+  font-family: webdings;
+  content: "6";
+  color: #B4B4B4;
+  cursor: pointer;
+  width: 26dip;
+}
+
+div#popupUserList:hover {
+  color: #62B4F7;
+}
+
+div#popupUserList:active {
+  color: #278CDE;
+}
+
+popup#userList {
+  width: 190dip;
+  height: 170dip;
+  background-color: white;
+  overflow-y: scroll-indicator;
+  border: 1px solid #278CDE;
+  padding: 1dip;
+}
+popup#userList > option {
+  flow: horizontal;
+  height: 30dip;
+  vertical-align: middle;
+  transition: height(linear, 200ms);
+}
+
+popup#userList > option img.head {
+  size: 28dip;
+  foreground-repeat: stretch keep-ratio;
+  margin: 2dip 4dip 2dip 4dip;
+  transition: size(linear, 200ms);
+}
+
+popup#userList > option .userName,
+popup#userList > option .delUser {
+  visibility: collapse;
+}
+
+popup#userList > option .userArea {
+  width: 120dip;
+}
+
+popup#userList > option .delUser {
+  font-family: webdings;
+  color: white;
+  font-weight: bold;
+}
+
+popup#userList > option .delUser:hover {
+  background-color: #FFFFFF44;
+}
+
+popup#userList > option:hover, 
+popup#userList > option:checked {
+  height: 40dip;
+  background-color: #278CDE;
+}
+
+popup#userList > option:hover img.head, 
+popup#userList > option:checked img.head {
+  size: 38dip;
+}
+
+popup#userList > option:hover .userName, 
+popup#userList > option:checked .userName,
+popup#userList > option:hover .delUser, 
+popup#userList > option:checked .delUser {
+  visibility: visible;
+}
+
+popup#userList > option:hover .userId,
+popup#userList > option:checked .userId {
+  color: white;
+}
+ 
+input[name="password"] {
+  border-bottom-left-radius: @MARGIN_SHADOW;
+}
+
+div.pwd:hover input[name="password"] {
+  border-color: #278CDE
+}     
+ 
+input[name="password"]:empty {
+  color: #7E7E7E;
+}
+
+div#popupKeyboard {
+  height: 26dip;
+  width: 26dip;
+  background-image: url(images/keyboard_normal.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-bottom-right-radius: @MARGIN_SHADOW;
+}
+
+div#popupKeyboard:hover {
+  background-image: url(images/keyboard_hover.png);
+}
+
+div#popupKeyboard:active {
+  background-image: url(images/keyboard_down.png);
+}
+
+
+#keyboardPanel {   
+	background-image: url(images\keypad1.png);
+	background-position: 14dip 14dip 10dip 9dip;
+	background-repeat: expand stretch-top stretch-left stretch-middle stretch-right stretch-bottom;
+	padding: 2dip;
+  background-color: transparent;
+  width: 360dip;
+  height: 110dip;   
+}
+
+#keyboardPanel div.line {
+  height: 22dip;   
+	margin: 4dip 2dip 4dip 2dip;
+  flow: horizontal;
+  vertical-align: middle;
+  horizontal-align: center;
+}
+
+#keyboardPanel button{
+	background-image: url(images\button4.png);
+	background-position: 3dip 2dip 3dip 2dip;
+	background-repeat: expand stretch-top stretch-left stretch-middle stretch-right stretch-bottom;
+	padding:0dip 2dip 3dip 2dip; 
+  margin: 1dip;      
+  width: max-intrinsic;
+  height: 22dip;
+  min-width: 21dip;
+  display: block; 
+  flow: text;
+}
+#keyboardPanel button.nosup{ 
+	font-size:11dip;
+	line-height:28dip; 
+  vertical-align: middle; 
+} 
+
+#keyboardPanel button:checked{
+	background-image: url(images\keypad1.png); 
+}
+
+#keyboardPanel button:hover{
+  background-image:url(images\button5.png); 
+}
+#keyboardPanel button:active{
+	background-image:url(images\button6.png); 
+}
+#keyboardPanel button sup{ 
+  font-size:10px;
+  color:#666;
+}
+   
+#userInput button[type="checkbox"] {
+  width: 70dip;
+  color: #656565;
+  font-size: 12dip;
+  background-image: url(images/checkbox_normal.png);
+}
+
+#userInput button[type="checkbox"]:hover {
+  background-image: url(images/checkbox_hightlight.png);
+}
+
+#userInput button[type="checkbox"]:checked {
+  background-image: url(images/checkbox_tick_normal1.png);
+}
+
+#userInput button[type="checkbox"]:checked:hover {
+  background-image: url(images/checkbox_tick_highlight1.png);
+}
+
+#userInput button[type="checkbox"]:checked:active {
+  background-image: url(images/checkbox_tick_pushed1.png);
+}
+ 
+#login {
+  height: 30dip;
+  width: 192dip;
+  position: absolute;
+  left: 136dip;
+  bottom: 20dip;
+  background-color: #09A3DC;
+  color: white;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 3dip;
+  transition: background-color(linear, 200ms) left(linear, 200ms);
+  behavior: clickable;
+}
+
+#login:hover {
+  background-color: #3CC3F5;
+}
+
+#login:active {
+  background-color: #098CBC;
+}
+
+#userInput[state="ewmlogin"]  #login {
+  left: 124dip;
+}
+
+#userInput[state="addqq"]  #login {
+  left: 124dip;
+}
+
+div#multAccount {
+  size: 24dip; 
+  position: absolute;
+  left: 12dip;
+  bottom: 12dip;
+  
+}
+div#multAccount[state="ewmlogining"] {
+  visibility: collapse;
+}
+
+div#multAccount[state="addqq"] {
+  background-image: url(images/switch_single_normal.png);
+}   
+div#multAccount[state="addqq"]:hover {
+  background-image: url(images/switch_single_hover.png);
+}
+div#multAccount[state="addqq"]:active {
+  background-image: url(images/switch_single_down.png);
+}
+
+div#multAccount[state="backlogin"] {
+  background-image: url(images/switch_multi_normal.png);
+}   
+div#multAccount[state="backlogin"]:hover {
+  background-image: url(images/switch_multi_hover.png);
+}
+div#multAccount[state="backlogin"]:active {
+  background-image: url(images/switch_multi_down.png);
+}
+
+div#ewmLogin {
+  size: 24dip; 
+  position: absolute;
+  right: 12dip;
+  bottom: 12dip;
+  background-image: url(images/corner_right_normal_normal.png);
+}
+
+div#ewmLogin:hover {
+  background-image: url(images/corner_right_hover.png);
+}
+
+div#ewmLogin:active {
+  background-image: url(images/corner_right_normal_down.png);
+}                              
+
+div#ewmLogin[state="ewmlogining"] {
+  visibility: collapse;
+    }

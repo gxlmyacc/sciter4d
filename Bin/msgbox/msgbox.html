@@ -1,0 +1,49 @@
+<html custom-frame="layered">
+<head>
+  <style>
+    @import url(sciter:msgbox.css);
+    
+    html { background-color: white; }
+  
+    @set std-edit < std-edit-base
+    {
+      :root {
+        color:windowtext;
+        padding:3px;  
+        text-align: left;
+        text-selection: windowtext threedface;
+        border: 1pt solid #D5D5D5;
+        font-size: 9pt;
+      }
+
+      :root:hover { border-color: #B5B5B5; outline:3px glow #B5B5B5 0px; }
+
+      :root:owns-popup,
+      :root:focus { 
+        border-color: #FE9900; 
+        text-selection: highlighttext highlight; 
+        outline:3px glow #FE9900 0px;
+      }
+      
+      :root:disabled {  
+        background-color: #F0F0F0; 
+        border-color: #D5D5D5;  
+        color:#999999; 
+      }
+    }
+    #input {
+      style-set: std-edit;
+    }
+  </style>
+  <script type="text/tiscript">
+    function self#ok.onClick(){
+      view.close();
+    }
+    </script>
+</head>
+<body>
+<div id="content" type=""><label>ddd</label><br/><input type="text" id="input" style="display:block;width:1*;"/></div>
+<div id="button-bar">
+<button id="ok" role="default-button">OK</button></div>
+</body>
+</html>

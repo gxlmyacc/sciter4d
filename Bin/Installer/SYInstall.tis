@@ -1,0 +1,59 @@
+namespace SYInstall {
+
+  var currentRoute = "start";
+  var routes = [
+    { name: "start", path: "0_start.html" },
+    { name: "install", path: "1_install.html" },
+    { name: "end", path: "2_end.html" }
+  ];
+
+  //安装信息
+  var installInfos = {
+    installPath: "C:/Program Files/myapp",
+    customPath: false
+  };
+ 
+  //安装页
+  var advImages = [
+    "advs/inst1.png",
+    "advs/inst2.png",
+    "advs/inst3.png"
+  ];
+  var installStep = "none"; //0: none 1:download 2:install
+  var installProgress = 0;
+  var downloadSpeed = "0KB/s";
+
+  
+  function _installMock(){
+    if (installProgress == 0)
+      installStep = "download";
+    installProgress += 1;
+    downloadSpeed = String.printf("%0.2f", Math.random()*100) + "KB/s"
+    if (installProgress < 100) 
+      return true; 
+    self.post(function(){ toEnd(); });
+  }
+  
+  function toInstall(){
+    currentRoute = "install";
+    self.timer(200, _installMock);
+    return true;
+  }
+  
+  function toEnd(){
+    currentRoute = "end";
+    return true;
+  }
+  
+  function toSelectFolder(){
+    var fn = view.selectFolder("选择安装目录");
+    if(!fn) return;
+    installInfos.installPath = fn;
+    return true;
+  }
+  
+  function toUse(){
+    closeApp();
+  }
+  
+}

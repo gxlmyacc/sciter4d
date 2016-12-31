@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+  <script type="text/javascript">
+    window.external.onGetMessage = function(msg){
+      var p = document.getElementById("output");
+      p.innerText = "接收到消息：" + msg;
+      return "已接收到消息！";
+    };
+    
+    function testParentMessage(){
+      var p = document.getElementById("output");
+      if (window.external.postEnable)
+        p.innerText = "CEF返回值：" + window.external.postMessage("哈哈！");
+      else
+        p.innerText = "不支持postMessage";
+    }
+  </script>
+</head>
+<body>
+	 <input type=button value="向父窗口发送消息" onclick='testParentMessage();'> 
+   <p id="output">你好</p>
+</body>
+</html>

@@ -1,0 +1,163 @@
+﻿/*
+  dialog函数将params.body元素作为一个文档模态对话框显示。
+  params参数这里是一个对象，它有以下字段:
+    - params.body: string | Element, 对话框内容体, 它可以是HTML代码段(字符串)，也可以是已存在的<form>元素
+    - params.title: string, 对话框的标题, 它可以是HTML代码段(字符串)，也可以是一个纯文本，
+	                        如果title为提供，则函数将尝试使用params.body元素中的@title属性作为对话框标题
+    - params.buttons: 按钮定义数组，每个按钮是一个下面的对象:
+                      {
+                        caption: string,              // 按钮标题     
+                        value: primitive | function,  // 点击该按钮返回的结果值或一个函数
+                        role: #cancel | #ok
+                      }  
+    - params.returns: 如果该参数等于#values，则返回值是params.body元素中一个输入字段的集合，而不是按钮定义的值
+                            
+ */
+ 
+function dialog(params)
+{
+  // 初始化阶段, 构建弹出HTML标记代码
+  var body = params.body || "没有内容体！";
+  var body_html = "";
+  var caption;
+  if( body !instanceof Element )
+  {
+    body_html = "<div.body>" + body.toString() +"</div>";
+    body = null;
+    caption = params.caption || "?"; 
+  }
+  else
+    caption = body.@#caption || params.caption || "?";
+    
+  var buttons = params.buttons ||
+                [{ caption:"确定", role:#ok, class:"ok", value:true },
+                 { caption:"取消", role:#cancel, class:"cancel", value:false }];
+  var buttons_html = "";
+  for(var button_def in buttons) {
+      var cls = button_def.class ? ("." + button_def.class) : "";
+      buttons_html += String.printf("<button%s>%s</button>", cls, button_def.caption || "");
+  }
+  
+  var html = "<div#lightbox-shim>"
+    "<div.dialog-frame>"
+      "<caption>" + caption + "</caption>"
+      + body_html + 
+      "<text.buttons>" + buttons_html + "</text>"
+    "</div>"
+  "</div>";
+  
+  self.append(html);
+  var dlg = self.last; // 我们的对话框层
+  
+  var bIsMaximizable = view.windowMaximizable;
+  var bIsResizeable  = view.windowResizable;
+  view.isMaximizable = false;
+  view.isResizeable  = false;
+  
+  var eleRoot = view.root.$(body);
+  var vx = eleRoot.box(#left, #client, #root);
+  var vy = eleRoot.box(#top, #client, #root);
+  var vh = eleRoot.box(#height, #client);
+  var vw = eleRoot.box(#width, #client);
+ 
+  dlg.move(vx, vy, vw, vh, #view, #attached-window);
+  dlg.style#visibility = "visible"; 
+
+  var prev_parent = null;
+  var prev_index;
+ 
+  if( !body ) 
+    body = dlg.$(div.body); // if we've got dialog body as an html text 
+  else {
+    // if we've got dialog body as a reference of existing Element 
+    prev_parent = body.parent;
+    prev_index = body.index;
+    dlg.$(div.dialog-frame).insert(body,1); // insert it after the <caption>
+  }  
+  
+  var ret_val = null; // value to return
+  
+  function handleValue(button_val)  
+  {
+    if( typeof button_val == #function) 
+    { // if it is a function, call it with the body element reference
+      ret_val = button_val(body);
+      if(ret_val)
+        body.state.collapsed = true; // to signal that we are done with it.
+    }
+    else
+    {
+      ret_val = button_val;
+      body.state.collapsed = true; // to signal that we are done with it.
+    }
+  }
+  
+  // 装载控制事件处理器
+  dlg.onControlEvent = function(evt)
+  {
+    if( evt.type != Event.BUTTON_CLICK || !evt.target.$is(div#lightbox-shim > div.dialog-frame > text.buttons > button))
+      return;
+    //evt.target is a button on text.buttons bar
+    var button_val = buttons[evt.target.index].value;
+    handleValue(button_val);
+    return true;
+  }
+  // 装载键盘按键事件处理器
+  dlg.onKey = function(evt)
+  {
+    if( evt.type != Event.KEY_DOWN)
+      return;
+    
+    var cmd;
+    
+    if( evt.keyCode == Event.VK_ESCAPE )
+      cmd = #cancel;
+    else if( evt.keyCode == Event.VK_RETURN )
+      cmd = #ok;
+    else 
+      return; // 这里我们只处理ESCAPE、ENTER按键.
+      
+    for( var button_def in buttons )
+    {
+      if( button_def.role == cmd )
+      {
+        handleValue(button_def.value);
+        return true;
+      }  
+    }
+  }
+  
+  if( params.initial )
+    body.value = params.initial;
+  
+  // 显示对话框，并进入模态循环:
+  
+  body.state.expanded = true;
+
+  view.update(); 
+
+  var sfocus = view.focus;
+  view.eventsRoot = dlg;
+  while (dlg.isVisible && !body.state.collapsed && view.state != View.WINDOW_HIDDEN) 
+     view.doEvent();
+  view.eventsRoot = null;
+  view.focus = sfocus;
+  
+  if(prev_parent) //如果我们是使用已经存在的DOM元素，则将它返还
+    prev_parent.insert(body,prev_index);
+  
+
+  dlg.style#visibility = "collapse";
+  dlg.move();  
+  dlg.detach(); // 从DOM中移除对话框元素
+  
+  view.windowMaximizable = bIsMaximizable;
+  view.windowResizable  = bIsResizeable;
+
+  view.update(); 
+  
+  if(params.returns == #values && ret_val == #ok)
+    return body.value;
+  
+  return ret_val;
+}

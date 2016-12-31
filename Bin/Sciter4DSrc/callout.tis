@@ -1,0 +1,63 @@
+function ShowCallout(forElement, message, timeout = 3000) {
+  var (x,y,w,h) = forElement.box(#rectw,#border,#view);
+  var balloon = ShowCallout.callout("message");
+  
+  ShowCallout.balloon = balloon;
+  
+  forElement.@.hasClass("primary") ? balloon.@.addClass("primary") : balloon.@.removeClass("primary");
+  forElement.@.hasClass("info") ? balloon.@.addClass("info") : balloon.@.removeClass("info");
+  forElement.@.hasClass("success") ? balloon.@.addClass("success") : balloon.@.removeClass("success");
+  forElement.@.hasClass("warning") ? balloon.@.addClass("warning") : balloon.@.removeClass("warning");
+  forElement.@.hasClass("error") ? balloon.@.addClass("error") : balloon.@.removeClass("error");
+  forElement.@.hasClass("danger") ? balloon.@.addClass("danger") : balloon.@.removeClass("danger");
+  
+  balloon.paintBackground = function(gfx) {
+    const (width,height) = balloon.box(#dimension, #border);
+    const (loff,toff,roff,boff) = this.box(#rect, #border, #inner);
+    gfx.translate(-loff,-toff);
+    gfx.fillColor(color(this.style#background-color));
+    gfx.strokeWidth(1).strokeColor(ShowCallout.CALLOUT_BORDER_COLOR);
+    gfx.rectangle(0,10,width,height-10,5);
+    gfx.triangle(20,10,20,0,30,10);
+    gfx.strokeWidth(2).strokeColor(color(this.style#background-color)).line(21,10,29,10);
+    return true;
+  }
+  balloon.html = message instanceof Element ? message.html : message;
+  
+  y += h;
+  y += ShowCallout.CALLOUT_OFFSET_Y;
+  x += ShowCallout.CALLOUT_OFFSET_X;
+       
+  forElement.state.focusable && (forElement.state.focus = true);
+  
+  ShowCallout.shutdown(); 
+  balloon.move(x, y, #view);
+  balloon.timer(timeout, ShowCallout.shutdown);
+  
+  return balloon;
+}
+
+ShowCallout.CALLOUT_OFFSET_X = 10;
+ShowCallout.CALLOUT_OFFSET_Y = 5;
+ShowCallout.CALLOUT_BORDER_COLOR = color("#aaa8");
+
+ShowCallout.callout = function(){
+    var elements = {};
+    return function(calloutType)
+    {
+      var callout = elements[calloutType];
+      if( callout ) return callout;
+      callout = new Element("popup");
+      callout.attributes.addClass("callout", calloutType); 
+      self.$(head).append(callout);
+      elements[calloutType] = callout;
+      return callout;
+    }
+}();
+
+ShowCallout.shutdown = function(){
+  if(var balloon = ShowCallout.balloon) {
+     balloon.move();
+     balloon.timer(0, ShowCallout.shutdown); // stop the timer
+  }
+};

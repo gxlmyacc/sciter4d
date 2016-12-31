@@ -1,0 +1,127 @@
+﻿<html>
+  <head>
+    <title></title>
+    <style>
+
+    @import "plugin://sciter4d/Plugins/SciterFlash"; 
+  
+    html {
+	    background-image: url(main_bg.png);
+	    background-repeat: stretch;
+	  }
+
+    widget[type=flash] {
+	    display: inline-block;
+      behavior: flash;
+ 
+      width: *;
+      height: *;
+	    margin: 10px;
+      border:1px solid black;
+      foreground-size:contain;
+    } 
+
+	  #container { flow:horizontal; size:*; }
+    </style>
+    <script type="text/tiscript">
+      include "datas.tis"
+      
+      function Object.toChartXML(){
+        var xml = new Element("chart");
+        for(var (n, v) in this.chart) {
+          xml.attributes[n] = v;
+        }
+        for(var (i, v) in this.data) {
+          var item = new Element("set");
+          for(var (key, value) in v) 
+            item.attributes[key] = value;
+          xml.append(item);
+        }
+        return xml.outerHtml;
+      }
+
+      function self.ready() {
+        var flash = $(widget[type=flash]).flash();
+        var select = $(select[type=dropdown-select]);
+        select.onValueChanged = function () {
+          var movie = this.url("FusionCharts/" + this.value).substring(7, -1).urlUnescape();
+          //var movie = "FusionCharts/" + this.value;
+          flash.Movie = movie;    
+          flash.FlashVars = "dataXML=" + jsonData.toChartXML();
+        };
+        select.value = "Column3D.swf";
+ 
+        //flash.FlashVars = "dataXML=" + $(chart).outerHtml;
+        flash.Movie = this.url("FusionCharts/" + select.value).substring(7, -1).urlUnescape();
+        flash.FlashVars = "dataXML=" + jsonData.toChartXML(); 
+      }
+    </script>
+  </head>
+  <chart yAxisName='销售个数' caption='2012年年度销售情况统计分析' useRoundEdges='1' bgColor='FFFFFF,FFFFFF' showBorder='0'>  
+    <set label='一月' value='25000'  />   
+    <set label='二月' value='35000' />   
+    <set label='三月' value='42300' />   
+    <set label='四月' value='35300' />   
+    <set label='五月' value='31300' />  
+    <set label='六月' value='25000'  />   
+    <set label='七月' value='35000' />   
+    <set label='八月' value='42300' />   
+    <set label='九月' value='35300' />   
+    <set label='10月' value='31300' />  
+    <set label='11月' value='25000'  />   
+    <set label='12月' value='35000' />   
+  </chart>  
+<body>
+  <select|dropdown-select >
+    <option value="Area2D.swf">Area2D.swf</option>
+    <option value="Bar2D.swf">Bar2D.swf</option>
+    <option value="Bubble.swf">Bubble.swf</option>
+    <option value="Column2D.swf">Column2D.swf</option>
+    <option value="Column3D.swf">Column3D.swf</option>
+    <option value="Doughnut2D.swf">Doughnut2D.swf</option>
+    <option value="Doughnut3D.swf">Doughnut3D.swf</option>
+    <option value="FCExporter.swf">FCExporter.swf</option>
+    <option value="Line.swf">Line.swf</option>
+    <option value="Marimekko.swf">Marimekko.swf</option>
+    <option value="MSArea.swf">MSArea.swf</option>
+    <option value="MSBar2D.swf">MSBar2D.swf</option>
+    <option value="MSBar3D.swf">MSBar3D.swf</option>
+    <option value="MSColumn2D.swf">MSColumn2D.swf</option>
+    <option value="MSColumn3D.swf">MSColumn3D.swf</option>
+    <option value="MSColumn3DLineDY.swf">MSColumn3DLineDY.swf</option>
+    <option value="MSColumnLine3D.swf">MSColumnLine3D.swf</option>
+    <option value="MSCombi2D.swf">MSCombi2D.swf</option>
+    <option value="MSCombi3D.swf">MSCombi3D.swf</option>
+    <option value="MSCombiDY2D.swf">MSCombiDY2D.swf</option>
+    <option value="MSLine.swf">MSLine.swf</option>
+    <option value="MSStackedColumn2D.swf">MSStackedColumn2D.swf</option>
+    <option value="MSStackedColumn2DLineDY.swf">MSStackedColumn2DLineDY.swf</option>
+    <option value="Pareto2D.swf">Pareto2D.swf</option>
+    <option value="Pareto3D.swf">Pareto3D.swf</option>
+    <option value="Pie2D.swf">Pie2D.swf</option>
+    <option value="Pie3D.swf">Pie3D.swf</option>
+    <option value="Scatter.swf">Scatter.swf</option>
+    <option value="ScrollArea2D.swf">ScrollArea2D.swf</option>
+    <option value="ScrollColumn2D.swf">ScrollColumn2D.swf</option>
+    <option value="ScrollCombi2D.swf">ScrollCombi2D.swf</option>
+    <option value="ScrollCombiDY2D.swf">ScrollCombiDY2D.swf</option>
+    <option value="ScrollLine2D.swf">ScrollLine2D.swf</option>
+    <option value="ScrollStackedColumn2D.swf">ScrollStackedColumn2D.swf</option>
+    <option value="SSGrid.swf">SSGrid.swf</option>
+    <option value="StackedArea2D.swf">StackedArea2D.swf</option>
+    <option value="StackedBar2D.swf">StackedBar2D.swf</option>
+    <option value="StackedBar3D.swf">StackedBar3D.swf</option>
+    <option value="StackedColumn2D.swf">StackedColumn2D.swf</option>
+    <option value="StackedColumn2DLine.swf">StackedColumn2DLine.swf</option>
+    <option value="StackedColumn3D.swf">StackedColumn3D.swf</option>
+    <option value="StackedColumn3DLine.swf">StackedColumn3DLine.swf</option>
+    <option value="StackedColumn3DLineDY.swf">StackedColumn3DLineDY.swf</option>
+    <option value="ZoomLine.swf">ZoomLine.swf</option>
+  </select>
+  <div #container>
+    <!--wmode="Transparent"-->
+    <widget type="flash" wmode="Transparent" scale="ShowAll" />
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+.svn
+Src/
+SciterVideoLib/
+Others/
+Demos/Help/
+
+Bin/sciter32_*.dll
+
+# delphi complie files
+*.dcu
+*.~*
+# *.exe
+
+# other files
+SciterGroupWithSrc.bpg
+SciterGroupWithSrc.groupproj
+SciterGroupWithSrc.groupproj.local
+
+
+

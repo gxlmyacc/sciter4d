@@ -1,0 +1,18 @@
+popup.callout {
+  display: block;
+  width: max-content;
+  height: max-content;
+  font: 1em arial, helvetica, sans-serif;
+  color: #333;
+  background-color: #eee;
+  border-color: #aaa8;
+  padding: 1px 15px;
+  margin: 10px 0px 0px 0px;
+}
+popup.callout.primary { color: #fff; background-color: #337ab7; }
+popup.callout.info { color: #fff; background-color: #5bc0de; }
+popup.callout.success { color: #fff; background-color: #5cb85c; }
+popup.callout.warning { color: #fff; background-color: #f0ad4e; }
+popup.callout.error, popup.callout.danger { color: #fff; background-color: #c9302c; }
+
+popup.callout.message { padding: 12px 10px 2px 10px; }

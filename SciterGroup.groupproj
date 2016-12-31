@@ -1,0 +1,372 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{E2736A9C-8E3D-4D75-B85C-3565FE6008D2}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Demos\Layered\Layered.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\QQLogin\QQLogin.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\Test\SciterTest.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\Sciter\Sciter.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\minimal\minimal.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\Installer\Installer.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\plain-win\plainWin.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\ui-framework\UIFramework.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\uminimal\uminimal.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\360\d360.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\d360_2\d360_2.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\d360_3\d360_3.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\d360_4\d360_4.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\Picasa\Picasa.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\Collapsible\Collapsible.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\KillerWhale\KillerWhale.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\Buttons\AButtons.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\DeskTip\DeskTip.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\BrushAsist\BrushAsist.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\repeatable\Repeatable.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\Plus\Plus.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\DeskLyrics\DeskLyrics.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\EPPortal\EPPortal.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\DirectxDemo\DirectxDemo.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\VSTDemo\VSTDemo.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\VSTPlugin\VSTPlugin.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Plugins\SciterWke\SciterWke.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Plugins\SciterFlash\SciterFlash.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Plugins\SciterIE\SciterIE.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="Layered">
+        <MSBuild Projects="Demos\Layered\Layered.dproj"/>
+    </Target>
+    <Target Name="Layered:Clean">
+        <MSBuild Projects="Demos\Layered\Layered.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Layered:Make">
+        <MSBuild Projects="Demos\Layered\Layered.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="QQLogin">
+        <MSBuild Projects="Demos\QQLogin\QQLogin.dproj"/>
+    </Target>
+    <Target Name="QQLogin:Clean">
+        <MSBuild Projects="Demos\QQLogin\QQLogin.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="QQLogin:Make">
+        <MSBuild Projects="Demos\QQLogin\QQLogin.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SciterTest">
+        <MSBuild Projects="Demos\Test\SciterTest.dproj"/>
+    </Target>
+    <Target Name="SciterTest:Clean">
+        <MSBuild Projects="Demos\Test\SciterTest.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SciterTest:Make">
+        <MSBuild Projects="Demos\Test\SciterTest.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Sciter">
+        <MSBuild Projects="Demos\Sciter\Sciter.dproj"/>
+    </Target>
+    <Target Name="Sciter:Clean">
+        <MSBuild Projects="Demos\Sciter\Sciter.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Sciter:Make">
+        <MSBuild Projects="Demos\Sciter\Sciter.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="minimal">
+        <MSBuild Projects="Demos\minimal\minimal.dproj"/>
+    </Target>
+    <Target Name="minimal:Clean">
+        <MSBuild Projects="Demos\minimal\minimal.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="minimal:Make">
+        <MSBuild Projects="Demos\minimal\minimal.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Installer">
+        <MSBuild Projects="Demos\Installer\Installer.dproj"/>
+    </Target>
+    <Target Name="Installer:Clean">
+        <MSBuild Projects="Demos\Installer\Installer.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Installer:Make">
+        <MSBuild Projects="Demos\Installer\Installer.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="plainWin">
+        <MSBuild Projects="Demos\plain-win\plainWin.dproj"/>
+    </Target>
+    <Target Name="plainWin:Clean">
+        <MSBuild Projects="Demos\plain-win\plainWin.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="plainWin:Make">
+        <MSBuild Projects="Demos\plain-win\plainWin.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="UIFramework">
+        <MSBuild Projects="Demos\ui-framework\UIFramework.dproj"/>
+    </Target>
+    <Target Name="UIFramework:Clean">
+        <MSBuild Projects="Demos\ui-framework\UIFramework.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="UIFramework:Make">
+        <MSBuild Projects="Demos\ui-framework\UIFramework.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="uminimal">
+        <MSBuild Projects="Demos\uminimal\uminimal.dproj"/>
+    </Target>
+    <Target Name="uminimal:Clean">
+        <MSBuild Projects="Demos\uminimal\uminimal.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="uminimal:Make">
+        <MSBuild Projects="Demos\uminimal\uminimal.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="d360">
+        <MSBuild Projects="Demos\360\d360.dproj"/>
+    </Target>
+    <Target Name="d360:Clean">
+        <MSBuild Projects="Demos\360\d360.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="d360:Make">
+        <MSBuild Projects="Demos\360\d360.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="d360_2">
+        <MSBuild Projects="Demos\d360_2\d360_2.dproj"/>
+    </Target>
+    <Target Name="d360_2:Clean">
+        <MSBuild Projects="Demos\d360_2\d360_2.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="d360_2:Make">
+        <MSBuild Projects="Demos\d360_2\d360_2.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="d360_3">
+        <MSBuild Projects="Demos\d360_3\d360_3.dproj"/>
+    </Target>
+    <Target Name="d360_3:Clean">
+        <MSBuild Projects="Demos\d360_3\d360_3.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="d360_3:Make">
+        <MSBuild Projects="Demos\d360_3\d360_3.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="d360_4">
+        <MSBuild Projects="Demos\d360_4\d360_4.dproj"/>
+    </Target>
+    <Target Name="d360_4:Clean">
+        <MSBuild Projects="Demos\d360_4\d360_4.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="d360_4:Make">
+        <MSBuild Projects="Demos\d360_4\d360_4.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Picasa">
+        <MSBuild Projects="Demos\Picasa\Picasa.dproj"/>
+    </Target>
+    <Target Name="Picasa:Clean">
+        <MSBuild Projects="Demos\Picasa\Picasa.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Picasa:Make">
+        <MSBuild Projects="Demos\Picasa\Picasa.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Collapsible">
+        <MSBuild Projects="Demos\Collapsible\Collapsible.dproj"/>
+    </Target>
+    <Target Name="Collapsible:Clean">
+        <MSBuild Projects="Demos\Collapsible\Collapsible.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Collapsible:Make">
+        <MSBuild Projects="Demos\Collapsible\Collapsible.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="KillerWhale">
+        <MSBuild Projects="Demos\KillerWhale\KillerWhale.dproj"/>
+    </Target>
+    <Target Name="KillerWhale:Clean">
+        <MSBuild Projects="Demos\KillerWhale\KillerWhale.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="KillerWhale:Make">
+        <MSBuild Projects="Demos\KillerWhale\KillerWhale.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="AButtons">
+        <MSBuild Projects="Demos\Buttons\AButtons.dproj"/>
+    </Target>
+    <Target Name="AButtons:Clean">
+        <MSBuild Projects="Demos\Buttons\AButtons.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="AButtons:Make">
+        <MSBuild Projects="Demos\Buttons\AButtons.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DeskTip">
+        <MSBuild Projects="Demos\DeskTip\DeskTip.dproj"/>
+    </Target>
+    <Target Name="DeskTip:Clean">
+        <MSBuild Projects="Demos\DeskTip\DeskTip.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DeskTip:Make">
+        <MSBuild Projects="Demos\DeskTip\DeskTip.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="BrushAsist">
+        <MSBuild Projects="Demos\BrushAsist\BrushAsist.dproj"/>
+    </Target>
+    <Target Name="BrushAsist:Clean">
+        <MSBuild Projects="Demos\BrushAsist\BrushAsist.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="BrushAsist:Make">
+        <MSBuild Projects="Demos\BrushAsist\BrushAsist.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Repeatable">
+        <MSBuild Projects="Demos\repeatable\Repeatable.dproj"/>
+    </Target>
+    <Target Name="Repeatable:Clean">
+        <MSBuild Projects="Demos\repeatable\Repeatable.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Repeatable:Make">
+        <MSBuild Projects="Demos\repeatable\Repeatable.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Plus">
+        <MSBuild Projects="Demos\Plus\Plus.dproj"/>
+    </Target>
+    <Target Name="Plus:Clean">
+        <MSBuild Projects="Demos\Plus\Plus.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Plus:Make">
+        <MSBuild Projects="Demos\Plus\Plus.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DeskLyrics">
+        <MSBuild Projects="Demos\DeskLyrics\DeskLyrics.dproj"/>
+    </Target>
+    <Target Name="DeskLyrics:Clean">
+        <MSBuild Projects="Demos\DeskLyrics\DeskLyrics.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DeskLyrics:Make">
+        <MSBuild Projects="Demos\DeskLyrics\DeskLyrics.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="EPPortal">
+        <MSBuild Projects="Demos\EPPortal\EPPortal.dproj"/>
+    </Target>
+    <Target Name="EPPortal:Clean">
+        <MSBuild Projects="Demos\EPPortal\EPPortal.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="EPPortal:Make">
+        <MSBuild Projects="Demos\EPPortal\EPPortal.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DirectxDemo">
+        <MSBuild Projects="Demos\DirectxDemo\DirectxDemo.dproj"/>
+    </Target>
+    <Target Name="DirectxDemo:Clean">
+        <MSBuild Projects="Demos\DirectxDemo\DirectxDemo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DirectxDemo:Make">
+        <MSBuild Projects="Demos\DirectxDemo\DirectxDemo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="VSTDemo">
+        <MSBuild Projects="Demos\VSTDemo\VSTDemo.dproj"/>
+    </Target>
+    <Target Name="VSTDemo:Clean">
+        <MSBuild Projects="Demos\VSTDemo\VSTDemo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VSTDemo:Make">
+        <MSBuild Projects="Demos\VSTDemo\VSTDemo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="VSTPlugin">
+        <MSBuild Projects="Demos\VSTPlugin\VSTPlugin.dproj"/>
+    </Target>
+    <Target Name="VSTPlugin:Clean">
+        <MSBuild Projects="Demos\VSTPlugin\VSTPlugin.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VSTPlugin:Make">
+        <MSBuild Projects="Demos\VSTPlugin\VSTPlugin.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SciterWke">
+        <MSBuild Projects="Plugins\SciterWke\SciterWke.dproj"/>
+    </Target>
+    <Target Name="SciterWke:Clean">
+        <MSBuild Projects="Plugins\SciterWke\SciterWke.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SciterWke:Make">
+        <MSBuild Projects="Plugins\SciterWke\SciterWke.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SciterFlash">
+        <MSBuild Projects="Plugins\SciterFlash\SciterFlash.dproj"/>
+    </Target>
+    <Target Name="SciterFlash:Clean">
+        <MSBuild Projects="Plugins\SciterFlash\SciterFlash.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SciterFlash:Make">
+        <MSBuild Projects="Plugins\SciterFlash\SciterFlash.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SciterIE">
+        <MSBuild Projects="Plugins\SciterIE\SciterIE.dproj"/>
+    </Target>
+    <Target Name="SciterIE:Clean">
+        <MSBuild Projects="Plugins\SciterIE\SciterIE.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SciterIE:Make">
+        <MSBuild Projects="Plugins\SciterIE\SciterIE.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="Layered;QQLogin;SciterTest;Sciter;minimal;Installer;plainWin;UIFramework;uminimal;d360;d360_2;d360_3;d360_4;Picasa;Collapsible;KillerWhale;AButtons;DeskTip;BrushAsist;Repeatable;Plus;DeskLyrics;EPPortal;DirectxDemo;VSTDemo;VSTPlugin;SciterWke;SciterFlash;SciterIE"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="Layered:Clean;QQLogin:Clean;SciterTest:Clean;Sciter:Clean;minimal:Clean;Installer:Clean;plainWin:Clean;UIFramework:Clean;uminimal:Clean;d360:Clean;d360_2:Clean;d360_3:Clean;d360_4:Clean;Picasa:Clean;Collapsible:Clean;KillerWhale:Clean;AButtons:Clean;DeskTip:Clean;BrushAsist:Clean;Repeatable:Clean;Plus:Clean;DeskLyrics:Clean;EPPortal:Clean;DirectxDemo:Clean;VSTDemo:Clean;VSTPlugin:Clean;SciterWke:Clean;SciterFlash:Clean;SciterIE:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="Layered:Make;QQLogin:Make;SciterTest:Make;Sciter:Make;minimal:Make;Installer:Make;plainWin:Make;UIFramework:Make;uminimal:Make;d360:Make;d360_2:Make;d360_3:Make;d360_4:Make;Picasa:Make;Collapsible:Make;KillerWhale:Make;AButtons:Make;DeskTip:Make;BrushAsist:Make;Repeatable:Make;Plus:Make;DeskLyrics:Make;EPPortal:Make;DirectxDemo:Make;VSTDemo:Make;VSTPlugin:Make;SciterWke:Make;SciterFlash:Make;SciterIE:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

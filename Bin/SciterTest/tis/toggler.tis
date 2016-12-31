@@ -1,0 +1,15 @@
+﻿class Toggler: Behavior
+{
+  function attached() {
+    if (this.@["oncaption"])
+      this.append("<caption .true>" + this.@["oncaption"] + "</caption>");
+    else
+    if (!this.$(:root > caption.true))
+      this.append("<caption .true>开</caption>");
+
+    if (this.@["offcaption"])
+      this.append("<caption .false>" + this.@["offcaption"] + "</caption>");
+    if (!this.$(:root > caption.false))
+      this.append("<caption .false>关</caption>");
+  }
+}

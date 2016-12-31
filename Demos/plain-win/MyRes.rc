@@ -1,0 +1,31 @@
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_PLAINWIN            ICON                    "res\\plain-win.ico"
+IDI_SMALL               ICON                    "res\\small.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// HTML
+//
+
+DEFAULT                 HTML                    "res\\default.htm"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// PNG
+//
+
+GO                      PNG                     "res\\go.png"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// JSON
+//
+
+TEST                    JSON                     "res\\test.json"
+

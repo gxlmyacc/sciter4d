@@ -1,0 +1,36 @@
+﻿function SetupLightbox(selector, cbk_on_show)
+{
+	self.on("click", selector, function(evt) {
+		assert(evt.target.$is({selector}));
+
+		var el_body = el_overlay.$(.ligthbox-body);
+		el_body.clear();
+		cbk_on_show(evt.target, el_body);
+
+		self.style#overflow = "hidden";
+		el_overlay.@.addClass("show");
+		el_overlay.style#visibility = "visible";
+	});
+}
+
+function CloseLightbox()
+{
+	el_overlay.@.removeClass("show");
+	el_overlay.timer(300, function() {
+		el_overlay.style#visibility = "none";
+	});
+}
+
+
+var el_overlay = new Element(#div);
+$(body).append(el_overlay);
+
+el_overlay.@.addClass("ligthbox-overlay");
+el_overlay.style#visibility = "none";
+el_overlay.html = "<div .ligthbox><div .ligthbox-body></div><div .ligthbox-close>r</div></div>";
+
+el_overlay.$(.ligthbox-close).on("click", CloseLightbox);
+el_overlay.on("click", function(evt) {
+	if(evt.target==el_overlay || evt.target==el_overlay.$(.ligthbox-close))
+		CloseLightbox();
+});

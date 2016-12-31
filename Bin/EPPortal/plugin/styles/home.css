@@ -1,0 +1,263 @@
+﻿html {background-color: transparent; }
+
+body {
+  font-family: 微软雅黑 宋体 Tahoma;
+  font-size: 9pt;
+  line-height: 18px;
+  flow: horizontal;
+  }
+
+#busMenu {
+  height:1*;
+  width: 220px;
+  background-color: #FFFFFF;
+}
+
+#busMenu .busMenuCaption {
+  height: 56px;
+  background: url(../images/home/menu_caption_bg.png) repeat-x;
+  vertical-align: middle;
+  color: white;
+  flow: horizontal;
+}
+
+#busMenu .busMenuCaption img {
+  display: block;
+  margin-left: 10px;
+  margin-top: 1*;
+  margin-bottom: 1*;
+}
+
+#busMenu .busMenuCaption span {
+  display: block;
+  font-size: 19px;
+  font-weight: bold;
+  margin-left:5px;
+  margin-top: 1*;
+  margin-bottom: 1*;
+}
+
+#busMenu .busMenuItem {
+  height: 45px;
+  border-bottom: 1px solid #EEF1F8;
+  vertical-align: middle; 
+  flow: horizontal;
+  cursor: pointer;
+  behavior: ~clickable;
+}
+
+#busMenu .busMenuItem:hover {
+  background-color: #F7F7F7;
+  color: black;
+}
+
+#busMenu .busMenuItem.blend {
+  transition: blend(linear, 400ms);
+}
+  
+
+#busMenu .busMenuItem img {
+  display: block;
+  margin-left: 15px;
+  margin-top: 1*;
+  margin-bottom: 1*;
+}
+
+#busMenu .busMenuItem span {
+  display: block;
+  margin-left:5px;
+  font-size: 14px;
+  margin-top: 1*;
+  margin-bottom: 1*;
+}
+
+#client {
+  height: 1*;
+  width:1*;
+  flow: "a b" "c c" "d d";
+}
+
+#client_top {
+  margin:10px;
+  float: "a";
+  width:360px;
+  height: 227px;
+  border-radius: 2px 2px;
+} 
+
+@image-map button-map {
+  src: url(../images/home/bgs.png);
+  cells: 1 4;
+  items:
+    button1,
+	button2,
+	button3,
+	button4
+}
+
+#client_top > .strip {
+  flow: horizontal;
+}
+
+#client_top > .strip [target] {
+  behavior: menutab;
+  background-color: #B6C2C9;
+  width: 160px;
+  height: 34px; 
+  margin-right: 10px;
+  text-align: center;
+  vertical-align: middle;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  color: #fff;
+}
+
+#client_top .strip [target][selected] {
+  background-color: #fff;
+  color: #838EA0;
+}
+
+#client_top [name] {
+  height: 1*;
+  width: 1*;
+  background-color: #fff;
+  flow: row(div, div);
+}
+
+#client_top [name] > [class] {
+  width: 1*;
+  height: 1*;
+  margin: 10px;
+  text-align: center;
+  vertical-align: bottom;
+  cursor: pointer;
+}
+
+#client_top [name] > .button1 {
+  background: image-map(button-map, button1) no-repeat center top;
+}
+
+#client_top [name] > .button2 {
+  background: image-map(button-map, button2) no-repeat center top;
+}
+
+#client_top [name] > .button3 {
+  background: image-map(button-map, button3) no-repeat center top;
+}
+
+#client_top [name] > .button4 {
+  background: image-map(button-map, button4) no-repeat center top;
+}
+
+#client_tzgg {
+  margin:10px;
+  float: "b";
+  width: 1*;
+  border-radius: 2px 2px;
+  background-color: #FFFFFF;
+  border: 1px solid #E2E5EB;
+} 
+
+#client_tzgg_caption {
+  color: #838EA0;
+  font-weight: bold;
+  height: 43px;
+  border-bottom: 1px solid #E5E5E5; 
+  vertical-align: middle;
+  padding-left: 15px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#tzgg_list {
+  height: 100%%;
+  width: 100%%;
+  list-style: square outside;
+  list-marker-color: #E8E8E8;
+  list-marker-size: 15px;
+  margin: 10px;
+}
+
+#tzgg_list li {
+  height: 30px;
+  color: #7CA6DE; 
+  margin-left: 10px;
+}
+
+#tzgg_list li:first-child {
+  margin-top: 10px;
+}
+
+#tzgg_list .tzgg_title {
+
+}
+
+#tzgg_list .tzgg_title:hover {
+  color: #3C7FB2;
+  cursor: pointer;
+}
+
+#tzgg_list .tzgg_date {
+  display: inline-block;
+  color: #DACFCC;
+  position:absolute;
+  right: 60px;
+}
+
+#client_dbsx {
+  margin:10px;
+  float: "c";
+  height: 1*;
+  border-radius: 2px 2px;
+  background-color: #FFFFFF;
+  border: 1px solid #E2E5EB;
+} 
+
+#client_dbsx_caption {
+  color: #838EA0;
+  font-weight: bold;
+  font-size: 13px;
+  height: 20px;
+  border-bottom: 1px solid #E5E5E5; 
+  vertical-align: middle;
+  padding-left: 15px;
+  padding-top: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#client_dbsx table {
+  width: 1*;
+  height: 1*;
+}
+
+#client_dbsx table thead {
+  color: #B3BDD8;
+  border-bottom: 2px solid #ACB7CA;
+  height: 20px;
+  vertical-align: middle;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#client_dbsx table tbody {
+  width: 1*;
+  height: 1*;
+}
+
+#client_dbsx table tbody[nochild] {
+  background: url(../images/home/icon_no_dbsx.png) no-repeat center center;
+}
+
+#client_footer {
+  margin:10px;
+  float: "d";
+  height: 70px;
+  background-color: #FFFFFF;
+  border: 1px solid #E2E5EB;
+  foreground: url(../images/home/menu_footer_1.jpg) stretch;
+} 
+
+
+
+

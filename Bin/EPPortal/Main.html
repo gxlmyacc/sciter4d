@@ -1,0 +1,125 @@
+﻿<html>  
+ <head>
+  <meta charset="utf-8" />
+
+  <title>主界面</title> 
+  <link type="text/css" rel="stylesheet" href="styles/reset.css" /> 
+  <link type="text/css" rel="stylesheet" href="styles/main.css" /> 
+
+  <script type="text/tiscript">
+       
+      function DynTip() {
+      
+        var tooltip = $(popup#dyn-tooltip); // element will be shown as tooltip 
+		    var format = this.attributes["title"]
+        
+        function provideTip(evt) {
+          tooltip.text = format;
+          evt.source = tooltip;
+          return true;
+        }
+      
+        this.subscribe(provideTip, Event.BEHAVIOR_EVENT,  Event.REQUEST_TOOLTIP);
+      }
+
+	  function popupMoreApp(x, y, w){
+		  var moreappPopup = $(#moreapp-popup);
+		  var moreapp = $(.moreapp);
+
+		 moreappPopup.style["width"] = w;
+		 moreapp.popup(moreappPopup, x, y);   
+	  }
+
+	  function closeMoreApp(){
+		 var moreappPopup = $(#moreapp-popup);
+		 moreappPopup.closePopup();      
+	  }
+  </script>
+
+   <popup id="dyn-tooltip" role="tooltip"></popup>
+ </head> 
+ <body> 
+   
+  <div id="wapper"> 
+   <div id="header" command="window-caption"> 
+    <h5>
+	  <span class="ctrl"> 
+	    <span class="menu" title="菜单" command="no-window-caption">&nbsp;
+		<menu class="popup blend" id="sysmenu">
+		  <li#mnChagnePwd>修改密码</li>
+		  <hr />
+		  <li#mnHelp>帮助</li>
+		  <li#mnAbout>关于</li>
+		  <hr />
+		  <li#mnChangeComp>切换企业</li>
+		  <li#mnChangeUser>切换用户</li>
+          <li#mnExit>退出</li>
+		</menu>
+		</span>
+	    <span class="min" title="最小化" command="window-min">&nbsp;</span>
+	    <span class="max" title="最大化" command="window-max">&nbsp;</span>
+	    <span class="restore" title="还原" command="window-restore">&nbsp;</span>
+	    <span class="close" title="关闭" command="window-close">&nbsp;</span> 
+	  </span> 
+	</h5> 
+	<div class="headerClient">
+	<img class="logo" src="images/header/icon_logo.png" />
+    <ul class="navbar" command="no-window-caption"> 
+     <li class="blend" href="main" title="首页" url="plugin/home.html?key1=333&key2=张三&key3=%E6%96%87%E6%A1%A3" selected>
+	   <img src="images/header/navbar/icon_home_normal.png" /><span>首页</span>
+	  </li> 
+     <li class="blend" href="main" title="网上申报" url="plugin/wssb.html">
+	   <img src="images/header/navbar/icon_wssb_normal.png" /><span>网上申报</span>
+	  </li> 
+     <li class="blend" href="main" title="普票开票" url="plugin/ppkp.html">
+	   <img src="images/header/navbar/icon_ppkp_normal.png" /><span>普票开票</span>
+	  </li> 
+     <li class="blend" href="main" title="嵌入DELPHI的VCL控件" url="plugin/incVCL.html">
+	   <img src="images/header/navbar/icon_grsds_normal.png" /><span>嵌入VCL</span>
+	  </li> 
+     <li class="blend" href="main" title="嵌入Sciter" url="plugin/subSciterForm.html">
+	   <img src="images/header/navbar/icon_kpgjx_normal.png" /><span>嵌入Sciter</span>
+	  </li> 
+     <li class="blend" href="main" title="网上大厅" url="plugin/wsdt.html">
+	   <img src="images/header/navbar/icon_wsdt_normal.png" /><span>网上大厅</span>
+	  </li> 
+     <li class="blend" href="main" title="第三方软件" url="plugin/dsfrj.html?key1=value2&key2=value2">
+	   <img src="images/header/navbar/icon_dsfrj_normal.png" /><span>第三方软件</span>
+	  </li> 
+     <li class="blend moreapp" href="main" title="更多" noselected>
+	   <img src="images/header/icon_more.png" />
+	  </li>
+    </ul>
+	<popup index="" id="moreapp-popup" class="popup">
+	  <li class="blend" title="其他" href="main" url="plugin/qt.html">
+		<img src="images/header/navbar/icon_dsfrj_normal.png" /><span>其他</span>
+	  </li>
+	</popup>
+	<ul class="operabar">
+     <li title="我要吐槽">
+	   <img src="images/header/operabar/icon_tucao_normal.png" />
+	 </li> 
+	 <li title="切换企业">
+	   <img src="images/header/operabar/icon_qhqy_normal.png" />
+	 </li> 
+	 <li id="obMsgCenter" title="消息中心">
+	   <img src="images/header/operabar/icon_xxzx_nromal.png" />
+	   <div id="obMsgCount">99</div>
+	 </li> 
+	 <li title="设置中心">
+	   <img src="images/header/operabar/icon_szzx_normal.png" />
+	 </li> 
+	<ul>
+    </div>
+   </div> 
+   <frame name="main" class="main-frame" before-animation="scroll-right(cubic-in-out,500ms)" after-animation="scroll-left(cubic-in-out,500ms)" alwaysload >
+   </frame> 
+   <div id="footer"> 
+    <span class="Enterprise">XXX企业[1323443454666667]</span>
+    <span id="about1" class="about">关于1</span> 
+    <span id="about2" class="about">关于2</span> 
+   </div> 
+  </div> 
+</div>
+ </body>
+</html>
