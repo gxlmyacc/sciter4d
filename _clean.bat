@@ -14,6 +14,6 @@ del /s *.so
 del /s *.stat
 del /s *.tci
 del /s *.bak
-del /s *.obj
+## del /s *.obj
 del /s *.rsm
 del /s /A Thumbs.db

@@ -16,9 +16,9 @@ uses
 type
   ISciterPlugin = interface;
 
-  TSciterBeforeLoadPluginProc = function(const ALayout: ISciterLayout; const APlugin: ISciterPlugin;
-    var Handled: Boolean): TLoadDataResult of object;
-  TSciterAfterLoadPluginProc = procedure(const ALayout: ISciterLayout; const APlugin: ISciterPlugin) of object;
+  TSciterBeforeLoadPluginProc = function(const APlugin: ISciterPlugin;
+    var Handled: Boolean): Boolean of object;
+  TSciterAfterLoadPluginProc = procedure(const APlugin: ISciterPlugin) of object;
 
   TSciterLoadPluginProc = procedure (const APlugin: ISciterPlugin); stdcall;
   TSciterCanUnloadPluginProc = function : Boolean; stdcall;
@@ -26,6 +26,8 @@ type
   TSciterSendMessageProc = function (const APlugin: ISciterPlugin;
     Msg: UINT; wParam: WPARAM; lParam: LPARAM;
     var bHandle: Boolean; const AFilter: SciterString): LRESULT; stdcall;
+  TSciterRequirePluginProc = function(const APlugin: ISciterPlugin; vm: HVM; this: tiscript_value;
+    argCount: Integer; args: Ptiscript_value_array): tiscript_value; stdcall;
   
 
   PSciterPlugin = ^ISciterPlugin;
@@ -49,6 +51,8 @@ type
     
     function  LoadPlugin(): Boolean;
     procedure UnloadPlugin;
+
+    function  Require(vm: HVM; argCount: Integer; args: Ptiscript_value_array; ns: tiscript_value = 0): tiscript_value;
 
     function SendMessage(Msg: UINT; wParam: WPARAM; lParam: LPARAM;
       var bHandle: Boolean; const AFilter: SciterString = ''): LRESULT;

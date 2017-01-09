@@ -24,8 +24,7 @@ body {
 #busMenu .busMenuCaption img {
   display: block;
   margin-left: 10px;
-  margin-top: 1*;
-  margin-bottom: 1*;
+  vertical-align: middle;
 }
 
 #busMenu .busMenuCaption span {
@@ -59,16 +58,14 @@ body {
 #busMenu .busMenuItem img {
   display: block;
   margin-left: 15px;
-  margin-top: 1*;
-  margin-bottom: 1*;
+  vertical-align: middle;
 }
 
 #busMenu .busMenuItem span {
   display: block;
   margin-left:5px;
   font-size: 14px;
-  margin-top: 1*;
-  margin-bottom: 1*;
+  vertical-align: middle;
 }
 
 #client {

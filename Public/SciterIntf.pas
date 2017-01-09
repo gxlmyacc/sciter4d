@@ -45,6 +45,7 @@ const
   PROC_SciterCanUnloadPlugin = 'SciterCanUnloadPlugin';
   PROC_SciterUnloadPlugin    = 'SciterUnloadPlugin';
   PROC_SciterSendMessage     = 'SciterSendMessage';
+  PROC_SciterRequirePlugin   = 'SciterRequirePlugin';
 
 type
   IDomValue = interface;

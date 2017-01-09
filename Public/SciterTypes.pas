@@ -411,12 +411,12 @@ type
     swParentCenter,
     swTopMost,
     swNoActivate,
+    swNoMouseActivate,
     swAcceptFiles,
     swSysMenu,
     swMinimizeBox,
     swMaximizeBox,
     swWindowShadow,
-    swNoActive,
     swDXPaint
   );
   TSciterCreateWindowFlags = set of TSciterCreateWindowFlag;

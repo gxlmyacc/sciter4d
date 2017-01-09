@@ -23,7 +23,7 @@ type
     function  OnCreateNativeObject(const ALayout: ISciterLayout; const AObjectName: SciterString;
       argCount: Integer; args: Ptiscript_value_array): IDispatch;
   public
-    { Public declarations }
+    destructor Destroy; override;
   end;
 
 procedure ShowAboutFrom(Modal: Boolean);
@@ -45,7 +45,7 @@ begin
     AboutForm.ShowModal
   else
     AboutForm.Show;
-end;  
+end;
 
 { TAboutForm }
 
@@ -60,6 +60,11 @@ var
     ('重点税源信息采集', 'V1.0.012')
   );
 
+
+destructor TAboutForm.Destroy;
+begin
+  inherited;
+end;
 
 procedure TAboutForm.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -101,7 +106,7 @@ var
   i: Integer;
 begin
   Result := False;
- 
+
   if FInit then
     Exit;
   FInit := True;

@@ -207,9 +207,11 @@ procedure TMainForm.Button7Click(Sender: TObject);
 var
   LWindow: ISciterWindow;
 begin
-  LWindow := CreateWindow(SysInit.HInstance, CWFlags_Sizeable + [swScreenCenter], Rect(0, 0, 500, 400), Self.Handle);
+  LWindow := CreateWindow(SysInit.HInstance, CWFlags_Sizeable + [swScreenCenter],
+    500, 400, Self.Handle);
   LWindow.Layout.LoadFile(Sciter.FilePathToURL(EdtFilePath.Text));
   LWindow.ShowModal();
+  //LWindow.Show();
 end;
 
 procedure TMainForm.launchDebugView(const AEle: IDomElement);

@@ -26,7 +26,6 @@
   
   </style>
   <script type="text/tiscript">
-
      function self#test.onClick(){
        //view.msgbox {type: #question, content: "Be or not to be?", title: "Huh?", buttons: [ {id:#yes, text:"To be"}, {id:#no, text:"Not to be"} ] };
        prompt("");
@@ -34,12 +33,17 @@
        //false || alert(JSON.stringify(getCommandLine()));
        
        //$(.test).toggle();
-       var token_match = /{[A-Z_]+[0-9]*}/ig; 
+       var d = new Date("1989-02-26 12:12:12");
+       alert(d.format("yyyy-MM-dd hh:mm:ss"));
      }
      
      function self#test1.onClick(){
        alert(compile( "file://D://test.tis", "file://D://test1.tis" ));
      }
+     
+     $(#bb).on("dblclick", function(){
+       alert("dd");
+     });
   </script>
  </head>
  <body >
@@ -64,7 +68,7 @@
    <input|text class="danger" style="display:block;width:1*;"/>
    <input|number step=10 min=40 max=160 value=0 style="display:block;width:1*;">
    <div class="test1">
-   <div class="test animation">
+   <div#bb class="test animation" >
      dd<br/>
      dd<br/>
      dd<br/>

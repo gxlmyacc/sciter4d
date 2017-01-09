@@ -102,15 +102,13 @@ menu.popup.busMenuItemDetailsPopup:empty {
 
 .busMenu .busMenuContainer > ul li.busMenuItem > caption img {
   display: block;
-  margin-top: 1*;
-  margin-bottom: 1*;
+  vertical-align: middle;
   margin-right: 10px;
 }
 
 .busMenu .busMenuContainer > ul li.busMenuItem > caption span {
   display: block;
-  margin-top: 1*;
-  margin-bottom: 1*;
+  vertical-align: middle;
 }
 
 .busMenu .busMenuItem[state] {

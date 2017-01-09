@@ -1,4 +1,4 @@
-
+﻿
 const Plus = function() {
                         
   function thisModel(el) {
@@ -75,11 +75,8 @@ const Plus = function() {
   
   function setupTerminalBinding(model,thing,path,isInput,updater,update=true) 
   {
-    //stdout.printf("STB %s %V\n", path, path.match( reIsExpression ) );
-    //stdout.println("STB", thing, path);
     if( typeof model != #object  && typeof model != #namespace) 
     {
-      //stdout.println("!!!!!! STB", thing, path, typeof model);
       stdout.println("Model is not an object while binding ", path);
       return;  
     }      
@@ -89,6 +86,7 @@ const Plus = function() {
       // try treat it as an expression
       if(reIsExpression.test(path)) { // 如果path看起来像一个表达式，则将它当做一个数据观察器来装载
         var parts = path.split(reIsExpression);
+        //stdout.printf("STB %s %V\n", path, parts );
         var expr = compileExpr(model,path);
         for( var part in parts) {
           if( part.match(reVarName) ) {
@@ -105,8 +103,6 @@ const Plus = function() {
       }
       return;
     }
-    
-    //stdout.printf("STB %V %V\n", model, path );
     
     //stdout.printf("setupTerminalBinding: coll=%s key=%v\n", typeof coll, key);    
     
@@ -556,13 +552,13 @@ function @observing(func, paths..) {
       Object.addObserver.call(obj,subs);
     };
     
-    function notifier(func,path) { return :: func(path); }
+    function notifier(obj,func,path) { return :: func.call(obj,path); }
     
     observeChanges.list = [];
     observeChanges.purolator = function(obj,changedef,path) {
       for( var cb in observeChanges.list ) 
         if( path like cb.path )
-           self.post( notifier(cb.func,path), true);
+           self.post( notifier(obj,cb.func,path), true);
     }
     this[#$observeChanges] = observeChanges;
     // setup observer on the namespace

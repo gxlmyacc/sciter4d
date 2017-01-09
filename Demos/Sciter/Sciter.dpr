@@ -64,7 +64,9 @@ begin
       MainForm.Layout.LoadFile(sOpenFile);
   end
   else
+  begin
     MainForm.Layout.LoadFile('res:default.html');
+  end;
 
   MainForm.Show();
   SciterIntf.Sciter.RunAppclition(MainForm.Handle);

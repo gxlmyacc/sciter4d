@@ -68,7 +68,7 @@ type
     function  IsBubbling(event_type: UINT): Boolean;
     function  IsHandled(event_type: UINT): Boolean;
 
-    procedure Show(nCmdShow: Integer = SW_SHOW; Update: Boolean = True);
+    procedure Show(nCmdShow: Integer = SW_SHOW; Update: Boolean = True; AddToList: Boolean = True);
     procedure Hide;
 
     function  ShowModal(nCmdShow: Integer = SW_SHOW): Integer;
@@ -101,10 +101,32 @@ type
     property OnKeyDown: TSciterKeyDownEvent read GetOnKeyDown write SetOnKeyDown; 
   end;
 
+  PISciterWindowList = ^ISciterWindowList;
+  ISciterWindowList = interface
+  ['{EBE29BFE-894D-4209-9AC2-97754F7EF355}']
+    function  GetCount: Integer;
+    function  GetItem(const Index: Integer): ISciterWindow;
+    function  GetItemByHandle(const AHandle: Cardinal): ISciterWindow;
+
+    function  Implementor: Pointer;
+
+    function  Add(AWindow: ISciterWindow): Integer;
+    procedure Delete(const AIndex: Integer); overload;
+    procedure DeleteByHandle(const AHandle: Cardinal); overload;
+    procedure Clear;
+    function  IndexOf(const AHandle: Cardinal): Integer;
+
+    property Count: Integer read GetCount;
+    property Item[const Index: Integer]: ISciterWindow read GetItem; default;
+    property ItemByHandle[const AHandle: Cardinal]: ISciterWindow read GetItemByHandle;
+  end;
+
 function CreateWindow(AInstance: HMODULE; creationFlags: TSciterCreateWindowFlags;
   const frame: TRect; parent: HWINDOW = 0; AWndProc: TSciterWndProc = nil): ISciterWindow; overload;
 function CreateWindow(AInstance: HMODULE; creationFlags: TSciterCreateWindowFlags;
   width, height: Integer; parent: HWINDOW = 0; AWndProc: TSciterWndProc = nil): ISciterWindow; overload;
+  
+function SciterWindowList(): PISciterWindowList;
 
 implementation
 
@@ -133,6 +155,13 @@ begin
     Result := CreateWindow(AInstance, creationFlags + [swScreenCenter], rc, parent, AWndProc)
   else
     Result := CreateWindow(AInstance, creationFlags + [swParentCenter], rc, parent, AWndProc)
+end;
+
+function SciterWindowList(): PISciterWindowList;
+type
+  TSciterWindowList = function (): PISciterWindowList;
+begin
+  Result := TSciterWindowList(SciterApi.Funcs[FuncIdx_SciterWindowList])();
 end;
 
 end.

@@ -1,6 +1,6 @@
 ﻿/*让窗体背景透明*/
 html {
-  behavior: ~windowSizer; 
+  behavior: windowSizer; 
 }
 
 html, body {

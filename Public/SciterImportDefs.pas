@@ -20,7 +20,7 @@ const
   DLL_Sciter4D       = 'Sciter4D.dll';
   CLASSNAME_SCITER4D = 'gxl.sciter4.delphi.class';
 
-  SciterApi_FuncsCount               = 18;
+  SciterApi_FuncsCount               = 19;
 
   //function Sciter: PSciter;
   FuncIdx_Sciter                     =  0;
@@ -58,7 +58,8 @@ const
   FuncIdx_SciterTopDomain            = 16;
   //function SciterCreateURI(const AURI: SciterString = ''): ISciterURI;
   FuncIdx_SciterCreateURI            = 17;
-
+  //function SciterWindowList(): PISciterWindowList;
+  FuncIdx_SciterWindowList           = 18;
 
 type
   PSciterFuncArray = ^TSciterFuncArray;
