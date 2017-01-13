@@ -1,10 +1,15 @@
 ﻿<!DOCTYPE html>
-<html window-round="4" window-shadow>
+<html window-frame="transparent">
  <head>
   <meta charset="utf-8" />
   <title>主界面</title> 
   <link type="text/css" rel="stylesheet" href="styles/reset.css" /> 
   <link type="text/css" rel="stylesheet" href="styles/skin.css" /> 
+  <script type="text/tiscript">
+      function webGo(url) {
+        $(#header ul li[selected=true]).go(url);
+      }
+  </script>
  </head> 
  <body> 
   <div id="wapper"> 
@@ -50,8 +55,7 @@
     </ul> 
     <img command="no-window-caption" class="360_logo" title="点击进入官网" url="http://www.360.cn" src="images/360_logo.png"/> 
    </div> 
-     <widget id="main" type="webbrowser" data-url="plugin/dntj.html" style="width:100%%;height:100%%;"></widget>
-   </frame> 
+   <widget id="main" type="webbrowser" data-url="plugin/dntj.html" style="width:100%%;height:100%%;"></widget>
    <div id="footer"> 
     <span class="version">主程序版本:8.8.0.1003</span>
     <span>备用木马库:2012-11-02</span>

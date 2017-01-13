@@ -114,7 +114,9 @@ div.left.logining > .myHead {
 
 #userInput > div.loginPanel {
   margin-top: 14dip;
-  flow: "1 1 2" "3 3 4" "5 6 0";
+  flow: "1 1 2" 
+        "3 3 4" 
+        "5 6 0";
   height: *;
   visibility: collapse;
 }
@@ -210,7 +212,7 @@ div.pwd:hover {
   vertical-align: middle;
   font-size: 13dip;
   background-color: white; 
-  width: 159dip;
+  width: *;
   padding: 0 0 0 6dip;
   vertical-align: middle;
   background-image: none;

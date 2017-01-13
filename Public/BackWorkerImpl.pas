@@ -311,7 +311,8 @@ begin
     begin
       TerminateThread(fThread.Handle, 0);
       Cleanup(True);
-      raise EBackgroundWorker.CreateFmt(SInvalidExit, [Name]);
+      OutputDebugString(PChar(Format(SInvalidExit, [Name])));
+      //raise EBackgroundWorker.CreateFmt(SInvalidExit, [Name]);
     end;
     FData.Free;
     inherited Destroy;

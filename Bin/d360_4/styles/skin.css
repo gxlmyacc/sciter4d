@@ -36,7 +36,7 @@ popup { color: #575757; font-size: 12px; font-weight: normal; line-height: 15px;
 	border: 1px solid transparent; border-radius: 2px; behavior:cmd-button; 
 }
 #header ul li:hover { border-color: #61bfed; background: url(../images/icons_bg.png) center; background-image-transformation: opacity(0.7); cursor: pointer; }
-#header ul li[selected="true"] { border-color: #61bfed; background: url(../images/icons_selected_bg.png) center; cursor: pointer; }
+#header ul li[selected=true] { border-color: #61bfed; background: url(../images/icons_selected_bg.png) center; cursor: pointer; }
 #header ul li img { display: block; margin: 3px auto 0 auto; }
 #header ul li span { display: block; margin-top:10px; width:100%; color: #fff; text-align:center; }
 /*360商标*/

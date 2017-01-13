@@ -10,23 +10,6 @@ type
     windowsNT40, windows2000, windowsXP, windows2003, windowsVista, windows7,
     windows8, windows10
   );
-
-  PLVItem64 = ^TLVItem64;
-  TLVItem64 = record
-    mask: UINT;
-    iItem: Integer;
-    iSubItem: Integer;
-    state: UINT;
-    stateMask: UINT;
-    placeholder1: Integer;
-    pszText: PAnsiChar;
-    placeholder11: Integer;
-    cchTextMax: Integer;
-    iImage: Integer;
-    lParam: LPARAM;
-    placeholder2: Integer;
-    iIndent: Integer;
-  end;
   
   TDesktopManager = class
   protected
@@ -90,6 +73,24 @@ function DesktopManager: TDesktopManager;
 
 implementation
 
+type
+  PLVItem64 = ^TLVItem64;
+  TLVItem64 = record
+    mask: UINT;
+    iItem: Integer;
+    iSubItem: Integer;
+    state: UINT;
+    stateMask: UINT;
+    placeholder1: Integer;
+    pszText: PAnsiChar;
+    placeholder11: Integer;
+    cchTextMax: Integer;
+    iImage: Integer;
+    lParam: LPARAM;
+    placeholder2: Integer;
+    iIndent: Integer;
+  end;
+
 var
   varIsWin64: Boolean;
   varWindowOS: TWindowOSType;
@@ -104,7 +105,6 @@ begin
     else
       varDesktopManager := TDesktopManager32.Create;
   end;
-
   Result := varDesktopManager;
 end;
 
@@ -116,7 +116,7 @@ var
   dwMajorVersion, dwMinorVersion, dwBuildNumber: DWORD;
 begin
   RtlGetNtVersionNumbers(dwMajorVersion, dwMinorVersion, dwBuildNumber);
-  AWin32Version := StrtoFloat(format('%d.%d' ,[dwMajorVersion, dwMinorVersion]));
+  AWin32Version := StrToFloat(format('%d.%d' ,[dwMajorVersion, dwMinorVersion]));
 
   Result := windowUnknown;
   if Win32Platform=VER_PLATFORM_WIN32_WINDOWS then
@@ -371,6 +371,7 @@ begin
   
   pDeskText := VirtualAllocEx(FDeskProcess, nil, 512, MEM_COMMIT, PAGE_READWRITE);
   try
+    ZeroMemory(@LItem, SizeOf(LItem));
     LItem.cchTextMax := 512;
     LItem.iSubItem   := ASubItem;
     LItem.pszText    := pDeskText;
@@ -383,7 +384,6 @@ begin
     pszText := GetMemory(512);
     try
       ReadProcessMemory(FDeskProcess, pDeskText, pszText, 512, bBytes);
-
       Result := pszText;
     finally
       FreeMemory(pszText);
@@ -418,6 +418,7 @@ begin
   
   pDeskText := VirtualAllocEx(FDeskProcess, nil, 512, MEM_COMMIT, PAGE_READWRITE);
   try
+    ZeroMemory(@LItem, SizeOf(LItem));
     LItem.cchTextMax := 512;
     LItem.iSubItem   := ASubItem;
     LItem.pszText    := pDeskText;

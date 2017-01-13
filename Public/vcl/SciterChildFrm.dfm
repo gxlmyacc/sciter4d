@@ -1,10 +1,10 @@
-object WinToolForm: TWinToolForm
-  Left = 267
-  Top = 95
+object SciterChildForm: TSciterChildForm
+  Left = 359
+  Top = 200
   BorderStyle = bsNone
-  Caption = 'WinToolForm'
-  ClientHeight = 488
-  ClientWidth = 753
+  Caption = 'SciterChildForm'
+  ClientHeight = 423
+  ClientWidth = 573
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,6 +12,7 @@ object WinToolForm: TWinToolForm
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  Position = poDefault
   PixelsPerInch = 96
   TextHeight = 13
 end

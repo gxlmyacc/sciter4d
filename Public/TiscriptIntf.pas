@@ -442,7 +442,7 @@ type
 
   ITiscriptFunction = interface(ITiscriptPined)
   ['{768E71F5-067D-491F-BE42-6186DB400E68}']
-    function GetThis: tiscript_object;
+    function GetThis: ITiscriptObject;
 
     function IsNativeFunction: Boolean;
 
@@ -453,7 +453,7 @@ type
 
     function ToDispatch: IDispatch;
 
-    property This: tiscript_object read GetThis;
+    property This: ITiscriptObject read GetThis;
   end;
 
   ITiscriptObject = interface(ITiscriptPined)

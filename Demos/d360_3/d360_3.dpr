@@ -7,6 +7,7 @@ uses
   SciterImportDefs,
   SciterIntf,
   SciterFrm in '..\..\Public\vcl\SciterFrm.pas' {SciterForm},
+  SciterChildFrm in '..\..\Public\vcl\SciterChildFrm.pas' {WinToolForm},
   MainFrm in 'MainFrm.pas' {d360Window},
   Behavior.CmbBtn in 'Behavior.CmbBtn.pas',
   Behavior.LogoBtn in 'Behavior.LogoBtn.pas',

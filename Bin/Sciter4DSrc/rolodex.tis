@@ -21,7 +21,8 @@
     this.slideNo = 0;
     if (this.list[this.slideNo])
       this.list[this.slideNo].style["visibility"] = "visible";
-    this.timer(this.pauseDuration, this.nextSlide );
+    if (!this.@.exists("manual"))
+      this.timer(this.pauseDuration, this.nextSlide );
   }
 
   function attached() { 
@@ -77,7 +78,7 @@
     this.timer(0, this.nextSlide);
     
     function quadOut( t, b = 0.0, c = 1.0, d = 1.0)     { return -c *(t/=d)*(t-2) + b; }
-    function cubicOut( t, b = 0.0, c = 1.0, d = 1.0)    { return c*((t=t/d-1)*t*t + 1) + b; }
+    //function cubicOut( t, b = 0.0, c = 1.0, d = 1.0)    { return c*((t=t/d-1)*t*t + 1) + b; }
     
     prevBox.style["visibility"] = "visible";
     currBox.style["visibility"] = "visible";
@@ -102,7 +103,8 @@
     function end() {
       prevBox.style["visibility"] = "hidden";
       this.checkState();
-      this.timer(this.pauseDuration, this.nextSlide );
+      if (!this.@.exists("manual"))
+        this.timer(this.pauseDuration, this.nextSlide );
       return false;
     }
     

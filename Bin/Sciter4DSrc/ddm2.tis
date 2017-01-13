@@ -146,7 +146,7 @@ function DragDrop2(def)
       tel.state.droptarget = true; // to give CSS a chance to highlight them somehow using :drop-target
     
     dd_source = el;
-    (dd_width, dd_height) = el.box(#dimension);
+    (dd_width, dd_height) = el.box(#dimension, #border);
     
     dd_source.state[ dd_op ] = true;
     
@@ -333,20 +333,11 @@ function DragDrop2(def)
     }
     
     // check for positions that are not allowed in DD:
-    if( typeof pos != #integer )
+    if( typeof pos != #integer ) {
+      dd_marker_position = null;
+      dd_marker_x1 = dd_marker_x2 = dd_marker_y1 = dd_marker_y2 = null;
       return;
-/*    else if( pos >= dd_target.length ) // after last pos
-    {
-      var tc = dd_target.last;
-      if(tc === dd_source) 
-        return; // not allowing to insert next to source
     }
-    else
-    {
-      var tc = dd_target[pos];
-      if( tc === dd_source) 
-        return; // not allowing to insert before the source
-    }*/
     
     var after = false;
     var marker;
@@ -475,8 +466,8 @@ function DragDrop2(def)
         return false;
       }
       case Event.MOUSE_UP | Event.SINKING:  
+        dd_x = dd_y = null; 
         if(dd_source) {
-          dd_x = dd_y = null; 
           this.timer(0, ping);
           return true; 
         }

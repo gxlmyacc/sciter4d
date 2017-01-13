@@ -28,14 +28,16 @@
   <script type="text/tiscript">
      function self#test.onClick(){
        //view.msgbox {type: #question, content: "Be or not to be?", title: "Huh?", buttons: [ {id:#yes, text:"To be"}, {id:#no, text:"Not to be"} ] };
-       prompt("");
+       //prompt("");
        //alert(JSON.stringify(getCommandLine()));
        //false || alert(JSON.stringify(getCommandLine()));
        
        //$(.test).toggle();
-       var d = new Date("1989-02-26 12:12:12");
-       alert(d.format("yyyy-MM-dd hh:mm:ss"));
-     }
+       var d = new Date("1989-02-26 12:13:14");
+       alert(d.toLocaleString());
+       alert(d.format("YYYY-MM-DD hh:mm:ss"));
+       log(d.format("YYYY-MM-DD hh:mm:ss"));
+     }            
      
      function self#test1.onClick(){
        alert(compile( "file://D://test.tis", "file://D://test1.tis" ));

@@ -9,20 +9,20 @@ unit SciterFrm;
 interface
 
 uses
-  Windows, SysUtils, Messages, Classes, Controls, Forms, SciterIntf, SciterTypes;
+  Windows, Messages, Classes, Controls, Forms, SciterIntf, SciterTypes;
 
 type
   TSciterForm = class(TForm, ISciterBase)
   private
-    FMaxToFullScreen: Boolean;
     FLayout: ISciterLayout;
     FOnHandleCreated: TNotifyEvent;
   protected
+    function  GetWindowName: SciterString;
+    function  GetHwnd: HWINDOW;
+    function  GetResourceInstance: HMODULE;
     function  GetLayout: PISciterLayout; virtual;
     function  GetBehavior: IDefalutBehaviorEventHandler; virtual;
     procedure SetBehavior(const Value: IDefalutBehaviorEventHandler); virtual;
-
-    procedure WMGetMinMaxInfo(var Msg: TWMGetMinMaxInfo); message WM_GetMinMaxInfo;
   protected
     function  IsSinking(event_type: UINT): Boolean;
     function  IsBubbling(event_type: UINT): Boolean;
@@ -35,14 +35,9 @@ type
     procedure CreateWnd; override;
     procedure DestroyWnd; override;
   public
-    constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
     procedure MouseWheelHandler(var Message: TMessage); override;
-
-    function GetWindowName: SciterString;
-    function GetHwnd: HWINDOW;
-    function GetResourceInstance: HMODULE;
 
     function LoadHtmlFile(const uri: SciterString): Boolean;
     function LoadHtml(const pb: LPCBYTE; cb: UINT; const uri: SciterString = ''): Boolean;
@@ -126,8 +121,7 @@ begin
   Result := @FLayout;
 end;
 
-procedure TSciterForm.DoWndProc(var Msg: TMessage;
-  var Handled: Boolean);
+procedure TSciterForm.DoWndProc(var Msg: TMessage; var Handled: Boolean);
 begin
   Handled := False;
 end;
@@ -162,23 +156,6 @@ begin
   Result := Layout.LoadHtml(pb, cb, uri);
 end;
 
-constructor TSciterForm.Create(AOwner: TComponent);
-begin
-  FMaxToFullScreen := False;
-  inherited Create(AOwner);
-end;
-
-procedure TSciterForm.WMGetMinMaxInfo(var Msg: TWMGetMinMaxInfo);
-begin
-  if (FLayout = nil) or (not FLayout.MaxToFullScreen) then
-  begin
-    Msg.MinMaxInfo.ptMaxSize.X := Screen.WorkAreaWidth;
-    Msg.MinMaxInfo.ptMaxSize.Y := Screen.WorkAreaHeight;
-    Msg.Result := 0;
-  end;
-  inherited;
-end;
-
 destructor TSciterForm.Destroy;
 var
   pbHandled: Boolean;
@@ -196,7 +173,6 @@ procedure TSciterForm.SetBehavior(const Value: IDefalutBehaviorEventHandler);
 begin
   if FLayout = nil then
     Exit;
-
   FLayout.Behavior := Value;
 end;
 
@@ -250,8 +226,6 @@ end;
 
 initialization
   OleInitialize(nil);
-
 finalization
   OleUninitialize;
-
 end.

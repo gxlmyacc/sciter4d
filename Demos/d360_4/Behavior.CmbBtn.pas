@@ -7,52 +7,58 @@ uses
 
 type
   TCmdButtonBehavior = class(TBehaviorEventHandler)
+  private
+    FBrowserOwner: Boolean;
   protected
     procedure OnAttached(const he: IDomElement); override;
     procedure OnDetached(const he: IDomElement); override;
     function  OnMouseClick(const he, target: IDomElement; event_type: UINT; var params: TMouseParams): Boolean; override;
     function  OnMouseMove(const he, target: IDomElement; event_type: UINT; var params: TMouseParams): Boolean; override;
     function  OnMouseDClick(const he, target: IDomElement; event_type: UINT; var params: TMouseParams): Boolean; override;
+  public
+    function go(const AURL: WideString): Boolean;
   end;
 
 implementation
 
+var
+  varBrowser: TSciterWebBrowser;
+
 { TCmdButtonBehavior }
+
+function TCmdButtonBehavior.go(const AURL: WideString): Boolean;
+begin
+  varBrowser.Web.Navigate(AURL);
+  Result := True;
+end;
 
 procedure TCmdButtonBehavior.OnAttached(const he: IDomElement);
 var
-  LBrowserElement, browser: IDomElement;
+  LBrowserElement: IDomElement;
   sUrl: WideString;
 begin
   if he.Root.Attributes['initWebBrower'] = 'true' then
     Exit;
   he.Root.Attributes['initWebBrower'] := 'true';
 
-  LBrowserElement := he.Root.FindFirst('widget[type=webbrowser]');
-  if LBrowserElement <> nil then
+  if he.Attributes['selected'] = 'true' then
   begin
-    varBrowser := TSciterWebBrowser.Create(LBrowserElement);
-    LBrowserElement.AttachHwnd(varBrowser.Handle);
-
-    browser := he.Root.FindFirst('#main');
-    if (browser <> nil)  then
+    LBrowserElement := he.Root.FindFirst('widget[type=webbrowser]');
+    if (LBrowserElement <> nil) and (varBrowser = nil) then
     begin
+      varBrowser := TSciterWebBrowser.Create(nil, LBrowserElement);
+      FBrowserOwner := True;
       sUrl := he.Attributes['url'];
       sUrl := 'file://' + ExtractFilePath(ParamStr(0)) + 'd360_4\' + StringReplace(sUrl, '/', '\', [rfReplaceAll]);
       varBrowser.Web.Navigate(sUrl);
     end;
-      
-    //varBrowser.Visible := True;
   end;
 end;
 
 procedure TCmdButtonBehavior.OnDetached(const he: IDomElement);
 begin
-  if varBrowser <> nil then
-  begin
-    varBrowser.ParentElement.AttachHwnd(0);
+  if FBrowserOwner and (varBrowser <> nil) then
     FreeAndNil(varBrowser);
-  end;
 end;
 
 function TCmdButtonBehavior.OnMouseClick(const he, target: IDomElement;

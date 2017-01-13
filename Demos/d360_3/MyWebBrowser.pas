@@ -4,10 +4,10 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, OleCtrls, SHDocVw, ExtCtrls, StdCtrls;
+  Dialogs, OleCtrls, SHDocVw, ExtCtrls, StdCtrls, SciterChildFrm;
 
 type
-  TSciterWebBrowser = class(TForm)
+  TSciterWebBrowser = class(TSciterChildForm)
     Web: TWebBrowser;
     Panel1: TPanel;
     Edit1: TEdit;

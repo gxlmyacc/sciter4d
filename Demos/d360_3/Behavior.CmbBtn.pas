@@ -8,6 +8,7 @@ uses
 type
   TCmdButtonBehavior = class(TBehaviorEventHandler)
   private
+    FBrowserOwner: Boolean;
   protected
     procedure OnAttached(const he: IDomElement); override;
     procedure OnDetached(const he: IDomElement); override;
@@ -22,34 +23,32 @@ implementation
 
 procedure TCmdButtonBehavior.OnAttached(const he: IDomElement);
 var
-  LBrowserElement, browser: IDomElement;
+  LBrowserElement: IDomElement;
   sUrl: WideString;
 begin
   if he.Root.Attributes['initWebBrower'] = 'true' then
     Exit;
   he.Root.Attributes['initWebBrower'] := 'true';
 
-  LBrowserElement := he.Root.FindFirst('widget[type=webbrowser]');
-  if LBrowserElement <> nil then
+  if he.Attributes['selected'] = 'true' then
   begin
-    varBrowser := TSciterWebBrowser.CreateParented(LBrowserElement.GetElementHwnd);
-    LBrowserElement.AttachHwnd(varBrowser.Handle);
-
-    browser := he.Root.FindFirst('#main');
-    if (browser <> nil)  then
+    FBrowserOwner := True;
+    LBrowserElement := he.Root.FindFirst('widget[type=webbrowser]');
+    if LBrowserElement <> nil then
     begin
+      varBrowser := TSciterWebBrowser.CreateParented(LBrowserElement.GetElementHwnd);
+      LBrowserElement.AttachHwnd(varBrowser.Handle);
       sUrl := he.Attributes['url'];
       sUrl := 'file://' + ExtractFilePath(ParamStr(0)) + 'd360_3\' + StringReplace(sUrl, '/', '\', [rfReplaceAll]);
       varBrowser.Web.Navigate(sUrl);
+      varBrowser.Visible := True;
     end;
-      
-    varBrowser.Visible := True;
   end;
 end;
 
 procedure TCmdButtonBehavior.OnDetached(const he: IDomElement);
 begin
-  if varBrowser <> nil then
+  if FBrowserOwner and (varBrowser <> nil) then
   begin
     he.AttachHwnd(0);
     FreeAndNil(varBrowser);

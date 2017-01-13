@@ -11,8 +11,6 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
   private
-  public
-    class function NewInstance: TObject; override;
   end;
 
 var
@@ -43,12 +41,6 @@ begin
   Layout.BehaviorFactorys.UnReg('logo-button');
   Layout.BehaviorFactorys.UnReg('menu-button');
   inherited;
-end;
-
-class function Td360Window.NewInstance: TObject;
-begin
-  Result := inherited NewInstance;
-  //TSciterForm(Result).Transparent := False;
 end;
 
 end.

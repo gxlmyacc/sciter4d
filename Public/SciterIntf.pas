@@ -11,7 +11,7 @@ interface
 {$I Sciter.inc}
 
 uses
-  Windows, SciterTypes, TiscriptTypes;
+  Windows, SciterTypes;
 
 const
   DOMAIN_Sciter4D    = 'Sciter4D';
@@ -284,6 +284,7 @@ type
     content_size: TSize;
   end;
 
+  PIDomElement = ^IDomElement;
   IDomElement = interface
   ['{1571BB84-AE67-4C4E-8A22-F78881D14C69}']
     function  GetID: SciterString;
@@ -1289,7 +1290,6 @@ type
     argCount: Integer; args: Ptiscript_value_array): IDispatch of object;
   TLayoutAfterCreateBehaviorProc = procedure (const ALayout: ISciterLayout; const lpab: LPSCN_ATTACH_BEHAVIOR; const ABehavior: IBehaviorEventHandler; var bHandled: Boolean) of object;
   TLayoutGraphicsCriticalFailure = procedure (const ALayout: ISciterLayout; var lpab: LPSCN_GRAPHICS_CRITICAL_FAILURE) of object; 
-  TLayoutDebugMessage = procedure(const ALayout: ISciterLayout; subsystem: TOutputSubSystem; severity: TOutputSeverity; const msg: SciterString) of object;
 
   PSciterGetPPIInfo = ^TSciterGetPPIInfo;
   TSciterGetPPIInfo = record
@@ -1343,7 +1343,6 @@ type
     function GetOnGraphicsCriticalFailure: TLayoutGraphicsCriticalFailure;
     function GetAfterWndProc: TLayoutAfterWndProc;
     function GetBeforeWndProc: TLayoutBeforeWndProc;
-    function GetOnDebugMessage: TLayoutDebugMessage;
     procedure SetMaxToFullScreen(const Value: Boolean);
     procedure SetBaseUri(const Value: SciterString);
     procedure SetBehavior(const Value: IDefalutBehaviorEventHandler);
@@ -1363,7 +1362,6 @@ type
     procedure SetOnGraphicsCriticalFailure(const Value: TLayoutGraphicsCriticalFailure);
     procedure SetAfterWndProc(const Value: TLayoutAfterWndProc);
     procedure SetBeforeWndProc(const Value: TLayoutBeforeWndProc);
-    procedure SetOnDebugMessage(const Value: TLayoutDebugMessage);
 
     function  Implementor: Pointer;
 
@@ -1604,7 +1602,6 @@ type
     property AfterWndProc: TLayoutAfterWndProc read GetAfterWndProc write SetAfterWndProc;
 
     property OnCreateNativeObject: TLayoutCreateNativeObjectProc read GetOnCreateNativeObject write SetOnCreateNativeObject;
-    property OnDebugMessage: TLayoutDebugMessage read GetOnDebugMessage write SetOnDebugMessage;
   end;
 
 
@@ -1615,6 +1612,7 @@ type
   TSciterEngineDestroyedProc = function (const ALayout: ISciterLayout; var Handled: Boolean): LRESULT of object;
   TSciterPostedNotificationProc = function (const ALayout: ISciterLayout; var lpab: LPSCN_POSTED_NOTIFICATION; var Handled: Boolean): LRESULT of object;
 
+  TSciterDebugMessage = procedure(subsystem: TOutputSubSystem; severity: TOutputSeverity; const msg: SciterString) of object;
   TSciterAfterCreateBehaviorProc = procedure (const ALayout: ISciterLayout; const lpab: LPSCN_ATTACH_BEHAVIOR;
     const Behavior: IBehaviorEventHandler) of object;
   TSciterRunAppclitionProc = function (const MainWnd: HWINDOW; var bHandled: Boolean): Integer;
@@ -1647,6 +1645,7 @@ type
     function GetOnNotification: TSciterNotificationProc;
     function GetOnPostedNotification: TSciterPostedNotificationProc;
     function GetOnRunAppclition: TSciterRunAppclitionProc;
+    function GetOnDebugMessage: TSciterDebugMessage;
     procedure SetReportBehaviorCount(const Value: Boolean);
     procedure SetMainWnd(const Value: HWINDOW);
     procedure SetDriverName(const Value: SciterString);
@@ -1665,6 +1664,7 @@ type
     procedure SetOnNotification(const Value: TSciterNotificationProc);
     procedure SetOnPostedNotification(const Value: TSciterPostedNotificationProc);
     procedure SetOnRunAppclition(const Value: TSciterRunAppclitionProc);
+    procedure SetOnDebugMessage(const Value: TSciterDebugMessage);
 
     function Implementor: Pointer;
 
@@ -1799,6 +1799,7 @@ type
     property OnEngineDestroyed: TSciterEngineDestroyedProc read GetOnEngineDestroyed write SetOnEngineDestroyed;
     property OnPostedNotification: TSciterPostedNotificationProc read GetOnPostedNotification write SetOnPostedNotification;
     property OnRunAppclition: TSciterRunAppclitionProc read GetOnRunAppclition write SetOnRunAppclition;
+    property OnDebugMessage: TSciterDebugMessage read GetOnDebugMessage write SetOnDebugMessage;
   end;
 
 function Sciter: PISciter;

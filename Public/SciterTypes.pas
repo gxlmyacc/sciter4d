@@ -406,7 +406,6 @@ type
     swPopup,       // the window is created as topmost.
     swEnableDebug, // make this window inspector ready
     swNoTaskIcon,
-    swMaxToFullScreen,
     swScreenCenter,
     swParentCenter,
     swTopMost,

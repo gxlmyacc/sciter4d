@@ -1,6 +1,6 @@
 
 //|
-//| Create a function bound to a given object (assigning this, and arguments, optionally).
+//| 创建一个函数并绑定到指定对象上(设置this，参数可省略)
 //|
 
 function Function.bind(context, bindargs..) 
@@ -14,7 +14,7 @@ function Function.bind(context, bindargs..)
 }
 
 //| 
-//| Memoize an expensive function by storing its results.
+//| 缓存一个昂贵(费时)函数的结果
 //| 
 
 function Function.memoize(hasher = null) 
@@ -31,8 +31,8 @@ function Function.memoize(hasher = null)
 }
 
 //| 
-//| Partially apply a function by creating a version that has had 
-//| some of its arguments pre-filled, without changing its dynamic this context.
+//| 在函数的this上下文不变的情况下，使用Function.partial封装这个函数，
+//| 缓存这个函数的一部分预先填充的参数
 //| 
 
 function Function.partial(pargs..) {
@@ -43,28 +43,25 @@ function Function.partial(pargs..) {
 
 
 //|
-//| Delays this function for the given number of milliseconds, 
-//| and then calls it with the arguments supplied.
+//| 在延时milliseconds毫秒后使用指定的args参数调用这个函数,。
 //|
 function Function.delay(milliseconds, args..) {
   self.timer(milliseconds, :: (this super).apply(null, args), true );
 }
 
 //|
-//| Defers a function, scheduling it to run after the current call stack has cleared.
+//| 推迟执行一个函数，使这个函数在"当前调用堆栈清空"后执行。
 //|
 function Function.defer(args..) {
   var func = this;
   self.post( :: func.apply(null, args) );
 }
 
-//|
-//| Returns a function, that, when invoked, will only be triggered 
-//| at most once during a given window of time. Normally, the throttled 
-//| function will run as much as it can, without ever going more than once 
-//| per milliseconds duration; but if you'd like to disable the execution on 
-//| the leading edge, pass {leading: false}. To disable execution on 
-//| the trailing edge, ditto.
+//| throttle: 节流、减速 函数
+//| 返回一个函数，这个函数在指定时间内不管调用多少次，一般只执行一次。
+//| 通常情况下, 减速函数尽可能多的执行，但milliseconds期间内不会超过1次。 
+//| 但如果你想禁止在milliseconds期间的起始边缘执行，options参数传递{leading: false}。
+//| 同上，如果你想禁止在milliseconds期间的结束边缘执行，options参数传递{trailing: false}。
 //| 
 
 function Function.throttle(milliseconds, options = {}) {
@@ -97,11 +94,10 @@ function Function.throttle(milliseconds, options = {}) {
     };
   }
 
-//| 
-//| Returns a function, that, as long as it continues to be invoked, 
-//| will not be triggered. The function will be called after it stops 
-//| being called for N milliseconds. If immediate is passed, trigger 
-//| the function on the leading edge, instead of the trailing.
+//| debounce: 去抖、防反跳 函数
+//| 返回一个函数，这个函数如果它一直被调用，则不会触发，
+//| 直到在等待milliseconds毫秒内都未调用时才触发一次。 
+//| 如果传递了immediate参数，则将会在milliseconds期间的起始位置触发，而不是末尾位置。 
 //| 
 
  function Function.debounce(milliseconds, immediate = false) {

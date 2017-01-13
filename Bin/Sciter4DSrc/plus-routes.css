@@ -1,0 +1,12 @@
+@import url(plus.css);
+
+plus-route-view {
+  size:*;
+  overflow:auto;
+}
+
+plus-route-view, [role=plus-route-view] {
+  aspect: Plus.Application url(plus-routes.tis);
+}
+
+
