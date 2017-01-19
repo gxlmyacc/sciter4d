@@ -66,6 +66,8 @@ type
     function GetResourceInstance: HMODULE;
   end;
 
+  TSciterDomValueArray = array[Word] of IDomValue;
+  PSciterDomValueArray = ^TSciterDomValueArray;
   TDynDomValueArray = array of IDomValue;
   IDomValue = interface
   ['{7B3A4F88-B10E-41A9-81E3-AB7CB2E3C998}']
@@ -1287,7 +1289,7 @@ type
   TLayoutEngineDestroyedProc = function (var Handled: Boolean): LRESULT of object;
   TLayoutPostedNotificationProc = function (var lpab: LPSCN_POSTED_NOTIFICATION; var Handled: Boolean): LRESULT of object;
   TLayoutCreateNativeObjectProc = function (const ALayout: ISciterLayout; const AObjectName: SciterString;
-    argCount: Integer; args: Ptiscript_value_array): IDispatch of object;
+    argCount: Integer; args: PSciterDomValueArray): IDispatch of object;
   TLayoutAfterCreateBehaviorProc = procedure (const ALayout: ISciterLayout; const lpab: LPSCN_ATTACH_BEHAVIOR; const ABehavior: IBehaviorEventHandler; var bHandled: Boolean) of object;
   TLayoutGraphicsCriticalFailure = procedure (const ALayout: ISciterLayout; var lpab: LPSCN_GRAPHICS_CRITICAL_FAILURE) of object; 
 
@@ -1532,10 +1534,6 @@ type
 
     function JsonToTiscriptValue(const Json: SciterString): tiscript_object;
     function TiscriptValueToJson(Obj: tiscript_value): SciterString;
-
-    function  RegisterObject(const Name: SciterString; Obj: IDispatch): tiscript_object;
-    function  RegisterFunction(const Name: SciterString; Handler: tiscript_native_method; Tag: Pointer = nil): tiscript_value;
-    procedure UnRegisterObject(const VarName: SciterString);
     
     property Hwnd: HWINDOW read GetHwnd;
     property HookWnd: HWINDOW read GetHookWnd;

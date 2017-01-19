@@ -28,8 +28,7 @@ begin
 
 end;
 
-function SciterSendMessage(const APlugin: ISciterPlugin;
-  Msg: UINT; wParam: WPARAM; lParam: LPARAM;
+function SciterSendMessage(Msg: UINT; wParam: WPARAM; lParam: LPARAM;
   var bHandle: Boolean; const AFilter: WideString): LRESULT; stdcall;
 begin
   Result := 0;

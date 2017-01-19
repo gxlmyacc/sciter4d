@@ -18,6 +18,7 @@ type
   ISciterValueFactory = interface
   ['{9E73A2FC-2C72-4F86-B58B-535E3B0F28B0}']
     function Create: IDomValue; overload;
+    function Create(const src: SCITER_VALUE): IDomValue; overload;
     function Create(const src: PSCITER_VALUE): IDomValue; overload;
     function Create(const src: IDomValue): IDomValue; overload;
     function Create(vm: HVM; const src: tiscript_value): IDomValue; overload;

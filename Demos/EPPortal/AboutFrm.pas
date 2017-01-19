@@ -21,7 +21,7 @@ type
     FInit: Boolean;
     function  OnDocumentComplete(const he, target: IDomElement; _type: UINT{BEHAVIOR_EVENTS}; var params: TBehaviorEventParams): Boolean;
     function  OnCreateNativeObject(const ALayout: ISciterLayout; const AObjectName: SciterString;
-      argCount: Integer; args: Ptiscript_value_array): IDispatch;
+      argCount: Integer; args: PSciterDomValueArray): IDispatch;
   public
     destructor Destroy; override;
   end;
@@ -90,7 +90,7 @@ begin
 end;
 
 function TAboutForm.OnCreateNativeObject(const ALayout: ISciterLayout;
-  const AObjectName: SciterString; argCount: Integer; args: Ptiscript_value_array): IDispatch;
+  const AObjectName: SciterString; argCount: Integer; args: PSciterDomValueArray): IDispatch;
 begin
   if AObjectName = 'Test' then
   begin

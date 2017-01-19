@@ -120,12 +120,12 @@ type
   tiscript_value_array = array[Word] of tiscript_value;
   Ptiscript_value_array = ^tiscript_value_array;
 
+  tiscript_native_method = function (vm: HVM; this, super: tiscript_value;
+    argCount: Integer; args: Ptiscript_value_array; tag: Pointer): tiscript_value;
+
   { TIScript value handy synonyms }
   tiscript_class  = type tiscript_value;
   tiscript_object = type tiscript_value;
-
-  tiscript_native_method = function (vm: HVM; this, super: tiscript_value;
-    argCount: Integer; args: Ptiscript_value_array; tag: Pointer): tiscript_value;
   
 const
   MaxParams = 32;
@@ -1346,6 +1346,7 @@ type
   PSciterSchemaInfo = ^TSciterSchemaInfo;
   TSciterSchemaInfo = record
     Path: SciterString;
+    Params: SciterString;
     Schema: TSciterSchemaType;
     IsOrigin: Boolean;
     IsPlugin: Boolean;

@@ -20,7 +20,7 @@ type
 
     function  OnLayoutLoadData(var pnmld: LPSCN_LOAD_DATA; const schema: PSciterSchemaInfo; var Handled: Boolean): TLoadDataResult;
     function  OnCreateNativeObject(const ALayout: ISciterLayout; const AObjectName: SciterString;
-      argCount: Integer; args: Ptiscript_value_array): IDispatch;
+      argCount: Integer; args: PSciterDomValueArray): IDispatch;
   public
     FButton: TButton;
     FTest: TTest;
@@ -65,7 +65,7 @@ procedure TMainForm.FormCreate(Sender: TObject);
 begin
   inherited;
   FTest := TTest.Create('属于一个页面的全局对象');
-  Layout.RegisterObject('Test1', WrapObjectDispatch(FTest));
+  Tiscript.RegisterObject(Layout.VM, 'Test1', WrapObjectDispatch(FTest));
   
   Layout.OnCreateNativeObject := OnCreateNativeObject;
   Layout.OnLoadData           := OnLayoutLoadData;
@@ -118,10 +118,11 @@ begin
 end;
 
 function TMainForm.OnCreateNativeObject(const ALayout: ISciterLayout;
-  const AObjectName: SciterString; argCount: Integer; args: Ptiscript_value_array): IDispatch;
+  const AObjectName: SciterString; argCount: Integer; args: PSciterDomValueArray): IDispatch;
 begin
   if AObjectName = 'Test1' then
   begin
+    ShowMessage(args[0].AsString);
     Result := WrapObjectDispatch(TTest.Create('临时变量'), True);
   end
   else

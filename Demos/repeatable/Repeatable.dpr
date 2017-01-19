@@ -24,7 +24,7 @@ begin
   LoadSciter4D(ExtractFilePath(ParamStr(0)) + DLL_Sciter4D);
   Sciter.ReportBehaviorCount := True;
 
-  Tiscript.GlobalObjects.Reg('Test2', WrapObjectDispatch(varTest));
+  Tiscript.RegisterGlobalObject('Test2', WrapObjectDispatch(varTest));
   //ShowMessage(Sciter.SciterVersion);
 
   Application.Initialize;

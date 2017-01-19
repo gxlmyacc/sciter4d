@@ -33,6 +33,13 @@ type
   ITiscriptObjectEnumerator = interface;
   ITiscriptArrayEnumerator = interface;
 
+
+  TTiscriptDynValueArray = array of ITiscriptValue;
+  TTiscriptValueArray = array[Word] of ITiscriptValue;
+  PTiscriptValueArray = ^TTiscriptValueArray;
+  TTiscriptNativeMethod = function(vm: HVM; this, super: ITiscriptObject;
+    argCount: Integer; args: PTiscriptValueArray; tag: Pointer): ITiscriptValue;
+
   PITiscriptRuntime = ^ITiscriptRuntime;
   ITiscriptRuntime = interface
   ['{3696A8CA-F395-452D-BA31-3B10D4F46136}']
@@ -47,11 +54,11 @@ type
     procedure GC();
 
     // designates ultimate "does not exist" situation.
-    function Nothing: tiscript_value;
+    function Nothing: ITiscriptValue;
     // non-initialized or non-existent value
-    function Undefined: tiscript_value;
+    function Undefined: ITiscriptValue;
     // explicit "no object" value
-    function Null: tiscript_value;
+    function Null: ITiscriptValue;
     function V(const v: tiscript_value): ITiscriptValue;
     function B(const v: Boolean): ITiscriptValue;
     function I(const v: Integer): ITiscriptValue;
@@ -257,47 +264,57 @@ type
     function ResolveClass(vm: HVM; const TypeName: SciterString): tiscript_class;
   end;
 
-  ITiscriptObjectRegInfo = interface
+  TTiscriptVariableType = ( tvtFunction, tvtObject );
+  ITiscriptVariableItem = interface
   ['{46357158-103D-47DF-843D-FB5954658710}']
     function GetName: SciterString;
-    function GetValue: IDispatch;
+    function GetType: TTiscriptVariableType;
+    function GetObject: IDispatch;
+    function GetFunction: TTiscriptNativeMethod;
+    function GetTag: Pointer;
     procedure SetName(const Value: SciterString);
-    procedure SetValue(const Value: IDispatch);
+    procedure SetType(const Value: TTiscriptVariableType);
+    procedure SetObject(const Value: IDispatch);
+    procedure SetFunction(const Value: TTiscriptNativeMethod);
+    procedure SetTag(const Value: Pointer);
 
     property Name: SciterString read GetName write SetName;
-    property Value: IDispatch read GetValue write SetValue;
+    property Type_: TTiscriptVariableType read GetType write SetType;
+    property Object_: IDispatch read GetObject write SetObject;
+    property Function_: TTiscriptNativeMethod read GetFunction write SetFunction;
+    property Tag: Pointer read GetTag write SetTag;
   end;
 
   TTiscriptObjectAction = (tocaReg, tocaUnreg, tocaChanged);
-  TTiscriptObjectListener = procedure (const AInfo: ITiscriptObjectRegInfo; Action: TTiscriptObjectAction) of object;
+  TTiscriptObjectListener = procedure (const AInfo: ITiscriptVariableItem; Action: TTiscriptObjectAction) of object;
 
-  PITiscriptObjectList = ^ITiscriptObjectList;
-  ITiscriptObjectList = interface
+  PITiscriptVariableList = ^ITiscriptVariableList;
+  ITiscriptVariableList = interface
   ['{E2129C46-3426-45A4-8B23-DA1215FC8FE8}']
     function  GetCount: Integer;
-    function  GetItem(const Index: Integer): ITiscriptObjectRegInfo;
+    function  GetItem(const Index: Integer): ITiscriptVariableItem;
     function  GetItemName(const Index: Integer): SciterString;
-    function  GetItemByName(const AName: SciterString): ITiscriptObjectRegInfo;
-    procedure SetItem(const Index: Integer; const Value: ITiscriptObjectRegInfo);
-    procedure SetItemByName(const AName: SciterString; const Value: ITiscriptObjectRegInfo);
+    function  GetItemByName(const AName: SciterString): ITiscriptVariableItem;
+    procedure SetItem(const Index: Integer; const Value: ITiscriptVariableItem);
+    procedure SetItemByName(const AName: SciterString; const Value: ITiscriptVariableItem);
 
     procedure Invalidate;
 
-    function  Reg(const AName: SciterString; const AItem: IDispatch): Integer;
+    function  RegObject(const AName: SciterString; const AItem: IDispatch): Integer;
+    function  RegFunction(const AName: SciterString; AFunction: TTiscriptNativeMethod; ATag: Pointer = nil): Integer;
     procedure UnReg(const Index: Integer); overload;
     procedure UnReg(const AName: SciterString); overload;
     procedure Clear;
-    
-    function  IndexOf(const AItem: IDispatch): Integer;
+
     function  IndexOfName(const AName: SciterString): Integer;
 
     function AddListener(const AListener: TTiscriptObjectListener): Integer;
     function RemoveListener(const AListener: TTiscriptObjectListener): Integer;
 
     property Count: Integer read GetCount;
-    property Item[const Index: Integer]: ITiscriptObjectRegInfo read GetItem write SetItem; default;
+    property Item[const Index: Integer]: ITiscriptVariableItem read GetItem write SetItem; default;
     property ItemName[const Index: Integer]: SciterString read GetItemName;
-    property ItemByName[const AName: SciterString]: ITiscriptObjectRegInfo read GetItemByName write SetItemByName;
+    property ItemByName[const AName: SciterString]: ITiscriptVariableItem read GetItemByName write SetItemByName;
   end;
 
 
@@ -346,15 +363,12 @@ type
     function GetOleObjectGuid(const Obj: IDispatch): SciterString;
     function FindOrCreateOleObjectClass(vm: HVM; const Dispatch: IDispatch): tiscript_class;
 
-    function  RegisterOleObject(vm: HVM; Dispatch: IDispatch; const Name: SciterString): tiscript_object;
-    procedure UnRegisterObject(const vm: HVM; const VarName: SciterString);
+    function  RegisterOleObject(vm: HVM; const Name: SciterString; Dispatch: IDispatch): tiscript_object;
     function  WrapOleObject(vm: HVM; Dispatch: IDispatch): tiscript_object;
-
-    function CreateOleObjectList: ITiscriptObjectList;
   end;
 
   TTiscriptCreateNativeObjectProc = function (const vm: HVM; const AObjectName: SciterString;
-    argCount: Integer; args: Ptiscript_value_array): IDispatch of object;
+    argCount: Integer; args: PTiscriptValueArray): IDispatch of object;
 
   ITiscriptPined = interface
   ['{08540024-B788-402E-8ECE-49DD379AF16F}']
@@ -405,6 +419,8 @@ type
     procedure SetE(const Value: HELEMENT);
     procedure SetSymbol(const Value: SciterString);
 
+    procedure Invalidate;
+
     function IsInt: Boolean;
     function IsFloat: Boolean;
     function IsSymbol: Boolean;
@@ -452,6 +468,7 @@ type
     function TryCallEx(const Args: array of ITiscriptValue; out RetVal: ITiscriptValue): Boolean;
 
     function ToDispatch: IDispatch;
+    function ToValue: ITiscriptValue;
 
     property This: ITiscriptObject read GetThis;
   end;
@@ -470,6 +487,8 @@ type
     function TryCall(const AFunc: SciterString; const Args: array of const): Boolean; overload;
     function TryCall(const AFunc: SciterString; const Args: array of const; out RetVal: ITiscriptValue): Boolean; overload;
     function TryCallEx(const AFunc: SciterString; const Args: array of ITiscriptValue; out RetVal: ITiscriptValue): Boolean;
+
+    function ToValue: ITiscriptValue;
 
     property Length: Cardinal read GetLength;
     property Item[const AKey: SciterString]: ITiscriptValue read GetItem write SetItem; default;
@@ -496,6 +515,8 @@ type
     function Push(const AValue: ITiscriptObject): Boolean; overload;
     function Push(const AValue: ITiscriptArray): Boolean; overload;
     function PushSymbol(const AValue: SciterString): Boolean;
+
+    function ToValue: ITiscriptValue;
 
     property Length: Cardinal read GetLength write SetLength;
     property Item[const AIndex: Integer]: ITiscriptValue read GetItem write SetItem; default;
@@ -545,7 +566,6 @@ type
     function  GetCurrent: PITiscriptRuntime;
     function  GetOle: PITiscriptOle;
     function  GetClassBag: PITiscriptClassBag;
-    function  GetGlobalObjects: PITiscriptObjectList;
     procedure SetOnCreateNativeObject(const Value: TTiscriptCreateNativeObjectProc);
 
     function CreateValue(vm: HVM; const aValue: tiscript_value): ITiscriptValue;
@@ -556,7 +576,7 @@ type
     function CreateArray(vm: HVM; num_elements: Cardinal): ITiscriptArray; overload;
     function CreateArray(num_elements: Cardinal): ITiscriptArray; overload;
     function CreateFunction(vm: HVM; aFunc: tiscript_value; aThis: tiscript_object = 0): ITiscriptFunction; overload;
-    function CreateFunction(vm: HVM; aFunc: tiscript_native_method; aTag: Pointer = nil): ITiscriptFunction; overload;
+    function CreateFunction(vm: HVM; aFunc: TTiscriptNativeMethod; aTag: Pointer = nil): ITiscriptFunction; overload;
 
     function CreateRuntime(const vm: HVM): ITiscriptRuntime; overload;
     function CreateRuntime(features: UINT = $ffffffff; heap_size: UINT= 1*1024*1024; stack_size: UINT = 64*1024): ITiscriptRuntime; overload;
@@ -572,14 +592,19 @@ type
     function IsClassExists(const vm: HVM; const Name: SciterString): tiscript_value;
     function FindObject(const vm: HVM; const Name: SciterString): tiscript_value;
     function FindClass(const vm: HVM; const ClassName: SciterString): tiscript_class;
-    function RegisterFunction(const vm: HVM; const Name: SciterString; Handler: tiscript_native_method;
+
+    function RegisterFunction(const vm: HVM; const Name: SciterString; Handler: TTiscriptNativeMethod;
       Tag: Pointer = nil; ThrowIfExists: Boolean = False): tiscript_value;
-    function RegisterClass(const vm: HVM; ClassDef: ptiscript_class_def; ThrowIfExists: Boolean): tiscript_class;
-    function CreateObjectInstance(const vm: HVM; Obj: Pointer; OfClass: tiscript_class): tiscript_object; overload;
-    function CreateObjectInstance(const vm: HVM; Obj: Pointer; OfClass: SciterString): tiscript_object; overload;
+    function  RegisterObject(vm: HVM; const Name: SciterString; Dispatch: IDispatch): tiscript_object;
+    function  WrapObject(vm: HVM; Dispatch: IDispatch): tiscript_object;
     
-    procedure RegisterObject(const vm: HVM; Obj: tiscript_object; const VarName: SciterString); overload;
-    procedure RegisterObject(const vm: HVM; Obj: Pointer; const OfClass: SciterString; const VarName: SciterString); overload;
+    procedure UnRegisterVariable(const vm: HVM; const Name: SciterString);
+
+    function  IsGlobalVariableExists(const Name: SciterString): Boolean;
+    function  RegisterGlobalFunction(const Name: SciterString; Handler: TTiscriptNativeMethod;
+      Tag: Pointer = nil): tiscript_value;
+    function  RegisterGlobalObject(const Name: SciterString; Dispatch: IDispatch): tiscript_object;
+    procedure UnRegisterGlobalVariable(const Name: SciterString);
 
     function  T2V(const vm: HVM; Value: tiscript_value): OleVariant;
     function  V2T(const vm: HVM; const Value: OleVariant): tiscript_value;
@@ -591,7 +616,6 @@ type
     property Current: PITiscriptRuntime read GetCurrent;
     property Ole: PITiscriptOle read GetOle;
     property ClassBag: PITiscriptClassBag read GetClassBag;
-    property GlobalObjects: PITiscriptObjectList read GetGlobalObjects;
     
     property OnCreateNativeObject: TTiscriptCreateNativeObjectProc read GetOnCreateNativeObject write SetOnCreateNativeObject;
   end;

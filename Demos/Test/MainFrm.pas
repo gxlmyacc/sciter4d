@@ -250,12 +250,11 @@ begin
   Result := AElement;
 end;
 
-function _NativeAnonymousFunction(vm: HVM; this, super: tiscript_value;
-  argCount: Integer; args: Ptiscript_value_array; tag: Pointer): tiscript_value;
+function _NativeAnonymousFunction(vm: HVM; this, super: ITiscriptObject;
+  argCount: Integer; args: PTiscriptValueArray; tag: Pointer): ITiscriptValue;
 begin
-  Result := tiscript.Current.Undefined;
   try
-    ShowMessage('込込');
+    ShowMessage(args[0].S);
   except
   end;
 end;
@@ -264,8 +263,8 @@ procedure TMainForm.Button8Click(Sender: TObject);
 var
   func: ITiscriptFunction;
 begin
-  func := Tiscript.CreateFunction(Tiscript.Current.vm, @_NativeAnonymousFunction);
-  func.Call([]);
+  func := Tiscript.CreateFunction(Tiscript.Current.vm, _NativeAnonymousFunction);
+  func.Call(['込込']);
 end;
 
 end.
