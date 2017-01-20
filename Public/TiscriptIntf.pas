@@ -393,11 +393,20 @@ type
     property Value: tiscript_value read GetValue write SetValue;
   end;
 
+  ITiscriptBytes = interface
+  ['{BAFB0CFD-908C-4012-A764-B40ACCB7B192}']
+    function GetMemory: Pointer;
+    function GetSize: Cardinal;
+    
+    property Memory: Pointer read GetMemory;
+    property Size: Cardinal read GetSize;
+  end;
+
   ITiscriptValue= interface(ITiscriptPined)
   ['{03E18D5F-A63C-4EE5-9F55-DF1492F689EB}']
     function GetA: ITiscriptArray;
     function GetB: Boolean;
-    function GetBytes: TBytes;
+    function GetBytes: ITiscriptBytes;
     function GetD: Double;
     function GetDT: TDateTime;
     function GetF: ITiscriptFunction;
@@ -409,7 +418,7 @@ type
     function GetSymbol: SciterString;
     procedure SetA(const Value: ITiscriptArray);
     procedure SetB(const Value: Boolean);
-    procedure SetBytes(const Value: TBytes);
+    procedure SetBytes(const Value: ITiscriptBytes);
     procedure SetD(const Value: Double);
     procedure SetDT(const Value: TDateTime);
     procedure SetF(const Value: ITiscriptFunction);
@@ -448,7 +457,7 @@ type
     property B: Boolean read GetB write SetB;
     property Symbol: SciterString read GetSymbol write SetSymbol;
     property S: SciterString read GetS write SetS;
-    property Bytes: TBytes read GetBytes write SetBytes;
+    property Bytes: ITiscriptBytes read GetBytes write SetBytes;
     property F: ITiscriptFunction read GetF write SetF;
     property O: ITiscriptObject read GetO write SetO;
     property NO: IDispatch read GetNO;
@@ -478,6 +487,28 @@ type
     function GetLength: Cardinal;
     function GetItem(const AKey: SciterString): ITiscriptValue;
     function GetNativeInstance: IDispatch;
+    function GetA(const AKey: SciterString): ITiscriptArray;
+    function GetB(const AKey: SciterString): Boolean;
+    function GetBytes(const AKey: SciterString): ITiscriptBytes;
+    function GetD(const AKey: SciterString): Double;
+    function GetDT(const AKey: SciterString): TDateTime;
+    function GetE(const AKey: SciterString): HELEMENT;
+    function GetF(const AKey: SciterString): ITiscriptFunction;
+    function GetI(const AKey: SciterString): Integer;
+    function GetNO(const AKey: SciterString): IDispatch;
+    function GetO(const AKey: SciterString): ITiscriptObject;
+    function GetS(const AKey: SciterString): SciterString;
+    function GetSymbol(const AKey: SciterString): SciterString;
+    procedure SetA(const AKey: SciterString; const Value: ITiscriptArray);
+    procedure SetB(const AKey: SciterString; const Value: Boolean);
+    procedure SetBytes(const AKey: SciterString; const Value: ITiscriptBytes);
+    procedure SetD(const AKey: SciterString; const Value: Double);
+    procedure SetDT(const AKey: SciterString; const Value: TDateTime);
+    procedure SetF(const AKey: SciterString; const Value: ITiscriptFunction);
+    procedure SetI(const AKey: SciterString; const Value: Integer);
+    procedure SetO(const AKey: SciterString; const Value: ITiscriptObject);
+    procedure SetS(const AKey, Value: SciterString);
+    procedure SetSymbol(const AKey, Value: SciterString);
     procedure SetItem(const AKey: SciterString; const AValue: ITiscriptValue);
 
     function GetEnumerator: ITiscriptObjectEnumerator;
@@ -492,13 +523,47 @@ type
 
     property Length: Cardinal read GetLength;
     property Item[const AKey: SciterString]: ITiscriptValue read GetItem write SetItem; default;
+    property I[const AKey: SciterString]: Integer read GetI write SetI;
+    property D[const AKey: SciterString]: Double read GetD write SetD;
+    property DT[const AKey: SciterString]: TDateTime read GetDT write SetDT;
+    property B[const AKey: SciterString]: Boolean read GetB write SetB;
+    property Symbol[const AKey: SciterString]: SciterString read GetSymbol write SetSymbol;
+    property S[const AKey: SciterString]: SciterString read GetS write SetS;
+    property Bytes[const AKey: SciterString]: ITiscriptBytes read GetBytes write SetBytes;
+    property F[const AKey: SciterString]: ITiscriptFunction read GetF write SetF;
+    property O[const AKey: SciterString]: ITiscriptObject read GetO write SetO;
+    property NO[const AKey: SciterString]: IDispatch read GetNO;
+    property A[const AKey: SciterString]: ITiscriptArray read GetA write SetA;
+    property E[const AKey: SciterString]: HELEMENT read GetE;
     property NativeInstance: IDispatch read GetNativeInstance;
   end;
 
   ITiscriptArray = interface(ITiscriptPined)
   ['{F5469043-D2AC-44A5-A34D-077C23C2526B}']
-    function GetLength: Cardinal;
+    function GetA(const AIndex: Integer): ITiscriptArray;
+    function GetB(const AIndex: Integer): Boolean;
+    function GetBytes(const AIndex: Integer): ITiscriptBytes;
+    function GetD(const AIndex: Integer): Double;
+    function GetDT(const AIndex: Integer): TDateTime;
+    function GetE(const AIndex: Integer): HELEMENT;
+    function GetF(const AIndex: Integer): ITiscriptFunction;
+    function GetI(const AIndex: Integer): Integer;
+    function GetNO(const AIndex: Integer): IDispatch;
+    function GetO(const AIndex: Integer): ITiscriptObject;
+    function GetS(const AIndex: Integer): SciterString;
+    function GetSymbol(const AIndex: Integer): SciterString;
     function GetItem(const AIndex: Integer): ITiscriptValue;
+    function GetLength: Cardinal;
+    procedure SetA(const AIndex: Integer; const Value: ITiscriptArray);
+    procedure SetB(const AIndex: Integer; const Value: Boolean);
+    procedure SetBytes(const AIndex: Integer; const Value: ITiscriptBytes);
+    procedure SetD(const AIndex: Integer; const Value: Double);
+    procedure SetDT(const AIndex: Integer; const Value: TDateTime);
+    procedure SetF(const AIndex: Integer; const Value: ITiscriptFunction);
+    procedure SetI(const AIndex, Value: Integer);
+    procedure SetO(const AIndex: Integer; const Value: ITiscriptObject);
+    procedure SetS(const AIndex: Integer; const Value: SciterString);
+    procedure SetSymbol(const AIndex: Integer; const Value: SciterString);
     procedure SetItem(const AIndex: Integer; const AValue: ITiscriptValue);
     procedure SetLength(const Value: Cardinal);
 
@@ -520,6 +585,18 @@ type
 
     property Length: Cardinal read GetLength write SetLength;
     property Item[const AIndex: Integer]: ITiscriptValue read GetItem write SetItem; default;
+    property I[const AIndex: Integer]: Integer read GetI write SetI;
+    property D[const AIndex: Integer]: Double read GetD write SetD;
+    property DT[const AIndex: Integer]: TDateTime read GetDT write SetDT;
+    property B[const AIndex: Integer]: Boolean read GetB write SetB;
+    property Symbol[const AIndex: Integer]: SciterString read GetSymbol write SetSymbol;
+    property S[const AIndex: Integer]: SciterString read GetS write SetS;
+    property Bytes[const AIndex: Integer]: ITiscriptBytes read GetBytes write SetBytes;
+    property F[const AIndex: Integer]: ITiscriptFunction read GetF write SetF;
+    property O[const AIndex: Integer]: ITiscriptObject read GetO write SetO;
+    property NO[const AIndex: Integer]: IDispatch read GetNO;
+    property A[const AIndex: Integer]: ITiscriptArray read GetA write SetA;
+    property E[const AIndex: Integer]: HELEMENT read GetE;
   end;
 
   ITiscriptObjectPair = interface
@@ -568,6 +645,8 @@ type
     function  GetClassBag: PITiscriptClassBag;
     procedure SetOnCreateNativeObject(const Value: TTiscriptCreateNativeObjectProc);
 
+    function CreateBytes(const ASize: Cardinal): ITiscriptBytes; overload;
+    function CreateBytes(const AMemory: Pointer; const ASize: Cardinal): ITiscriptBytes; overload;
     function CreateValue(vm: HVM; const aValue: tiscript_value): ITiscriptValue;
     function CreateObject(vm: HVM; const aObject: tiscript_value): ITiscriptObject;
     function CreateObjectByClass(const vm: HVM; const of_class: tiscript_value = 0): ITiscriptObject;
