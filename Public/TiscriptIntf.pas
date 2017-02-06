@@ -71,7 +71,7 @@ type
     function O(const native_object: IDispatch): ITiscriptObject; overload;
     //@region Array
     function A(const v: tiscript_value): ITiscriptArray; overload;
-    function A(const num_elements: UINT): ITiscriptArray; overload;
+    function A(const num_elements: UINT = 0): ITiscriptArray; overload;
     function Symbol(const v: SciterString): ITiscriptValue;
     function Bytes(const data: PByte; datalen: UINT): ITiscriptValue;
     function Json(const jsonStr: SciterString): ITiscriptValue;
@@ -504,6 +504,7 @@ type
     procedure SetBytes(const AKey: SciterString; const Value: ITiscriptBytes);
     procedure SetD(const AKey: SciterString; const Value: Double);
     procedure SetDT(const AKey: SciterString; const Value: TDateTime);
+    procedure SetE(const AKey: SciterString; const Value: HELEMENT);
     procedure SetF(const AKey: SciterString; const Value: ITiscriptFunction);
     procedure SetI(const AKey: SciterString; const Value: Integer);
     procedure SetO(const AKey: SciterString; const Value: ITiscriptObject);
@@ -534,7 +535,7 @@ type
     property O[const AKey: SciterString]: ITiscriptObject read GetO write SetO;
     property NO[const AKey: SciterString]: IDispatch read GetNO;
     property A[const AKey: SciterString]: ITiscriptArray read GetA write SetA;
-    property E[const AKey: SciterString]: HELEMENT read GetE;
+    property E[const AKey: SciterString]: HELEMENT read GetE write SetE;
     property NativeInstance: IDispatch read GetNativeInstance;
   end;
 
@@ -559,6 +560,7 @@ type
     procedure SetBytes(const AIndex: Integer; const Value: ITiscriptBytes);
     procedure SetD(const AIndex: Integer; const Value: Double);
     procedure SetDT(const AIndex: Integer; const Value: TDateTime);
+    procedure SetE(const AIndex: Integer; const Value: HELEMENT);
     procedure SetF(const AIndex: Integer; const Value: ITiscriptFunction);
     procedure SetI(const AIndex, Value: Integer);
     procedure SetO(const AIndex: Integer; const Value: ITiscriptObject);
@@ -596,7 +598,7 @@ type
     property O[const AIndex: Integer]: ITiscriptObject read GetO write SetO;
     property NO[const AIndex: Integer]: IDispatch read GetNO;
     property A[const AIndex: Integer]: ITiscriptArray read GetA write SetA;
-    property E[const AIndex: Integer]: HELEMENT read GetE;
+    property E[const AIndex: Integer]: HELEMENT read GetE write SetE;
   end;
 
   ITiscriptObjectPair = interface

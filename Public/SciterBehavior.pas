@@ -214,7 +214,7 @@ var
 {$IFNDEF Sciter4D}
 function SciterCanUnloadPlugin: Boolean; stdcall;
 begin
-  Result := (not SciterGlobalPlugin) and (varLocalBehaviorCount <= 0);
+  Result := (not SciterGlobalPlugin) and (varLocalBehaviorCount <= 0) and (ObjectDispatchCount <= 0);
 end;
 exports
   SciterCanUnloadPlugin;

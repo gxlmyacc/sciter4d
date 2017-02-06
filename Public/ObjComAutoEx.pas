@@ -149,6 +149,9 @@ function CreateMethodPointer(const Instance: IDispatch; DispID: Integer;
   TypeInfo: PTypeInfo): TMethod; overload;
 procedure ReleaseMethodPointer(const MethodPointer: TMethod);
 
+var
+  ObjectDispatchCount: Integer = 0;
+
 implementation
 
 uses
@@ -223,6 +226,8 @@ begin
 
   FMethodInfoList   := THashedStringList.Create;
   FPropertyInfoList := THashedStringList.Create;
+
+  InterlockedIncrement(ObjectDispatchCount);
 end;
 
 destructor TObjectDispatchEx.Destroy;
@@ -248,7 +253,8 @@ begin
   if FOwned and (FInstance <> nil) then
     FreeAndNil(FInstance);
   FObjectInterface := nil;
-
+  
+  InterlockedDecrement(ObjectDispatchCount);
   inherited;
 end;
 

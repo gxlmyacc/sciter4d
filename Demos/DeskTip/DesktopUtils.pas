@@ -164,7 +164,7 @@ end;
 
 function _IsWin64: Boolean;   
 var  
-  Kernel32Handle: THandle;   
+  Kernel32Handle: Cardinal;   
   IsWow64Process: function(Handle: Windows.THandle; var Res: Windows.BOOL): Windows.BOOL; stdcall;   
   GetNativeSystemInfo: procedure(var lpSystemInfo: TSystemInfo); stdcall;   
   isWoW64: Bool;   
@@ -172,28 +172,25 @@ var
 const  
   PROCESSOR_ARCHITECTURE_AMD64 = 9;   
   PROCESSOR_ARCHITECTURE_IA64 = 6;   
-begin  
-  Kernel32Handle := GetModuleHandle('KERNEL32.DLL');   
-  if Kernel32Handle = 0 then  
-    Kernel32Handle := LoadLibrary('KERNEL32.DLL');   
+begin
+  Result := False;
+  Kernel32Handle := GetModuleHandle('KERNEL32.DLL');
   if Kernel32Handle <> 0 then  
   begin  
     IsWOW64Process := GetProcAddress(Kernel32Handle,'IsWow64Process');   
     GetNativeSystemInfo := GetProcAddress(Kernel32Handle,'GetNativeSystemInfo');   
     if Assigned(IsWow64Process) then  
     begin  
-      IsWow64Process(GetCurrentProcess,isWoW64);   
+      IsWow64Process(GetCurrentProcess, isWoW64);   
       Result := isWoW64 and Assigned(GetNativeSystemInfo);   
       if Result then  
       begin  
         GetNativeSystemInfo(SystemInfo);   
         Result := (SystemInfo.wProcessorArchitecture = PROCESSOR_ARCHITECTURE_AMD64) or  
-                  (SystemInfo.wProcessorArchitecture = PROCESSOR_ARCHITECTURE_IA64);   
+          (SystemInfo.wProcessorArchitecture = PROCESSOR_ARCHITECTURE_IA64);   
       end;   
-    end  
-    else Result := False;   
-  end  
-  else Result := False;   
+    end;
+  end;
 end; 
 
 { TDesktopManager }
@@ -237,7 +234,7 @@ var
 begin
   Result := 0;
 
-  bufClassName := GetMemory(256);
+  bufClassName := GetMemory(256*SizeOf(Char));
   try
     hWin := FindWindow('Progman', 'Program Manager');
     if (hWin = 0) or (GetWindow(hWin, GW_CHILD) = 0) then
