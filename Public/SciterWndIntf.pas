@@ -38,6 +38,7 @@ type
     function GetIsModaling: Boolean;
     function GetIsShowing: Boolean;
     function GetModalCode: Integer;
+    function GetTag: Pointer;
     function GetOnWndProc: TSciterWndProc;
     function GetOnClose: TSciterNotifyEvent;
     function GetOnCloseQuery: TSciterCloseQueryEvent;
@@ -55,6 +56,7 @@ type
     procedure SetWidth(const Value: Integer);
     procedure SetBounds(const Value: TRect);
     procedure SetModalCode(const Value: Integer);
+    procedure SetTag(const Value: Pointer);
     procedure SetOnWndProc(const Value: TSciterWndProc);
     procedure SetOnClose(const Value: TSciterNotifyEvent);
     procedure SetOnCloseQuery(const Value: TSciterCloseQueryEvent);
@@ -90,6 +92,7 @@ type
     property IsShowing: Boolean read GetIsShowing;
     property IsModaling: Boolean read GetIsModaling;
     property ModalCode: Integer read GetModalCode write SetModalCode;
+    property Tag: Pointer read GetTag write SetTag;
 
     property OnWndProc: TSciterWndProc read GetOnWndProc write SetOnWndProc;
     property OnCreate: TSciterNotifyEvent read GetOnCreate write SetOnCreate;
@@ -98,7 +101,7 @@ type
     property OnCloseQuery: TSciterCloseQueryEvent read GetOnCloseQuery write SetOnCloseQuery;
     property OnShow: TSciterNotifyEvent read GetOnShow write SetOnShow;
     property OnHide: TSciterNotifyEvent read GetOnHide write SetOnHide;
-    property OnKeyDown: TSciterKeyDownEvent read GetOnKeyDown write SetOnKeyDown; 
+    property OnKeyDown: TSciterKeyDownEvent read GetOnKeyDown write SetOnKeyDown;
   end;
 
   PISciterWindowList = ^ISciterWindowList;

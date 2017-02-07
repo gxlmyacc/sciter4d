@@ -43,8 +43,8 @@ const
 const
   PROC_SciterLoadPlugin      = 'SciterLoadPlugin';
   PROC_SciterCanUnloadPlugin = 'SciterCanUnloadPlugin';
-  PROC_SciterUnloadPlugin    = 'SciterUnloadPlugin';
   PROC_SciterSendMessage     = 'SciterSendMessage';
+  PROC_SciterUnloadPlugin    = 'SciterUnloadPlugin';
   PROC_SciterRequirePlugin   = 'SciterRequirePlugin';
 
 type

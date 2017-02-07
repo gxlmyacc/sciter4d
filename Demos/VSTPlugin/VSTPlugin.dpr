@@ -28,16 +28,9 @@ begin
 
 end;
 
-function SciterSendMessage(Msg: UINT; wParam: WPARAM; lParam: LPARAM;
-  var bHandle: Boolean; const AFilter: WideString): LRESULT; stdcall;
-begin
-  Result := 0;
-end;
-
 exports
   SciterLoadPlugin,
-  SciterUnloadPlugin,
-  SciterSendMessage;
+  SciterUnloadPlugin;
 
 begin
 end.

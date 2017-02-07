@@ -653,8 +653,13 @@ end;
 function OleInitialize(pwReserved: Pointer): HResult; stdcall; external 'ole32.dll' name 'OleInitialize';
 procedure OleUninitialize; stdcall; external 'ole32.dll' name 'OleUninitialize';
 
+procedure _RenderTimerProc(hwnd:HWND; uMsg, idEvent: UINT; dwTime: DWORD); stdcall;
+begin
+  Render();
+end;
+
 var
-  msg: TMsg;
+  timerId: Cardinal;
 begin
 //SCITER+
   // Sciter needs it for Drag-n-drop, etc.
@@ -672,19 +677,12 @@ begin
   end;
   
   MainFrom.Show();
+  timerId := SetTimer(MainFrom.Handle, 1, 50, @_RenderTimerProc);
+
   // Main message loop
-  //ExitCode := Sciter.RunAppclition(MainFrom.Handle);
-  while WM_QUIT <> msg.message do
-  begin
-    if PeekMessage(msg, 0, 0, 0, PM_REMOVE ) then
-    begin
-      TranslateMessage( msg );
-      DispatchMessage( msg );
-    end
-    else
-      Render();
-  end;
-  ExitCode := msg.wParam;
+  ExitCode := Sciter.RunAppclition(MainFrom.Handle);
+  
+  KillTimer(MainFrom.Handle, timerId);
   CleanupDevice;
 
   MainFrom := nil;

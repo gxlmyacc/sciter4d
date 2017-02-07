@@ -41,16 +41,9 @@ begin
 
 end;
 
-function SciterSendMessageProc(Msg: UINT; wParam: WPARAM; lParam: LPARAM;
-  var bHandle: Boolean; const AFilter: WideString): LRESULT; stdcall;
-begin
-  Result := 0;
-end;
-
 exports
   SciterLoadPlugin,
-  SciterUnloadPlugin,
-  SciterSendMessageProc;
+  SciterUnloadPlugin;
 
 begin
 end.

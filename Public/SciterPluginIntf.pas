@@ -23,7 +23,7 @@ type
   TSciterLoadPluginProc = procedure (const APlugin: ISciterPlugin); stdcall;
   TSciterCanUnloadPluginProc = function : Boolean; stdcall;
   TSciterUnloadPluginProc = procedure (const APlugin: ISciterPlugin); stdcall;
-  TSciterSendMessageProc = function (Msg: UINT; wParam: WPARAM; lParam: LPARAM;
+  TSciterSendMessageProc = function (const Msg: WideString; wParam: WPARAM; lParam: LPARAM;
     var bHandle: Boolean; const AFilter: SciterString): LRESULT; stdcall;
   TSciterRequirePluginProc = function(const AParams: SciterString): IDispatch; stdcall;
   
@@ -52,12 +52,11 @@ type
 
     function  Require(const AParams: SciterString): IDispatch;
 
-    function SendMessage(Msg: UINT; wParam: WPARAM; lParam: LPARAM;
+    function SendMessage(const Msg: WideString; wParam: WPARAM; lParam: LPARAM;
       var bHandle: Boolean; const AFilter: SciterString = ''): LRESULT;
-
-    function  Broadcast(Msg: UINT; wParam: WPARAM; lParam: LPARAM;
+    function  Broadcast(const Msg: WideString; wParam: WPARAM; lParam: LPARAM;
       var bHandle: Boolean; const AFilter: SciterString = ''): LRESULT; overload;
-    procedure Broadcast(Msg: UINT; wParam: WPARAM; lParam: LPARAM;
+    procedure Broadcast(const Msg: WideString; wParam: WPARAM; lParam: LPARAM;
       const AFilter: SciterString = ''); overload;
 
     property LastError: SciterString read GetLastError;
@@ -91,9 +90,9 @@ type
     procedure Delete(const Index: Integer);
     procedure Insert(const Index: Integer; const AItem: ISciterPlugin; const AOwner: Boolean);
 
-    function  Broadcast(Msg: UINT; wParam: WPARAM; lParam: LPARAM;
+    function  Broadcast(const Msg: WideString; wParam: WPARAM; lParam: LPARAM;
       var bHandle: Boolean; const AFilter: SciterString = ''): LRESULT; overload;
-    procedure Broadcast(Msg: UINT; wParam: WPARAM; lParam: LPARAM;
+    procedure Broadcast(const Msg: WideString; wParam: WPARAM; lParam: LPARAM;
       const AFilter: SciterString = ''); overload;
     
     function  IndexOf(const AItem: ISciterPlugin): Integer;

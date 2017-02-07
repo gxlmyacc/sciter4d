@@ -1350,6 +1350,7 @@ type
     Schema: TSciterSchemaType;
     IsOrigin: Boolean;
     IsPlugin: Boolean;
+    IsHtml: Boolean;
   end;
 type
 (** #SCITER_X_MSG_CODE message/function identifier *)
