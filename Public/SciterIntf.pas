@@ -726,40 +726,6 @@ type
     property ItemByUID[const AUID: UINT]: IDomElement read GetItemByUID write SetItemByUID;
   end;
 
-  IDomEditBox = interface(IDomElement)
-  ['{EC3610CE-B791-4AE7-9C1E-0D497804475E}']
-    function  GetTextValue: SciterString;
-    procedure SetTextValue(const Value: SciterString);
-
-    function Selection(var AStart: Integer; var AEnd: Integer): Boolean;
-    function Select(const AStart: Integer = 0; const AEnd: Integer = $FFFF): Boolean;
-    function Replace(const text: SciterString): Boolean;
-
-    function CharPosAtXY(x, y: Integer): Integer;
-
-    property TextValue: SciterString read GetTextValue write SetTextValue;
-  end;
-
-  PDomScrollbarInfo = ^TDomScrollbarInfo;
-  TDomScrollbarInfo = record
-    Pos:      Integer;
-    min_value:  Integer;
-    max_value:  Integer ;
-    page_value: Integer; // page increment
-    step_value: Integer; // step increment (arrow button click)
-  end;
-
-  IDomScrollbar = interface(IDomElement)
-  ['{516E79FF-8A41-45AE-9864-5994FF81886E}']
-    function  GetInfo: TDomScrollbarInfo;
-    function  GetPos: Integer;
-    procedure SetInfo(const Value: TDomScrollbarInfo);
-    procedure SetPos(const Value: Integer);
-
-    property Info: TDomScrollbarInfo read GetInfo write SetInfo;
-    property Pos: Integer read GetPos write SetPos;
-  end;
-
   // event handler which can be attached to any DOM element.
   // event handler can be attached to the element as a "behavior" (see below)
   // or by sciter::dom::element::attach( event_handler* eh )

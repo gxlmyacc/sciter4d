@@ -73,16 +73,6 @@ type
     function Create(const e: IDomElement): IDomElement; overload;
     function Create(const e: IDomNode): IDomElement; overload;
 
-    function CreateEditBox: IDomEditBox; overload;
-    function CreateEditBox(h: HELEMENT): IDomEditBox; overload;
-    function CreateEditBox(const e: IDomElement): IDomEditBox; overload;
-    function CreateEditBox(const e: IDomNode): IDomEditBox; overload;
-
-    function CreateScrollbar: IDomScrollbar; overload;
-    function CreateScrollbar(h: HELEMENT): IDomScrollbar; overload;
-    function CreateScrollbar(const e: IDomElement): IDomScrollbar; overload;
-    function CreateScrollbar(const e: IDomNode): IDomScrollbar; overload;
-
     function CreateList: IDomElementList;
   end;
 

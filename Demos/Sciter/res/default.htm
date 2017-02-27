@@ -87,6 +87,9 @@
     </style>
 
     <script type="text/tiscript">
+    
+      const APP_NAME = "sciter.app";
+      include "settings.tis";
 
       const content = $(frame#content);
       const inspectorButton = $(button#inspector);
@@ -163,7 +166,10 @@
           return true;
         }
       }
-      
+
+      function self.ready() {
+        Settings.restore();
+      }      
            
     </script>
 

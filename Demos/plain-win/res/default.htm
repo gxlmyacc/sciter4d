@@ -9,10 +9,20 @@
         function add(n1,n2) { return n1+n2; }
       }
       
-      $(#test).onClick = function() {
+      event click $(#test) {
         var data = self.request(5000, #get, "res:test.json");
         $(pre#out).text = data.toString();
       };
+      
+      event click $(#dependent-window) {
+        view.window {
+          url: self.url(),
+          type: View.FRAME_WINDOW,
+          alignment: -5,
+          width:800, 
+          height:600,
+        };
+      }
 
       $(#testpost).onClick = function() {
 	    var params = {
@@ -26,15 +36,6 @@
     </script>
     <style>
         html { background:white; font:system; }
-        /*
-        p.test { font:18pt "Arial Unicode MS"; margin:20px; }
-        p.test span.large { font-size:14pt; }
-        p.test span.back { background:gold; }
-        p.test span.over { text-decoration:overline; }
-        body { border:red 2px solid; behavior:htmlarea; }
-        button { display:block; }
-        p.ellipsis  { text-overflow:ellipsis; white-space:nowrap; overflow-x:hidden; }
-        p.path-ellipsis  { text-overflow:path-ellipsis; white-space:nowrap; overflow-x:hidden; } */
         
         frameset { border:3dip solid; }
         frameset > div { background:#fff; }
@@ -57,6 +58,8 @@ $(pre#out).text = data.toString();
 
 
   <button #testpost>测试#post</button>
+  
+  <p>测试调用view.window {}: <button #dependent-window>显示第二个窗口</button></p>
   
   <p>
     CTRL+F8: <input|time id=time />

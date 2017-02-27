@@ -22,7 +22,7 @@ begin
   Sciter.DriverName := ExtractFilePath(ParamStr(0)) + DLL_Sciter;
   Sciter.ReportBehaviorCount := True;
 
-  MainFrom := CreateWindow(HInstance, CWFlags_None + [swAlpha, swScreenCenter, swMain], 412, 588);
+  MainFrom := CreateWindow(HInstance, CWFlags_None + [swScreenCenter, swMain], 412, 588);
   MainFrom.Caption := '¶¯»­Í¼²ã´°¿Ú';
   MainFrom.Layout.LoadFile('file://'+ExtractFilePath(ParamStr(0))+'Layered\main.htm');
   MainFrom.Show();

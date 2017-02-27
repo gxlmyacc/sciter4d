@@ -1,12 +1,12 @@
-
+﻿
 
 //| 
-//| VirtualList - list view bound with the records array. The list is real time bound with the array - view reflects changes in the array.
+//| VirtualList - 一个绑定了数组的列表视图。这个列表实时绑定数组 - 视图反映数组的变化。
 //|
-//| params.container - DOM element, the list containing list items representing records.
-//| params.bufferSize - integer, size of sliding window - max number of DOM element used to render records in the view.
-//| params.renderItemView - function(recordNo:integer,record: object, itemEl: Element) - function used to render contents of itemEl by record data, optional.
-//| params.setupItemView - function(recordNo:integer,record: object, itemEl: Element) - function used to setup contents of itemEl after rendering (add classes etc.), optional.
+//| params.container - DOM元素, 包含列表项(代表数组中的数据)的列表容器。
+//| params.bufferSize - integer, 滑动窗口的尺寸 - 在视图中渲染记录的最大DOM元素数量。
+//| params.renderItemView - function(recordNo:integer,record: object, itemEl: Element) - 用于根据记录数据渲染itemEl内容的函数，可选。
+//| params.setupItemView - function(recordNo:integer,record: object, itemEl: Element) - 用于在渲染(添加class等)后装载itemEl的内容, 可选。
 //| params.getItemData - function(recordNo:integer): object - function gets called on undefined records to fetch record from external source, optional. 
 //|
 
@@ -38,6 +38,9 @@ function VirtualList(params) {
     //multiselection support (not yet)
     //var   selected = params.multiselect ? {} : null; // ATTENTION: if multiselect then each record must have unique .id field
         
+    // requests gc to be called
+    function dogc() { gc(); }
+    
     var   setupSetObserver;
     
     function recordAt(n) {
@@ -91,7 +94,8 @@ function VirtualList(params) {
       detachRecordObserver(el);    
       cache.push(el); 
       el.detach();    
-      el.state.clear(0xFFFFFFFF); // clear all flags      
+      el.state.clear(0xFFFFFFFF); // clear all flags 
+      list.timer(1s,dogc);     // throttle GC call as DOM object may hold various native resources      
     }
     
     function createRecViewer(rec) {
@@ -420,7 +424,7 @@ function VirtualList(params) {
     }
                 
     list.onMouse = function(evt) {
-      if( evt.type == (Event.MOUSE_DOWN | Event.SINKING) )
+      if( evt.type == Event.MOUSE_DOWN )
       {
         var li = evt.target.$p(li,tr);
         if( li && li.parent === list )
@@ -485,83 +489,14 @@ class VList : Behavior
 
 class VGrid : Behavior 
 {
-  var me;
-
-  property value(v) {
-    set this.tbody.value = v;
-    get return this.tbody.value;
-  }
-
-  function sortColumn(name, sortType) {
-    if (sortType === undefined)
-      sortType = "asc";
-    
-    var factor = 1;
-    switch (sortType)
-    {
-      case "asc":
-        factor = 1;
-        break;
-      case "desc":
-        factor = -1;
-        break;
-    }   
-
-    var v = me.value;
-
-    v.sort(function (v1,v2) {
-      var p1 = v1.propertyAt(name);
-      var p2 = v2.propertyAt(name); 
-
-      if (p1 > p2)
-        return 1 * factor;
-      else
-      if (p1 < p2)
-        return -1 * factor;
-      else
-        return 0;
-    });  
-    
-    me.value = v;
-  }
-
-  function onHeaderClick() {
-    if (this.@#sortable === undefined)
-      return;
-            
-    var sortType = this.@#sortType;
-    if (!sortType)
-      sortType = "desc";
-
-    me.select(function (e) {
-      if (e != this)
-        e.@#sortType = undefined;
-      return false;
-    }, "thead > tr > th[name]");
-
-     switch (sortType)
-     {
-        case "asc":  
-        {
-          sortColumn(this.@#name, "desc");
-          this.@#sortType = "desc";
-        }
-          break;
-        case "desc":
-        {    
-          sortColumn(this.@#name, "asc");
-          this.@#sortType = "asc";
-        }
-          break;  
-     }
-  }
-
   function attached() { 
     this.tbody = this.$(tbody);
     VirtualList { container: this.tbody  };
-
-    me = this;
-    this.on("click", "thead > tr > th[name]", onHeaderClick);
+  }
+  
+  property value(v) {
+    set this.tbody.value = v;
+    get return this.tbody.value;
   }
   
   property animating(v) {

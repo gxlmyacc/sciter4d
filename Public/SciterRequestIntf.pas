@@ -70,6 +70,7 @@ type
     function GetCompletionStatus: TSciterCompletionStatus;
     function GetProxyHost: SciterString;
     function GetProxyPort: UINT;
+    procedure SetReceivedDataType(const Value: SciterString);
     procedure SetReqHeader(const name, value: SciterString);
     procedure SetRspHeader(const name, value: SciterString);
 
@@ -77,6 +78,7 @@ type
     procedure Failed(status: UINT; dataOrNull: LPCBYTE = nil; dataLength: UINT = 0);
     procedure AppendData(data: LPCBYTE; dataLength: UINT);
 
+    function  SetReceivedDataEncoding(const type_: SciterString): REQUEST_RESULT;
     function  RequestData(const rcv: TSciterRequestDataReceiver): REQUEST_RESULT;
 
     property Request: HREQUEST read GetRequest;
@@ -85,7 +87,7 @@ type
     property ContentURL: SciterString read GetContentURL;
     property RequestType: REQUEST_RQ_TYPE read GetRequestType;
     property RequestedDataType: SciterResourceType read GetRequestedDataType;
-    property ReceivedDataType: SciterString read GetReceivedDataType;
+    property ReceivedDataType: SciterString read GetReceivedDataType write SetReceivedDataType;
     property NumberOfParameters: UINT read GetNumberOfParameters;
     property ParameterName[n: UINT]: SciterString read GetParameterName;
     property ParameterValue[n: UINT]: SciterString read GetParameterValue;

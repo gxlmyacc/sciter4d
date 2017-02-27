@@ -303,18 +303,20 @@ const
   //);
   //TBehaviorEvent = BEHAVIOR_EVENTS;
 
-  //EVENT_REASON = (
-    BY_MOUSE_CLICK = 0;
-    BY_KEY_CLICK   = 1;
-    SYNTHESIZED    = 2;  // synthesized, programmatically generated.
+  //CLICK_REASON = (
+    BY_MOUSE_CLICK   = 0;
+    BY_KEY_CLICK     = 1;
+    SYNTHESIZED      = 2;  // synthesized, programmatically generated.
+    BY_MOUSE_ON_ICON = 3;
   //);
   //TEventReason = EVENT_REASON;
 
   //EDIT_CHANGED_REASON = (
     BY_INS_CHAR  = 0;  // single char insertion
-    BY_INS_CHARS = 1; // character range insertion, clipboard
+    BY_INS_CHARS = 1;  // character range insertion, clipboard
     BY_DEL_CHAR  = 2;  // single char deletion
     BY_DEL_CHARS = 3;  // character range deletion (selection)
+    BY_UNDO_REDO = 4;  // undo/redo
   //);
   //TEditChangedReason = EDIT_CHANGED_REASON;
 
@@ -365,7 +367,7 @@ type
   TScriptRuntimeFeatures = SCRIPT_RUNTIME_FEATURES;
 
   GFX_LAYER = (
-    GFX_LAYER_GDI         = 1,
+    GFX_LAYER_GDI         = 1,  // GFX_LAYER_CG = 1, /*Mac OS*/ GFX_LAYER_CAIRO = 1, /*GTK*/
     GFX_LAYER_WARP        = 2,
     GFX_LAYER_D2D         = 3,
     GFX_LAYER_SKIA        = 4,
@@ -1186,7 +1188,7 @@ type
     heTarget: HELEMENT;       // target element handler, in MENU_ITEM_CLICK this is owner element that caused this menu - e.g. context menu owner
                               // In scripting this field named as Event.owner
     he:       HELEMENT;       // source element e.g. in SELECTION_CHANGED it is new selected <option>, in MENU_ITEM_CLICK it is menu item (LI) element
-    reason:   UINT_PTR;       // EVENT_REASON or EDIT_CHANGED_REASON - UI action causing change.
+    reason:   UINT_PTR;       // CLICK_REASON or EDIT_CHANGED_REASON - UI action causing change.
                               // In case of custom event notifications this may be any
                               // application specific value.
     data:     SCITER_VALUE;   // auxiliary data accompanied with the event. E.g. FORM_SUBMIT event is using this field to pass collection of values.
@@ -1205,6 +1207,7 @@ type
 
   BEHAVIOR_METHOD_IDENTIFIERS = (
     DO_CLICK = 0,
+(*  remnants of HTMLayout API, not used 
     GET_TEXT_VALUE = 1,
     SET_TEXT_VALUE,
       // p - TEXT_VALUE_PARAMS
@@ -1228,6 +1231,7 @@ type
     TEXT_EDIT_GET_SELECTION_TEXT, // p - TEXT_SELECTION_PARAMS
     TEXT_EDIT_GET_SELECTION_HTML, // p - TEXT_SELECTION_PARAMS
     TEXT_EDIT_CHAR_POS_AT_XY,     // p - TEXT_EDIT_CHAR_POS_AT_XY_PARAMS
+    *)
 
     IS_EMPTY      = $FC,       // p - IS_EMPTY_PARAMS // set VALUE_PARAMS::is_empty (false/true) reflects :empty state of the element.
     GET_VALUE     = $FD,       // p - VALUE_PARAMS
@@ -1396,7 +1400,7 @@ type
 **)
   ELEMENT_BITMAP_RECEIVER = procedure (rgba: LPCBYTE; x, y: Integer; width, height: UINT; param: Pointer); stdcall;
 
-(** #SCITER_X_MSG_CODE message/function identifier *)
+(** #SCITER_X_MSG_PAINT target identifier *)
   SCITER_PAINT_TARGET_TYPE = (
     SPT_DEFAULT   = 0,  (**< default rendering target - window surface *)
     SPT_RECEIVER  = 1,  (**< target::receiver fields are valid *)
