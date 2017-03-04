@@ -65,7 +65,7 @@ procedure TMainForm.FormCreate(Sender: TObject);
 begin
   inherited;
   FTest := TTest.Create('属于一个页面的全局对象');
-  Tiscript.RegisterObject(Layout.VM, 'Test1', WrapObjectDispatch(FTest));
+  Tiscript.RegisterObject('Test1', WrapObjectDispatch(FTest), Layout.VM);
   
   Layout.OnCreateNativeObject := OnCreateNativeObject;
   Layout.OnLoadData           := OnLayoutLoadData;

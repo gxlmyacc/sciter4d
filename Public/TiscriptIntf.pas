@@ -647,39 +647,41 @@ type
     function  GetClassBag: PITiscriptClassBag;
     procedure SetOnCreateNativeObject(const Value: TTiscriptCreateNativeObjectProc);
 
-    function CreateBytes(const ASize: Cardinal): ITiscriptBytes; overload;
-    function CreateBytes(const AMemory: Pointer; const ASize: Cardinal): ITiscriptBytes; overload;
-    function CreateValue(vm: HVM; const aValue: tiscript_value): ITiscriptValue;
-    function CreateObject(vm: HVM; const aObject: tiscript_value): ITiscriptObject;
-    function CreateObjectByClass(const vm: HVM; const of_class: tiscript_value = 0): ITiscriptObject;
-    function CreateObjectByPath(const vm: HVM; const class_path: SciterString): ITiscriptObject;
-    function CreateArray(vm: HVM; const aArray: tiscript_value): ITiscriptArray; overload;
-    function CreateArray(vm: HVM; num_elements: Cardinal): ITiscriptArray; overload;
-    function CreateArray(num_elements: Cardinal): ITiscriptArray; overload;
-    function CreateFunction(vm: HVM; aFunc: tiscript_value; aThis: tiscript_object = 0): ITiscriptFunction; overload;
-    function CreateFunction(vm: HVM; aFunc: TTiscriptNativeMethod; aTag: Pointer = nil): ITiscriptFunction; overload;
+    function Bytes(const ASize: Cardinal): ITiscriptBytes; overload;
+    function Bytes(const AMemory: Pointer; const ASize: Cardinal): ITiscriptBytes; overload;
+    function V(const aValue: tiscript_value; vm: HVM = nil): ITiscriptValue; overload;
+    function V(const AJson: JSONObject; vm: HVM = nil): ITiscriptValue; overload;
+    function O(const aObject: tiscript_value; vm: HVM = nil): ITiscriptObject; overload;
+    function O(const AJson: JSONObject; vm: HVM = nil): ITiscriptObject; overload;
+    function OC(const of_class: tiscript_value = 0; vm: HVM = nil): ITiscriptObject;
+    function OP(const class_path: SciterString; vm: HVM = nil): ITiscriptObject;
+    function A(const aArray: tiscript_value; vm: HVM = nil): ITiscriptArray; overload;
+    function A(num_elements: Cardinal; vm: HVM = nil): ITiscriptArray; overload;
+    function A(const AJson: JSONObject; vm: HVM = nil): ITiscriptArray; overload;
+    function F(aFunc: tiscript_value; aThis: tiscript_object = 0; vm: HVM = nil): ITiscriptFunction; overload;
+    function F(aFunc: TTiscriptNativeMethod; aTag: Pointer = nil; vm: HVM = nil): ITiscriptFunction; overload;
 
+    function CreateStringStream(const str: SciterString): ITiscriptStringStream;
+    function CreateFileStream(const filename: SciterString): ITiscriptFileStream;
     function CreateRuntime(const vm: HVM): ITiscriptRuntime; overload;
     function CreateRuntime(features: UINT = $ffffffff; heap_size: UINT= 1*1024*1024; stack_size: UINT = 64*1024): ITiscriptRuntime; overload;
 
-    function ParseData(vm: HVM; const AJson: PJSONObject; ALen: Cardinal): tiscript_value; overload;
-    function ParseData(vm: HVM; const AJson: JSONObject): tiscript_value; overload;
-    function ParseData(const AJson: JSONObject): tiscript_value; overload;
-    function Eval(vm: HVM; const AScript: PWideChar; ALen: Cardinal): tiscript_value; overload;
-    function Eval(vm: HVM; const AScript: SciterString): tiscript_value; overload;
-    function Eval(const AScript: SciterString): tiscript_value; overload;
+    function ParseData(const AJson: PJSONObject; ALen: Cardinal; vm: HVM = nil): tiscript_value; overload;
+    function ParseData(const AJson: JSONObject; vm: HVM = nil): tiscript_value; overload;
+    function Eval(const AScript: PWideChar; ALen: Cardinal; vm: HVM = nil): tiscript_value; overload;
+    function Eval(const AScript: SciterString; vm: HVM = nil): tiscript_value; overload;
 
-    function IsNameExists(const vm: HVM; const Name: SciterString): tiscript_value;
-    function IsClassExists(const vm: HVM; const Name: SciterString): tiscript_value;
-    function FindObject(const vm: HVM; const Name: SciterString): tiscript_value;
-    function FindClass(const vm: HVM; const ClassName: SciterString): tiscript_class;
+    function IsNameExists(const Name: SciterString; vm: HVM = nil): tiscript_value;
+    function IsClassExists(const Name: SciterString; vm: HVM = nil): tiscript_value;
+    function FindObject(const Name: SciterString; vm: HVM = nil): tiscript_value;
+    function FindClass(const ClassName: SciterString; vm: HVM = nil): tiscript_class;
 
-    function RegisterFunction(const vm: HVM; const Name: SciterString; Handler: TTiscriptNativeMethod;
-      Tag: Pointer = nil; ThrowIfExists: Boolean = False): tiscript_value;
-    function  RegisterObject(vm: HVM; const Name: SciterString; Dispatch: IDispatch): tiscript_object;
-    function  WrapObject(vm: HVM; Dispatch: IDispatch): tiscript_object;
+    function RegisterFunction(const Name: SciterString; Handler: TTiscriptNativeMethod;
+      Tag: Pointer = nil; vm: HVM = nil): tiscript_value;
+    function  RegisterObject(const Name: SciterString; Dispatch: IDispatch; vm: HVM = nil): tiscript_object;
+    function  WrapObject(Dispatch: IDispatch; vm: HVM = nil): tiscript_object;
     
-    procedure UnRegisterVariable(const vm: HVM; const Name: SciterString);
+    procedure UnRegisterVariable(const Name: SciterString; vm: HVM = nil);
 
     function  IsGlobalVariableExists(const Name: SciterString): Boolean;
     function  RegisterGlobalFunction(const Name: SciterString; Handler: TTiscriptNativeMethod;
@@ -687,11 +689,8 @@ type
     function  RegisterGlobalObject(const Name: SciterString; Dispatch: IDispatch): tiscript_object;
     procedure UnRegisterGlobalVariable(const Name: SciterString);
 
-    function  T2V(const vm: HVM; Value: tiscript_value): OleVariant;
-    function  V2T(const vm: HVM; const Value: OleVariant): tiscript_value;
-
-    function CreateStringStream(const str: SciterString): ITiscriptStringStream;
-    function CreateFileStream(const filename: SciterString): ITiscriptFileStream;
+    function  T2V(Value: tiscript_value; vm: HVM = nil): OleVariant;
+    function  V2T(const Value: OleVariant; vm: HVM = nil): tiscript_value;
 
     property Api: Pointer read GetApi;
     property Current: PITiscriptRuntime read GetCurrent;

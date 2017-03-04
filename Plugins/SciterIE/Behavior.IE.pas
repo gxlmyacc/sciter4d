@@ -293,7 +293,7 @@ begin
   FWebBrowser.OnQuit := DoQuit;
   FWebBrowser.OnGetExternal := DoGetExternal;
 
-  LValue := Tiscript.CreateValue(he.vm, he.GetObject(True));
+  LValue := Tiscript.V(he.GetObject(True), he.vm);
   FThisObject := LValue.O;
 
   if he.HasAttribute('offline') then
