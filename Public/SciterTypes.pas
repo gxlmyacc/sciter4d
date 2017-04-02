@@ -28,7 +28,7 @@ type
   LPVOID    = Pointer;
   LPCVOID   = ^LPVOID;
   LPUINT    = ^UINT;
-  LPCBYTE   = PByte;
+  LPCBYTE   = PAnsiChar;
   LPRECT    = ^TRect;
   LPPoint   = ^TPoint;
 
@@ -423,9 +423,9 @@ type
   TSciterCreateWindowFlags = set of TSciterCreateWindowFlag;
 const
   CWFlags_Sizeable = [swTitlebar, swResizeable, swSysMenu, swMinimizeBox, swMaximizeBox, swAcceptFiles];
-  CWFlags_Dialog   = [swTitlebar, swPopup, swAcceptFiles];
-  CWFlags_ToolWnd  = [swTool, swPopup, swAcceptFiles];
-  CWFlags_None     = [swPopup, swAcceptFiles];
+  CWFlags_Dialog   = [swTitlebar, swMinimizeBox, swPopup, swAcceptFiles];
+  CWFlags_ToolWnd  = [swTool, swMinimizeBox, swPopup, swAcceptFiles];
+  CWFlags_None     = [swPopup, swMinimizeBox, swAcceptFiles];
 
 type
   OUTPUT_SUBSYTEMS = (
@@ -1345,16 +1345,20 @@ type
     sstNormal,
     sstFile,
     sstRes,
+    sstThisApp,
     sstPlugin
   );
   PSciterSchemaInfo = ^TSciterSchemaInfo;
   TSciterSchemaInfo = record
     Path: SciterString;
+    Anchor: SciterString;
     Params: SciterString;
     Schema: TSciterSchemaType;
     IsOrigin: Boolean;
     IsPlugin: Boolean;
     IsHtml: Boolean;
+    IsFont: Boolean;
+    IsZip: Boolean;
   end;
 type
 (** #SCITER_X_MSG_CODE message/function identifier *)

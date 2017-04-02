@@ -10,6 +10,13 @@
                         value: primitive | function,  // 点击该按钮返回的结果值或一个函数
                         role: #cancel | #ok
                       }  
+    - params.closeable: boolean, 弹出是否显示关闭按钮
+    - params.mode: string, 弹出窗口模式：#auto、#attached-window、#detached-window、#detached-topmost-window 
+    - params.check: 按钮旁边的复选框，格式： 
+                      {
+                        caption: string,              // 提示文本
+                        value: true                   // 复选框状态 true:选中 false:未选中
+                      }
     - params.returns: 如果该参数等于#values，则返回值是params.body元素中一个输入字段的集合，而不是按钮定义的值
                             
  */
@@ -26,33 +33,43 @@ function dialog(params)
     body = null;
     caption = params.caption || "?"; 
   }
-  else
+  else {
+    assert !body.@.exists("-lightbox-dialog-showing") : "element is already showing in lightbox dialog!";
     caption = body.@#caption || params.caption || "?";
+  }
+  if (!params.mode) params.mode = #auto;
     
   var buttons = params.buttons ||
                 [{ caption:"确定", role:#ok, class:"ok", value:true },
                  { caption:"取消", role:#cancel, class:"cancel", value:false }];
   var buttons_html = "";
+  var btn_cancel = null;
   for(var button_def in buttons) {
       var cls = button_def.class ? ("." + button_def.class) : "";
-      buttons_html += String.printf("<button%s>%s</button>", cls, button_def.caption || "");
+      var role = button_def.role ? String.$(role="{button_def.role}") : "";
+      buttons_html += String.printf("<div.button%s %s>%s</div>", cls, role, button_def.caption || "");
+      if (button_def.role == #cancel) btn_cancel = button_def;
   }
-  
-  var html = "<div#lightbox-shim>"
+ 
+  var html = "<div.lightbox-dialog-shim>"
     "<div.dialog-frame>"
-      "<caption>" + caption + "</caption>"
+      "<caption draggable=\"both\" drag-margin=\"2 2 2 2\">" + caption + (btn_cancel || params.closeable ? "<div.button.close>r</div>" : "") + "</caption>"
       + body_html + 
-      "<text.buttons>" + buttons_html + "</text>"
-    "</div>"
-  "</div>";
+      + "<footer" + (buttons.length ? ".show" : "") + " no-drag>" +
+        + (params.check ? ("<div.checkbox " + (params.check.value ? "checked" : "") +">"+params.check.caption+"</div>") : "") 
+        + "<div.buttons>" + buttons_html + "</div>" + 
+      + "</footer>" +
+    +"</div>"+
+  + "</div>";
+  
   
   self.append(html);
   var dlg = self.last; // 我们的对话框层
   
-  var bIsMaximizable = view.windowMaximizable;
-  var bIsResizeable  = view.windowResizable;
-  view.isMaximizable = false;
-  view.isResizeable  = false;
+  //var bIsMaximizable = view.windowMaximizable;
+  //var bIsResizeable  = view.windowResizable;
+  //view.isMaximizable = false;
+  //view.isResizeable  = false;
   
   var eleRoot = view.root.$(body);
   var vx = eleRoot.box(#left, #client, #root);
@@ -60,7 +77,7 @@ function dialog(params)
   var vh = eleRoot.box(#height, #client);
   var vw = eleRoot.box(#width, #client);
  
-  dlg.move(vx, vy, vw, vh, #view, #attached-window);
+  dlg.move(vx, vy, vw, vh, #view, params.mode);
   dlg.style#visibility = "visible"; 
 
   var prev_parent = null;
@@ -74,90 +91,109 @@ function dialog(params)
     prev_index = body.index;
     dlg.$(div.dialog-frame).insert(body,1); // insert it after the <caption>
   }  
-  
   var ret_val = null; // value to return
-  
-  function handleValue(button_val)  
-  {
-    if( typeof button_val == #function) 
-    { // if it is a function, call it with the body element reference
-      ret_val = button_val(body);
-      if(ret_val)
-        body.state.collapsed = true; // to signal that we are done with it.
-    }
-    else
-    {
-      ret_val = button_val;
-      body.state.collapsed = true; // to signal that we are done with it.
-    }
-  }
-  
-  // 装载控制事件处理器
-  dlg.onControlEvent = function(evt)
-  {
-    if( evt.type != Event.BUTTON_CLICK || !evt.target.$is(div#lightbox-shim > div.dialog-frame > text.buttons > button))
-      return;
-    //evt.target is a button on text.buttons bar
-    var button_val = buttons[evt.target.index].value;
-    handleValue(button_val);
-    return true;
-  }
-  // 装载键盘按键事件处理器
-  dlg.onKey = function(evt)
-  {
-    if( evt.type != Event.KEY_DOWN)
-      return;
+  var ret_check = null;
     
-    var cmd;
-    
-    if( evt.keyCode == Event.VK_ESCAPE )
-      cmd = #cancel;
-    else if( evt.keyCode == Event.VK_RETURN )
-      cmd = #ok;
-    else 
-      return; // 这里我们只处理ESCAPE、ENTER按键.
-      
-    for( var button_def in buttons )
+  if (body) {    
+    function handleValue(button_val, check = undefined)  
     {
-      if( button_def.role == cmd )
+      if( typeof button_val == #function) 
+      { // if it is a function, call it with the body element reference
+        var cb = function(ret){
+          ret_val = ret;
+          ret_check = check;
+          if(ret_val)
+            body.state.collapsed = true; // to signal that we are done with it.      
+        }
+        if (button_val.length <= 2) cb(button_val(body, check));
+        else button_val(body, check, cb);
+      }
+      else
       {
-        handleValue(button_def.value);
-        return true;
-      }  
+        ret_val = button_val;
+        ret_check = check;
+        body.state.collapsed = true; // to signal that we are done with it.
+      }
     }
-  }
-  
-  if( params.initial )
-    body.value = params.initial;
-  
-  // 显示对话框，并进入模态循环:
-  
-  body.state.expanded = true;
+    
+    // 装载控制事件处理器
+    dlg.onControlEvent = function(evt)
+    {
+      if( evt.type != Event.BUTTON_CLICK)
+        return;
+      if(params.check && evt.target.$is(div.lightbox-dialog-shim > div.dialog-frame > footer > div.checkbox)) {
+        params.check.value = evt.target.value;
+        return;
+      }
+      var button_val = null;
+      if(evt.target.$is(div.lightbox-dialog-shim > div.dialog-frame > footer > div.buttons > div.button)) {
+        //evt.target is a button on div.buttons bar
+        button_val = buttons[evt.target.index].value;
+      } else if (evt.target.$is(div.lightbox-dialog-shim > div.dialog-frame > caption > div.button.close)) { 
+        button_val = btn_cancel ? btn_cancel.value : null;
+      } else return;
+      handleValue(button_val, params.check);
+      return true;
+    }
+    // 装载键盘按键事件处理器
+    dlg.onKey = function(evt)
+    {
+      if( evt.type != Event.KEY_DOWN)
+        return;
+      
+      var cmd;
+      
+      if( evt.keyCode == Event.VK_ESCAPE )
+        cmd = #cancel;
+      else if( evt.keyCode == Event.VK_RETURN )
+        cmd = #ok;
+      else 
+        return; // 这里我们只处理ESCAPE、ENTER按键.
+        
+      for( var button_def in buttons )
+      {
+        if( button_def.role == cmd )
+        {
+          handleValue(button_def.value, params);
+          return true;
+        }  
+      }
+    }
+    
+    if( body && params.initial )
+      body.value = params.initial;
+    
+    // 显示对话框，并进入模态循环:
+    
+    body.@["-lightbox-dialog-showing"] = "";
+    body.state.expanded = true;
 
-  view.update(); 
+    view.update(); 
 
-  var sfocus = view.focus;
-  view.eventsRoot = dlg;
-  while (dlg.isVisible && !body.state.collapsed && view.state != View.WINDOW_HIDDEN) 
-     view.doEvent();
-  view.eventsRoot = null;
-  view.focus = sfocus;
-  
-  if(prev_parent) //如果我们是使用已经存在的DOM元素，则将它返还
-    prev_parent.insert(body,prev_index);
-  
+    var sfocus = view.focus;
+    view.eventsRoot = dlg;
+    while (body && dlg.isVisible && !body.state.collapsed && view.state != View.WINDOW_HIDDEN) 
+       view.doEvent();
+    view.eventsRoot = null;
+    view.focus = sfocus;
+    body.@.remove("-lightbox-dialog-showing");
+    
+    if(body && prev_parent) //如果我们是使用已经存在的DOM元素，则将它返还
+      prev_parent.insert(body,prev_index);
+  }  
 
   dlg.style#visibility = "collapse";
   dlg.move();  
   dlg.detach(); // 从DOM中移除对话框元素
+  dlg = null;
   
-  view.windowMaximizable = bIsMaximizable;
-  view.windowResizable  = bIsResizeable;
+  //view.windowMaximizable = bIsMaximizable;
+  //view.windowResizable  = bIsResizeable;
 
   view.update(); 
   
-  if(params.returns == #values && ret_val == #ok)
-    return body.value;
-  
-  return ret_val;
+  if(body && params.returns == #values && ret_val == #ok)
+    return (ret_check, body.value);
+  else
+    return (ret_check, ret_val);
 }

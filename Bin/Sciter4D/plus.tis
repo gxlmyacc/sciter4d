@@ -3,14 +3,21 @@ const Plus = function() {
                         
   function thisModel(el) {
     for(var p = el; p; p = p.parent) {
-      //p.style.display属性;
       if(var dr = p.$model) return dr;
+      if (p == self) break;
     }
     return null;
   }
 
   const reIsExpression=/ *[-()+*&:?|=!^"']+ */;
-  const reVarName =/[a-zA-Z_][a-zA-Z0-9_]*/;
+  const reVarName = /[a-zA-Z_][a-zA-Z0-9_]*/;
+  
+  function referenceOf(model, path) {
+    var (coll,key) = Object.referenceOf(model, path);
+    if (!key || Sciter.VERSION <= 262144 && Sciter.REVISION < 5 && coll[key] === undefined ) 
+      key = null;
+    return (coll,key);
+  }
 
   // 当coll[key]的值被修改时(更新 或者 删除)，'changed()'方法会被调用
   function setupModelChangeHandler(coll,key,changed) 
@@ -23,10 +30,10 @@ const Plus = function() {
       //[2] - symbol 或 string, 对象的name属性 或 数组中被修改范围的起始索引
       //[3] - symbol 数组中被修改范围的结束索引(不含)  
       if(changedef) switch(changedef[0]) {
-        case #update: if( key == changedef[2] ) changed(coll[key]); break; // object-property
-        case #delete: if( key == changedef[2] ) changed(undefined); break; // object-property
-        case #update-range: if( key >= changedef[2] &&  key < changedef[3] ) changed(coll[key]); break; // vector-index
-        case #delete-range: if( key >= changedef[2] &&  key < changedef[3] ) changed(undefined); break; // vector-index
+        case #update: if( key == changedef[2] ) changed(coll[key], key, coll); break; // object-property
+        case #delete: if( key == changedef[2] ) changed(undefined, key, coll); break; // object-property
+        case #update-range: if( key >= changedef[2] &&  key < changedef[3] ) changed(coll[key], key, coll); break; // vector-index
+        case #delete-range: if( key >= changedef[2] &&  key < changedef[3] ) changed(undefined, key, coll); break; // vector-index
       }
     }  
     // 添加一个观察器
@@ -75,65 +82,90 @@ const Plus = function() {
   
   function setupTerminalBinding(model,thing,path,isInput,updater,update=true) 
   {
-    if( typeof model != #object  && typeof model != #namespace) 
+    if( typeof model != #object  && typeof model != #namespace)
     {
       stdout.println("Model is not an object while binding ", path);
-      return;  
-    }      
-    var (coll,key) = Object.referenceOf(model, path);
-    if( key === null ) {
+      return;      
+    }
+    
+    var _updater = function (thing,v,force=false){
+      if (typeof v != #function) return updater(thing, v, force); 
+      else {
+        if (var computeds = v.plus_computeds) {
+          for( var path in computeds ) {
+            var (coll,key) = referenceOf(model, path);
+            if(!key) continue;
+            if(key == #length) setupModelLengthChangeHandler( coll, function(length) { if( !thing.parent ) throw undefined; updater(thing, v()); } );
+            else setupModelChangeHandler( coll, key, function(val) { if( !thing.parent ) throw undefined; updater(thing, v()); } ); 
+          }
+        }
+        return updater(thing, v(), force);
+      }
+    } 
+
+    var (coll,key) = referenceOf(model, path);
+    if( key === null) {
       // it cannot be parsed as simple l-value 
       // try treat it as an expression
       if(reIsExpression.test(path)) { // 如果path看起来像一个表达式，则将它当做一个数据观察器来装载
         var parts = path.split(reIsExpression);
-        //stdout.printf("STB %s %V\n", path, parts );
+        //stdout.printf("STB %s %V\n", path, parts );        
         var expr = compileExpr(model,path);
         for( var part in parts) {
           if( part.match(reVarName) ) {
-            var (coll,key) = Object.referenceOf(model, part);
+            var (coll,key) = referenceOf(model, part);
             if(!key) continue;
             //stdout.printf("setupTerminalBinding, expr part key %s in coll %V\n", key, coll);    
-            if(key == #length) 
-              setupModelLengthChangeHandler( coll, function(length) { if( !thing.parent ) throw undefined; updater(thing, expr()); } );
-            else 
-              setupModelChangeHandler( coll, key, function(val) { if( !thing.parent ) throw undefined; updater(thing, expr()); } ); 
+            if(key == #length) setupModelLengthChangeHandler( coll, function(length) { if( !thing.parent ) throw undefined; updater(thing, expr()); } );
+            else setupModelChangeHandler( coll, key, function(val) { if( !thing.parent ) throw undefined; _updater(thing, expr()); } ); 
           }
         }
-        if (update) thing.post(::updater(thing,expr()));
+        if (update) thing.post(::_updater(thing,expr(),true));
       }
       return;
     }
-    
-    //stdout.printf("setupTerminalBinding: coll=%s key=%v\n", typeof coll, key);    
-    
+    //stdout.printf("setupTerminalBinding: coll=%s key=%v\n", typeof coll, key);  
+        
     if( key == #length ) { // 对length这种计算属性进行特殊处理
       setupModelLengthChangeHandler( coll, function(length) { if( !thing.parent ) throw undefined; updater(thing, length); } );
-      updater(thing,coll.length); // intial value
+      updater(thing,coll.length,true); // intial value
     } 
     else { // 订阅"模型改变"通知事件:
       if( isInput ) { // 装载"DOM发生改变"事件处理器
-        function on_ui_change(evt) { if(evt.target === this) coll[key] = thing.value; return false; } 
+        function on_ui_change(evt) { 
+          if(evt.target === this) {
+						if (thing.tag == "select") {
+							var opt = thing.$(popup.list>option:checked);
+							coll[key] = opt ? opt.@#value : undefined;
+						} else
+							coll[key] = thing.value;
+          }
+          return false; 
+        } 
         thing.subscribe("change.plus",on_ui_change); // 订阅"元素值发生改变"事件
       }
-      setupModelChangeHandler( coll, key, function(val) { if( !thing.parent ) throw undefined; updater(thing,val); } );
-      //WRONG: updater(thing,coll[key]);
-      //我们需要异步调用这个函数，因为它可能有其他的aspect和behavior。
-      if(update) thing.post(::updater(thing,coll[key])); // 为它赋初始值
-      if(thing.tag == "select")
-        thing.plusSetValueFromModel = function() { this.value = coll[key]; return false; } 
-    } 
+      setupModelChangeHandler( coll, key, function(val) { if( !thing.parent ) throw undefined; _updater(thing,val); } );
+      if(update) {
+        if(thing.attributes["each"]) { // if it has each then we need to update the value after rendering its items
+          thing.on("set-value-postfactum.plus", function() { 
+            thing.post(::_updater(thing,coll[key],true));
+            return true; 
+          });
+        } else //we need to post this thing as it may have other aspects and behaviors
+          thing.post(::_updater(thing,coll[key],true)); // assign intial value to it; 
+      }
+    }
   }
-  
 
-  function valueUpdater(thing,v) 
+  function valueUpdater(thing,v,force=false) 
   { 
     // 如果元素有自定义的setBoundValue(val)方法，则使用它
     var customSetter = thing.setBoundValue;
     if (typeof customSetter == #function )
-      customSetter.call(thing,v);
+      customSetter.call(thing,v,force);
     // 否则使用正常的thing.value = v 赋值。
     // 但是当元素聚焦时，我们不能更新它 - 因为用户正在编辑它。
-    else if(!thing.state.focus) 
+    else if(!thing.state.focus || force) 
       thing.value = v; 
   }
   
@@ -158,10 +190,8 @@ const Plus = function() {
         thing.state.disabled = !v; break;
       default:
         if (typeof v == #boolean) {
-          if (v) 
-            thing.@[attr] = "";
-          else 
-            thing.attributes.remove(attr);
+          if (v) thing.@[attr] = "";
+          else thing.attributes.remove(attr);
         }
         else
           thing.@[attr] = v;  
@@ -169,7 +199,7 @@ const Plus = function() {
   }
   
   function boundAttributeInit(model, el) {
-    // scan all attributes for "@..." ones:  
+    // scan all attributes for "@..." ones:       
     for( var attr in el.attributes ) 
     {
       if( attr !like "@*" ) continue;
@@ -188,7 +218,7 @@ const Plus = function() {
       function attrUpdater(thing,v) {
         thing.post(::boundAttributeUpdater(thing,v,attr), true);
       }
-      setupTerminalBinding(model,thing,expr,false,attrUpdater); 
+      setupTerminalBinding(model,thing,expr,false,attrUpdater, !thing.boundAttributeInited); 
     }
     for( var attr in thing.attributes ) // scan all attributes for "@..." ones:
     {
@@ -197,7 +227,7 @@ const Plus = function() {
       attr = attr.substr(1); // attribute name without '@'
       bind(expr,attr);
     }
-    this.boundAttributeInited = true;
+    thing.boundAttributeInited = true;
   } 
   
   function rebindSubtree(container, model)
@@ -222,8 +252,9 @@ const Plus = function() {
     var pmot = typeof pmo;
     if( pmo && (pmot == #object || pmot == #class || pmot == #namespace)) // 如果是模型中的模型(内嵌模型)
     {
-      var (coll,key) = Object.referenceOf(pmo, mo);
-      this.$model = coll == pmo ? coll : coll[key];
+      var (coll,key) = referenceOf(pmo, mo); 
+      if (!key) throw "{" + mo + "} 变量未找到!";       
+      this.$model = coll[key];
       setupModelChangeHandler( coll, key, function(val) { 
         assert typeof val == #object || 
                typeof val == #class  ||
@@ -286,7 +317,6 @@ const Plus = function() {
     var suffix = expr %~ "}}"; // 类名部分
     expr = expr /~ "}}";  //  {{...}} 中的每一部分
     //stdout.println("A:", prefix, expr, suffix);
-    
     function attrUpdater(thing,v) {
       thing.post(function() {
           thing.@[attrname] = prefix + v + suffix;  
@@ -350,9 +380,9 @@ const Plus = function() {
       var (ncoll, nitem, nindex, filter) = crackEachExpression(this.@["each"]);
       var root = thisModel(this); 
       assert root;
-      var isSelect = this.tag == "select";
+      var hasBoundValue = !!this.attributes["name"];
       var that = this; 
-      var thing = isSelect? that.options: that; 
+      var thing = this.tag == "select" ? that.options: that; 
       var template = thing.first; 
       thing.clear();
       
@@ -361,7 +391,10 @@ const Plus = function() {
       var ff = eachRecord; // filter function
       var fs = null;       // filter value
 
-      function rqRenderList() { thing.post(renderList,true); } 
+      function rqRenderList() { 
+        if (setTimeout) setTimeout(renderList, 0, true);
+        else thing.post(renderList,true); 
+      } 
       var updateCollectionObserves;
       function rqUpdateCollectionObserves() { thing.post(updateCollectionObserves,true); } 
           
@@ -398,7 +431,7 @@ const Plus = function() {
           val.addObserver(rqUpdateCollectionObserves);
       }
     
-      var (rcoll,rkey) = Object.referenceOf(root, ncoll);
+      var (rcoll,rkey) = referenceOf(root, ncoll);
       var coll = rcoll[rkey];
                  //eval(ncoll,root);
       assert(coll);
@@ -418,11 +451,11 @@ const Plus = function() {
           domitem.remove(); 
           Object.removeObserver.call(elval, rqRenderList);
         }
-        if(isSelect && that.plusSetValueFromModel) // after rendering <select> items we need to reset value to match new options
-          that.timer(1, :: that.plusSetValueFromModel);
+        if(hasBoundValue) // after rendering <select> items we need to reset value to match new options
+          that.postEvent("set-value-postfactum.plus");
         // notify each end
         if(thing.repeatCreated)
-          thing.repeatCreated(coll); //thing.post(::this.repeatCreated(coll));
+          thing.post(::this.repeatCreated(coll));
       }
       
       if( filter ) {
@@ -448,10 +481,59 @@ const Plus = function() {
       } );
   }
   
+  function IfShow(){
+    var thing = this; 
+    var model = thing.$model || thisModel(thing);
+    var path = thing.@["if-show"]; 
+    thing.@.addClass("plus-hide");
+    
+    var ifelse = thing.next && thing.next.@.exists("if-else") ? thing.next : null;   
+    ifelse && (ifelse.@.addClass("plus-hide"));
+    
+    function ifshowUpdater(thing,v){
+      if (ifelse) {
+        if (v) ifelse.@.addClass("plus-hide");
+        else ifelse.@.removeClass("plus-hide");
+      }
+      if (v) thing.@.removeClass("plus-hide");
+      else thing.@.addClass("plus-hide");
+    }
+    setupTerminalBinding(model,thing,path,false,ifshowUpdater);
+  }
+  
+  function switchShow(){
+    var thing = this; 
+    var model = thing.$model || thisModel(thing);
+    var path = thing.@["switch-show"]; 
+    for (var i = 0; i < thing.length; i++)
+      thing[i].@.addClass("plus-hide");
+    function switchShowUpdater(thing,v){
+      var def, find;
+      for (var i = 0; i < thing.length; i++) {
+        var child = thing[i];
+        if (child.@.exists("switch-default")) {
+          def = child;
+          continue;
+        }
+        if (!child.@.exists("switch-case")) continue;
+        if (child.@["switch-case"] == v) child.@.removeClass("plus-hide");
+        else child.@.addClass("plus-hide");
+      }
+      if (def) {
+        if (find) def.@.addClass("plus-hide");
+        else def.@.removeClass("plus-hide");
+      }
+    }
+    setupTerminalBinding(model,thing,path,false,switchShowUpdater);
+  }
+  
   function handleEvent(target,name, evt) {
     var model = target.$model || thisModel(target);
     var action = target.attributes[name];
-    return eval.call(target,action,model);
+    if (model && typeof model[action] == #function)
+      return model[action](evt)
+    else
+      return eval.call(target,action,model);
   }
   function handleKeyEvent(target, name, evt) {
     var code;   
@@ -464,20 +546,21 @@ const Plus = function() {
       return false;
     var model = target.$model || thisModel(target);
     var action = target.attributes[name];
-    eval.call(target,action,model);
+    if (model && typeof model[action] == #function) model[action](evt)
+    else eval.call(target,action,model);
     return true;
   }
+
+  function Click()    { this.unsubscribe("click.plus"); this.subscribe("click.plus", function(evt) { return handleEvent(this,"click",evt) }) }
+  function DblClick() { this.unsubscribe("dblclick.plus"); this.subscribe("dblclick.plus", function(evt) { return handleEvent(this,"dblclick",evt) }) }
   
-  function Click()    {  this.subscribe("click", function(evt) { return handleEvent(this,"click",evt) }) }
-  function DblClick() { this.subscribe("dblclick", function(evt) { return handleEvent(this,"dblclick",evt) }) }
+  function Enter()    { this.subscribe("~keydown.plus", function(evt) { return handleKeyEvent(this,"enter", evt) }) }
+  function Escape()   { this.subscribe("~keydown.plus", function(evt) { return handleKeyEvent(this,"escape", evt) }) }
   
-  function Enter()    { this.subscribe("~keydown", function(evt) { return handleKeyEvent(this,"enter", evt) }) }
-  function Escape()   { this.subscribe("~keydown", function(evt) { return handleKeyEvent(this,"escape", evt) }) }
+  function FocusIn()  { this.unsubscribe("focusin.plus"); this.subscribe("focusin.plus", function(evt) { return handleEvent(this,"focusin",evt); } ) }
+  function FocusOut() { this.unsubscribe("focusout.plus"); this.subscribe("focusout.plus", function(evt) { return handleEvent(this,"focusout",evt); } ) }
   
-  function FocusIn()  { this.subscribe("focusin", function(evt) { return handleEvent(this,"focusin",evt); } ) }
-  function FocusOut() { this.subscribe("focusout", function(evt) { return handleEvent(this,"focusout",evt); } ) }
-  
-  function Change()   { this.subscribe("change", function(evt) { return handleEvent(this,"change",evt); } ) }
+  function Change()   { this.unsubscribe("change.plus"); this.subscribe("change.plus", function(evt) { return handleEvent(this,"change",evt); } ) }
    
   return {
     Model:Model,
@@ -488,6 +571,8 @@ const Plus = function() {
     hrefAttrTerminal: function() { AttrTerminal.call(this,"href"); },
     srcAttrTerminal: function() { AttrTerminal.call(this,"src"); },
     boundAttributesTerminal: boundAttributesTerminal,
+    switchShow: switchShow,
+    IfShow: IfShow,
     Repeater:Repeater,
     Click:Click,
     DblClick:DblClick,
@@ -500,6 +585,12 @@ const Plus = function() {
  
 }();
 
+function @computed(func, computeds..){
+  assert !func.plus_computeds;
+  assert computeds;
+  func.plus_computeds = (typeof computeds == #array) ? computeds : [computeds];
+  return func;
+}
 
 // @observing装饰器
 // 该装饰器应用于函数，当绑定的数据(path中定义的)发生改变时，
@@ -509,10 +600,8 @@ function @observing(func, paths..) {
   assert typeof this == #namespace;
   
   var observeChanges = this[#$observeChanges];
-  if (!observeChanges)
-  {
-    observeChanges = function(obj, onchange, path = "") 
-    {
+  if (!observeChanges) {
+    observeChanges = function(obj, onchange, path = "") {
       var typ = typeof obj;
       
       //stdout.println("observing:", path);
@@ -586,19 +675,18 @@ function Object.merge(objects..)
 {
   function merge1(reciever,source) {
     var rv;
-    for( var (k,v) in source ) 
-    {
+    for( var (k,v) in source ) {
       rv = reciever[k];
       if( typeof v == #object && typeof rv == #object )
         merge1(rv,v);
-      if( typeof v == #array && typeof rv == #array ) {
+      else if( typeof v == #array && typeof rv == #array ) {
         rv.length = v.length;
         merge1(rv,v);
       }
-      else
-        reciever[k] = v;
+      else if (rv !== v) reciever[k] = v;   
     }
   }
+
   if(typeof this == #object)
     for( var obj in objects ) // called as memeber function
       merge1(this,obj);

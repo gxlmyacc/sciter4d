@@ -649,14 +649,14 @@ type
 
     function Bytes(const ASize: Cardinal): ITiscriptBytes; overload;
     function Bytes(const AMemory: Pointer; const ASize: Cardinal): ITiscriptBytes; overload;
-    function V(const aValue: tiscript_value; vm: HVM = nil): ITiscriptValue; overload;
+    function V(const aValue: tiscript_value = 0; vm: HVM = nil): ITiscriptValue; overload;
     function V(const AJson: JSONObject; vm: HVM = nil): ITiscriptValue; overload;
     function O(const aObject: tiscript_value; vm: HVM = nil): ITiscriptObject; overload;
     function O(const AJson: JSONObject; vm: HVM = nil): ITiscriptObject; overload;
-    function OC(const of_class: tiscript_value = 0; vm: HVM = nil): ITiscriptObject;
+    function OC(const of_class: tiscript_value; vm: HVM = nil): ITiscriptObject;
     function OP(const class_path: SciterString; vm: HVM = nil): ITiscriptObject;
     function A(const aArray: tiscript_value; vm: HVM = nil): ITiscriptArray; overload;
-    function A(num_elements: Cardinal; vm: HVM = nil): ITiscriptArray; overload;
+    function A(num_elements: Cardinal = 0; vm: HVM = nil): ITiscriptArray; overload;
     function A(const AJson: JSONObject; vm: HVM = nil): ITiscriptArray; overload;
     function F(aFunc: tiscript_value; aThis: tiscript_object = 0; vm: HVM = nil): ITiscriptFunction; overload;
     function F(aFunc: TTiscriptNativeMethod; aTag: Pointer = nil; vm: HVM = nil): ITiscriptFunction; overload;

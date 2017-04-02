@@ -33,24 +33,30 @@
 
 .ligthbox-close { 
   position: absolute;
-  right: -20px;
-  top: -20px;
+  right: 0px;
+  top: 0px;
   text-align: center; 
   vertical-align: middle;
   font-family: webdings;
-  font-size: 28px;
-  size: 37px;
+  font-size: 22px;
+  size: 28px;
 	border: solid 2px black;
 	border-radius: 50%;
 	cursor: pointer;
+  color: white;
+  border-color: white;
+}
+.ligthbox-close.outer { 
+  right: -20px;
+  top: -20px;
 }
 
 .ligthbox-close:hover {
-  color: red;
-  border-color: red;
+  color: #ccc;
+  border-color: #ccc;
 }
 
-.ligthbox-body {
+.ligthbox-body.shadow {
   box-shadow:0 0 10px rgba(0,0,0,0.4);
 }
   

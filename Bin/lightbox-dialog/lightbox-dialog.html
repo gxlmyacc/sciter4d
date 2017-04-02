@@ -58,11 +58,11 @@
     include "vstDatas.tis";
 
 	  !function() {
-      $(#vst).value = vstDatas;    
+      //$(#vst).value = vstDatas;    
 	   }();
      
      function self.ready() {
-       $(#floathelp).move(500, 100, #view, #attached-window);
+       //$(#floathelp).move(500, 100, #view, #attached-window);
      }
 
     //打开一个简单对话框并等待它关闭
@@ -135,11 +135,11 @@
       view.state = view.WINDOW_MINIMIZED;
     }
     
-    $(#clickMe).onClick = function () {
+    /*$(#clickMe).onClick = function () {
       if (this.state.moving)
         return;
       view.msgbox(#alert, "你点了我");
-    }
+    }*/
 
   </script>
   
@@ -176,11 +176,11 @@
     <p><input type="button" #button4 value="打开一个有自定义按钮的对话框并等待它关闭"> <span id="result4"></span></p>
   </div>
   
-  <div.float #floathelp draggable="both" drag-margin="2 2 2 2" drag-mode="attached-window" >
+  <!--div.float #floathelp draggable="both" drag-margin="2 2 2 2" drag-mode="attached-window" >
     <div.caption #clickMe>点我</div>
   </div>
   
-  <div #vst></div>
+  <div #vst></div-->
 
 </body>
 </html>

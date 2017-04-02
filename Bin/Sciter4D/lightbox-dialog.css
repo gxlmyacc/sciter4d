@@ -1,66 +1,133 @@
 ﻿
 /* lightbox shim */
-div#lightbox-shim 
+div.lightbox-dialog-shim 
 {
-  //background-color: rgba(0,0,0,0.3); 
-  background-image: url(sciter4d:img\dialog-shim-bg.png);
-  background-repeat: repeat;
-  background-image-transformation:color-schema("system");
+  background-color: rgba(0,0,0,0.2); 
   visibility: collapse;
+  position:relative;
 }
 
 /* dialog "window" frame */
-div#lightbox-shim > div.dialog-frame 
+div.lightbox-dialog-shim > div.dialog-frame 
 {
   font: system;
   width: 300px;
   min-width: min-content;
-  margin-left: 50%%;
-  margin-right: 50%%;
-  margin-top: 40%%;
-  background-image: url(sciter4d:img\dialog-dialog2.png);/* square top / round bottom */
-  background-repeat: expand;
-  background-position: 38px 20px 20px 20px;
-  background-image-transformation:color-schema("system");
   
-  //background-color: window;
-  //border-radius: 0 0 10px 10px; /* square top / round bottom */
-  padding:10px;
+  background-color: white;
+  border-radius: 4px; 
+  box-shadow: 0 0 10px #333; 
+  padding: 0px 0px 0px 0px;
+  position: absolute;
+  left: 50%%;
+  right: 50%%;
+  top: 50%%;
+  bottom:50%%;
 }
 
 /* dialog "window" caption */
-div#lightbox-shim > div.dialog-frame > caption 
+div.lightbox-dialog-shim > div.dialog-frame > caption 
 {
-  font-weight: bold;
   line-height: 28px;
-  background-color: threedface threedface threedshadow threedshadow;
+  border-bottom: 1px solid #E5E5E5;
   padding:0 10px;
+  cursor: move;
+  aspect: movable(node: "div.lightbox-dialog-shim > div.dialog-frame", container: "div.lightbox-dialog-shim ") url(movable.tis);
+}
+div.lightbox-dialog-shim > div.dialog-frame > caption  > div.button.close {
+  font-family: Webdings;
+  display: inline-block;
+  float:right;
+  color: #333;
+  cursor: pointer;
+  margin: 5px 0px 0px 0px;
+  padding: 0px;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  text-align: center;
+  behavior: clickable;
+}
+div.lightbox-dialog-shim > div.dialog-frame > caption > div.button.close:hover {
+  background-color: #FF8359;
+  color: white;
 }
 
 /* dialog body element */
-div#lightbox-shim > div.dialog-frame > :nth-child(2) 
+div.lightbox-dialog-shim > div.dialog-frame > :nth-child(2) 
 {
   height: *;
   padding: 10px;
 }
 
 /* dialog button bar */
-div#lightbox-shim > div.dialog-frame > text.buttons
- {
-  margin:20px 10px 10px *;
+div.lightbox-dialog-shim > div.dialog-frame > footer {
+  margin: 10px 10px 10px 10px;
+  flow: horizontal;
+  min-height: 50px;
+  visibility: none;
+  vertical-align: middle;
+}
+div.lightbox-dialog-shim > div.dialog-frame > footer.show {
+  visibility: visible;
+}
+
+
+div.lightbox-dialog-shim > div.dialog-frame > footer > div.buttons {
+  margin-left: *;
   width: max-intrinsic;
   white-space: nowrap;
-  /*
-  border-top: 1px solid threedshadow;
-  padding-top: 10px;
-  */
+  flow: horizontal;
 }
 
 /* button on dialog button bar */
-div#lightbox-shim > div.dialog-frame > text.buttons > button 
+div.lightbox-dialog-shim > div.dialog-frame > footer > div.buttons > div.button
 {
-  width: 55px;
+  width: 55;
   text-align: center;
   vertical-align: middle;
-  padding: 5px 10px;
+  padding: 6px 8px;
+  margin-left: 10px;
+  cursor: pointer;
+  behavior: button;
+  border-radius: 4px;
+  background-color: white;
+  background-image: none;
+  border: 1px solid #CCCCCC;
+  color: #333;  
 }
+div.lightbox-dialog-shim > div.dialog-frame > footer > div.buttons > div.button:hover {
+  background-color: #d4d4d4; 
+  border-color: #8c8c8c;
+}
+div.lightbox-dialog-shim > div.dialog-frame > footer > div.buttons > div.button:focus,
+div.lightbox-dialog-shim > div.dialog-frame > footer > div.buttons > div.button:tab-focus {
+  border-radius: 0px;
+}
+div.lightbox-dialog-shim > div.dialog-frame > footer > div.buttons > div.button[role=ok] {
+  background-image: none;
+  color: #fff; 
+  background-color: #FF8359; 
+  border: 1px solid #FF7445;
+}
+div.lightbox-dialog-shim > div.dialog-frame > footer > div.buttons > div.button[role=ok]:hover {
+  background-color: #d9534f; 
+  border-color: #d43f3a;
+}
+
+div.lightbox-dialog-shim > div.dialog-frame > footer > div.checkbox {
+  color: #929292;
+  behavior: check;
+  display: inline-block;
+  padding-left: 14px;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALBAMAAABbgmoVAAAAD1BMVEUAAACSkpKSkpKSkpKSkpI1nskXAAAABHRSTlMA5ko5S2/lDwAAACFJREFUCNdjUHRxcXFUYBBmYGBgFmBwAFJAgmgKqg9qCgD3BQZpHlJ6wwAAAABJRU5ErkJggg==);
+  background-repeat: no-repeat;
+  background-position: left center;
+  cursor: pointer;
+}
+div.lightbox-dialog-shim > div.dialog-frame > footer > div.checkbox:checked {
+  foreground-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAGCAMAAAA40HREAAAAM1BMVEUAAAAxw3wxw3wxw3wxw3wxw3wxw3wxw3wxw3wxw3wxw3wxw3wxw3wxw3wxw3wxw3wxw3z2mTobAAAAEXRSTlMA/FwHlO/l4cuvloBpTDYpEbk1UFwAAAAsSURBVAjXHYm3AQAwCMNsIL3+f20CGqRBCE6P7FShips5MIsYF9BIik8V+34QNwCbcHcOsAAAAABJRU5ErkJggg==);
+  foreground-repeat: no-repeat;
+  foreground-position: 2px center;  
+}
+div.lightbox-dialog-shim > div.dialog-frame > footer > div.checkbox:tab-focus { outline:1px dotted windowtext -1px; }

@@ -1,0 +1,43 @@
+﻿const require = function(){
+  const _require_modules = {};
+  const _require_global = {};
+  const _require_timeout = 2000;
+  
+  function relative(parent) {
+    return function(p){
+      if ("." != p.charAt(0)) return require(p);
+      var path = parent.split("/");
+      var segs = p.split("/");
+      path.pop();
+
+      for (var i = 0; i < segs.length; i++) {
+        var seg = segs[i];
+        if (".." == seg) path.pop();
+        else if ("." != seg) path.push(seg);
+      }
+      return require(path.join("/"));
+    };
+  };
+  
+  return function (path, options = {}, timeout = _require_timeout) 
+  {
+    if (_require_modules[path]) return _require_modules[path];
+    path = self.url(path);
+    var (status, data) = self.request(timeout, #get, path);
+    if (status < 200 && status >= 300) {
+      if(data instanceof Error) throw data;
+      return;
+    }     
+    var exports = {};
+    var env = {
+      require: relative(path),
+      global: _require_global,
+      module: { exports: exports, options: options },
+      exports: exports
+    }; 
+    env.prototype = self.ns;
+    eval(data, env);
+    _require_modules[path] = env;
+    return env.module.exports;
+  }
+}();

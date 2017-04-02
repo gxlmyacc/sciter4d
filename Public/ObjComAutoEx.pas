@@ -651,6 +651,36 @@ begin
           FMemberArray[High(FMemberArray)] := LMethodInfo;
         end;
       end;
+      if (LPropInfo^.GetProc <> nil) and (LPropertyInfo^.GetMethodInfo = nil) then
+      begin
+        New(LMethodInfo);
+        LMethodInfo.Header := nil;
+        LMethodInfo.ParamCount := 0;
+        LMethodInfo.MethodName := '';
+        LMethodInfo.ReturnInfo := nil;
+
+        LMethodInfo^.PropertyName := {$IF CompilerVersion > 18.5}UTF8ToString{$IFEND}(LPropInfo^.Name);
+        LMethodInfo^.IsPropertyGet := True;
+        LMethodInfo^.IsPropertyPut := False;
+        LMethodInfo^.PropertyIndex := Length(FMemberArray);
+        SetLength(FMemberArray, LMethodInfo^.PropertyIndex+1);
+        FMemberArray[High(FMemberArray)] := LMethodInfo;
+      end;
+      if (LPropInfo^.SetProc <> nil) and (LPropertyInfo^.GetMethodInfo = nil) then
+      begin
+        New(LMethodInfo);
+        LMethodInfo.Header := nil;
+        LMethodInfo.ParamCount := 0;
+        LMethodInfo.MethodName := '';
+        LMethodInfo.ReturnInfo := nil;
+        
+        LMethodInfo^.PropertyName := {$IF CompilerVersion > 18.5}UTF8ToString{$IFEND}(LPropInfo^.Name);
+        LMethodInfo^.IsPropertyGet := False;
+        LMethodInfo^.IsPropertyPut := True;
+        LMethodInfo^.PropertyIndex := Length(FMemberArray);
+        SetLength(FMemberArray, LMethodInfo^.PropertyIndex+1);
+        FMemberArray[High(FMemberArray)] := LMethodInfo;
+      end;
       FPropertyInfoList.AddObject(
         {$IF CompilerVersion > 18.5}UTF8ToString{$IFEND}(LPropInfo^.Name), TObject(LPropertyInfo));
     end;
@@ -1026,7 +1056,7 @@ begin
       if LMethodInfo.IsPropertyPut and (index = LMethodInfo.PropertyIndex) then
         LFuncDesc.invkind := INVOKE_PROPERTYPUT
       else
-        LFuncDesc.invkind := INVOKE_FUNC;;
+        LFuncDesc.invkind := INVOKE_FUNC;
       FFuncDescArray[index] := LFuncDesc;
       LFuncDesc := nil;
     end;

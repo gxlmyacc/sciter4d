@@ -1,36 +1,81 @@
-﻿function SetupLightbox(selector, cbk_on_show)
-{
-	self.on("click", selector, function(evt) {
-		assert(evt.target.$is({selector}));
+﻿const Lightbox = function(){
 
-		var el_body = el_overlay.$(.ligthbox-body);
-		el_body.clear();
-		cbk_on_show(evt.target, el_body);
+  var el_overlay = new Element(#div);
+  self.$(body).append(el_overlay);
 
-		self.style#overflow = "hidden";
-		el_overlay.@.addClass("show");
-		el_overlay.style#visibility = "visible";
-	});
-}
+  var prev_parent, prev_index, body;
 
-function CloseLightbox()
-{
-	el_overlay.@.removeClass("show");
-	el_overlay.timer(300, function() {
-		el_overlay.style#visibility = "none";
-	});
-}
+  function show(cbk_on_show, targetOrOption = null, option = null) {
+    if (!option) {
+      if (targetOrOption && (typeof targetOrOption == #object))
+        option = targetOrOption;
+      else
+        option = { shadow: false, closeOuter: true };
+    }
 
+    var el_body = el_overlay.$(.ligthbox-body);
+    if (body && prev_parent) {
+      prev_parent.insert(body,prev_index);
+      body = prev_parent = prev_index = null;   
+    } else
+        el_body.clear();
+    switch(typeof cbk_on_show) {
+      case #function:
+        cbk_on_show(el_body, targetOrOption)
+        break;
+      case #Element:
+        body = cbk_on_show;
+        prev_parent = body.parent;
+        prev_index = body.index;
+        el_body.append(body);
+        break;
+      default:
+        assert false: "cbk_on_show is not correct!";
+    }
+    if (option.shadow) el_body.@.addClass("shadow");
+    if (option.closeOuter) el_overlay.$(.ligthbox-close).@.addClass("outer");
 
-var el_overlay = new Element(#div);
-$(body).append(el_overlay);
+    self.style#overflow = "hidden";
+    el_overlay.@.addClass("show");
+    el_overlay.style#visibility = "visible";
+  }
 
-el_overlay.@.addClass("ligthbox-overlay");
-el_overlay.style#visibility = "none";
-el_overlay.html = "<div .ligthbox><div .ligthbox-body></div><div .ligthbox-close>r</div></div>";
+  function close(){
+    el_overlay.@.removeClass("show");
+    el_overlay.on("animationend.lightbox_overlay", function(evt) { 
+      el_overlay.off(this function); 
+      el_overlay.style#visibility = "none";
+      if (body && prev_parent) {
+        prev_parent.insert(body,prev_index);
+        body = prev_parent = prev_index = null;   
+      } else {
+        var el_body = el_overlay.$(.ligthbox-body);
+        el_body.clear();
+      }
+      return true;
+    });
+  }
+  
+  function setup(selector, cbk_on_show){
+    self.on("click", selector, function(evt) {
+      assert(evt.target.$is({selector}));
+      Lightbox.show(cbk_on_show, evt.target, { shadow: true, closeOuter: true });
+    });
+  }
+  
+  el_overlay.@.addClass("ligthbox-overlay");
+  el_overlay.style#visibility = "none";
+  el_overlay.html = "<div.ligthbox><div.ligthbox-body></div><div.ligthbox-close role=\"ligthbox-close\">r</div></div>";
 
-el_overlay.$(.ligthbox-close).on("click", CloseLightbox);
-el_overlay.on("click", function(evt) {
-	if(evt.target==el_overlay || evt.target==el_overlay.$(.ligthbox-close))
-		CloseLightbox();
-});
+  el_overlay.$(.ligthbox-close).on("click", close);
+  el_overlay.on("click", function(evt) {
+    if(evt.target==el_overlay || evt.target.$is([role=ligthbox-close]))
+      close();
+  });
+  
+  return {
+    setup : setup,
+    show  : show,
+    close : close
+  };
+}();

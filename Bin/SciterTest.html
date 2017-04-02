@@ -26,14 +26,12 @@
   
   </style>
   <script type="text/tiscript">
+
      function self#test.onClick(){
-       //view.msgbox {type: #question, content: "Be or not to be?", title: "Huh?", buttons: [ {id:#yes, text:"To be"}, {id:#no, text:"Not to be"} ] };
-       //prompt("");
-       //alert(JSON.stringify(getCommandLine()));
-       //false || alert(JSON.stringify(getCommandLine()));
-       
-       //$(.test).toggle();
-       alert(getCommandLine())
+       var a = [], b = {}, c = {};
+       alert(hash(a));
+       alert(hash(b));
+       alert(hash(c));
      }            
      
      function self#test1.onClick(){
@@ -46,6 +44,7 @@
   </script>
  </head>
  <body >
+   <output#out></output>
    <input|button #test value="测试" />
    <input|button #test1 value="测试1" />
    <input|button role="default-button" value="测试" />
@@ -61,7 +60,7 @@
    <input|button class="warning" disabled value="warning" />
    <input|button class="danger" disabled value="danger" />
    <button|toggler ></button>
-   <input|text style="display:block;width:1*;">
+   <input|text #test-input style="display:block;width:1*;">
    <input|text class="success" novalue="ddddd" style="display:block;width:1*;"/>
    <input|text class="warning" style="display:block;width:1*;"/>
    <input|text class="danger" style="display:block;width:1*;"/>

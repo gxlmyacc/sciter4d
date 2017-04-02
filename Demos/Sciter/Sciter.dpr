@@ -11,6 +11,7 @@ uses
   Windows,
   Classes,
   SysUtils,
+  StrUtils,
   SciterBehavior,
   SciterImportDefs,
   SciterTypes,
@@ -40,10 +41,10 @@ begin
   //SciterIntf.Sciter.DriverName := ExtractFilePath(ParamStr(0)) + DLL_Sciter;
   //SciterIntf.Sciter.ReportBehaviorCount := True;
 
-  sMasterDir := ExtractFilePath(ParamStr(0)) + 'SciterTest\';
-//  sMasterFile := sMasterDir + 'win-master.css';
-//  if FileExists(sMasterFile) then
-//    SciterIntf.Sciter.MainMasterFile := sMasterFile;
+  sMasterDir := ExtractFilePath(ParamStr(0)) + 'Views\master\';
+  sMasterFile := sMasterDir + 'win-master.css';
+  if FileExists(sMasterFile) then
+    SciterIntf.Sciter.MainMasterFile := sMasterFile;
   sMasterFile := sMasterDir + 'debug-peer.tis';
   if FileExists(sMasterFile) then
     SciterIntf.Sciter.DebugPeerFile := sMasterFile;
@@ -58,10 +59,13 @@ begin
   sOpenFile := ParamStr(1);
   if (sOpenFile <> '') then
   begin
-    if FileExists(sOpenFile) then
+    if FileExists(sOpenFile) or (Pos('file://', sOpenFile) = 1) then
       MainForm.Layout.LoadFile('file://' + sOpenFile)
     else
-      MainForm.Layout.LoadFile(sOpenFile);
+    if Pos('http', sOpenFile) = 1 then
+      MainForm.Layout.LoadFile(sOpenFile)
+    else
+      MainForm.Layout.LoadFile('res:default.html');
   end
   else
   begin

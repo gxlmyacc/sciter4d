@@ -31,6 +31,9 @@ const
   SCHEMA_FileLen     = Length(SCHEMA_File);
   SCHEMA_Sciter      = 'sciter:';
   SCHEMA_SciterLen   = Length(SCHEMA_Sciter);
+  SCHEMA_ThisApp     = 'this://app/';
+  SCHEMA_ThisAppLen  = Length(SCHEMA_ThisApp);
+
 
   EXT_PLUGIN         = '.plugin';
   EXT_PLUGINLen      = Length(EXT_PLUGIN);
@@ -1568,7 +1571,6 @@ type
     property OnCreateNativeObject: TLayoutCreateNativeObjectProc read GetOnCreateNativeObject write SetOnCreateNativeObject;
   end;
 
-
   TSciterNotificationProc =  function (const ALayout: ISciterLayout; var pnm: PSciterCallbackNotification; var Handled: Boolean): LRESULT of object;
   TSciterLoadDataProc = function (const ALayout: ISciterLayout; var pnmld: LPSCN_LOAD_DATA; const schema: PSciterSchemaInfo; var Handled: Boolean): TLoadDataResult of object;
   TSciterDataLoadedProc = function (const ALayout: ISciterLayout; var pnmld: LPSCN_DATA_LOADED; var Handled: Boolean): LRESULT of object;
@@ -1635,6 +1637,9 @@ type
     function  AddDataLoadProc(const ADataLoadProc: TSciterLoadDataProc): Integer;
     function  RemoveDataLoadProc(const ADataLoadProc: TSciterLoadDataProc): Integer;
     procedure ClearDataLoadProcs;
+
+    function  AddCustomFont(const AFontFile: SciterString): Cardinal;
+    function  AddCustomFontFromDir(const AFontDir: SciterString): Boolean;
 
     (**Set Master style sheet.
      *
@@ -1748,7 +1753,7 @@ type
     property DebugPeerFile: SciterString read GetDebugPeerFile write SetDebugPeerFile;
     {** tiscript custom base library file **}
     property BaseLibraryFile: SciterString read GetBaseLibraryFile write SetBaseLibraryFile;
-    
+
     property BehaviorFactorys: IBehaviorFactorys read GetBehaviorFactorys;
 
     property GraphicsCaps: UINT read GetGraphicsCaps;

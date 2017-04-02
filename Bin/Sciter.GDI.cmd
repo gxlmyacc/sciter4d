@@ -1,0 +1,1 @@
+start sciter.exe sciter-gfx=gdi

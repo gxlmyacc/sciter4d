@@ -1,0 +1,72 @@
+function movable(params = {}) 
+{ 
+  const NO_DRAG_TAGS = ["a", "select", "input", "button", "checkbox"];
+  
+  function thisContainer(el) {
+    for(var p = el; p; p = p.parent) {
+      if (p.style#position && p.style#position != "static") return p;
+      if (p == self) break;
+    }
+    return null;
+  }
+  function doDrag(evt){
+    if (NO_DRAG_TAGS.indexOf(evt.target.tag.toLowerCase()) >= 0 || evt.target.@.exists("no-drag"))
+      return false;
+    
+    var offx,offy, container, node, dragMode, dragMargin, canH, canV;
+    if (params.container) 
+      container = this.$p({params.container});
+    else 
+      container = thisContainer(this.parent);
+    assert container : "container"+ (params ? "["+params.container+"]" : "") +" not find!" ;
+
+    if (params.node)
+      node = this.$p({params.node});
+    else
+      node = this;
+    assert node : "node"+ (params ? "["+params.node+"]" : "") +" not find!" ;
+
+    node.style#position = "absolute";
+    dragMode = this.@#draggable ? this.@#draggable : "both";
+    dragMargin = this.@#drag-margin ? this.@#drag-margin.split(" ") : null;
+    assert !dragMargin || (dragMargin.length == 4) : "drag-margin["+ this.@#drag-margin +"] not correct!" ;
+    for (var (i,v) in dragMargin) dragMargin[i] = v.toInteger(0);
+    canH = dragMode == "both" || dragMode == "horizontal";
+    canV = dragMode == "both" || dragMode == "vertical";
+    
+    var onMouse_old = container.onMouse;
+    container.onMouse = function(evt) {
+      if( evt.type != Event.MOUSE_MOVE )
+        return false;
+      if( typeof offx != #integer )
+      {
+        var (nx,ny) = node.box(#position,#inner,#container);
+        offx = canH ? evt.x - nx : 0;
+        offy = canV ? evt.y - ny : 0;
+      } else {
+        var  x = evt.x - offx;
+        var  y = evt.y - offy;
+        var (cw,ch) = container.box(#dimension,#inner);
+        var (nw,nh) = node.box(#dimension,#border);
+        if (dragMargin) {
+          if (x < dragMargin[3]) x = dragMargin[3];
+          else if (x+nw > cw - dragMargin[1]) x = cw - dragMargin[1] - nw;
+          if (y < dragMargin[0]) y = dragMargin[0];
+          else if (y+nh > ch - dragMargin[2]) y = ch - dragMargin[2] - nh;
+        }
+        node.style.set {
+          left: dip(x),
+          top: dip(y) 
+        };
+      }
+      return true;      
+    };
+    
+    container.capture( true );
+    view.doEvent(#untilMouseUp);
+    container.capture( false );
+    container.onMouse = onMouse_old;
+  }
+  
+  this.on("mousedown", doDrag);
+}

@@ -1,6 +1,8 @@
 ﻿
 /* 主要处理器 */
 [model] { aspect:"Plus.Model" url(plus.tis); }
+[model] [if-show] { aspect:"Plus.IfShow"; }
+[model] [switch-show] { aspect:"Plus.switchShow"; }
 [model] [each] { aspect:"Plus.Repeater"; } /* note repeater shall come first before [model] [name] for <select each="..." name="var"> */
 [model] [name] { aspect:"Plus.Terminal"; }
 [model] [class*='{{'] { aspect:"Plus.ClassTerminal"; }
@@ -20,3 +22,5 @@
 [model] [escape] { aspect:"Plus.Escape"; }
 [model] [focusin] { aspect:"Plus.FocusIn"; }
 [model] [focusout] { aspect:"Plus.FocusOut"; }
+
+[model] .plus-hide { visibility: none; }

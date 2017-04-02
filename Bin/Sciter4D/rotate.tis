@@ -1,0 +1,43 @@
+class Rotate : Element {
+  this var angle = 0;
+  this var running = false;
+  
+  function checkRun(){
+    if (this.style["-rotate"] == "auto" && this.isVisible) 
+      (!this.running) && this.run();
+    else return true;
+  }
+  
+  function attached(){
+    this.timer(100, this.checkRun);
+  }
+  function detached()  {
+  }
+  
+  function doAnimate(){
+    this.angle += 1;
+    this.style["transform"] = [rotate: this.angle * 10deg];
+    if (this.angle >= 36) this.angle = 0;
+    var ret = false;
+    if (this.style["-rotate"] == "auto" && this.isVisible)
+      ret = 50;
+    if (!ret) {
+      this.angle = 0;
+      if (this.style["-rotate"] != "auto") this.style["transform"] = [rotate: 0deg];
+      this.running = false;  
+      if (this.checkRun) this.timer(100, this.checkRun);
+    }
+    return ret;
+  }
+  
+  function run() {
+    this.angle = 0;
+    this.style["-rotate"] = "auto";
+    this.running = true;
+    this.animate(this.doAnimate);
+  }
+  
+  function pause() {
+    this.style["-rotate"] = "none";
+  };
+}

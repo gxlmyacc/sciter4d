@@ -185,8 +185,7 @@ begin
   if FLayout = nil then
   begin
     FLayout := LayoutFactory.Create(Self);
-    //ÉèÖÃÖ÷´°¿Ú
-    if (Sciter.MainWnd = 0) and (Application.MainForm <> nil) then
+    if (not IsWindow(Sciter.MainWnd)) and (Application.MainForm <> nil) then
       Sciter.MainWnd := Application.MainForm.Handle;
   end;
   if HandleAllocated and (FLayout <> nil) then
@@ -203,6 +202,8 @@ begin
   begin
     if IsWindow(WindowHandle) then
       FLayout.ProcND(WindowHandle, WM_DESTROY, 0, 0, pbHandled);
+    if IsWindow(Sciter.MainWnd) and (Application.MainForm = Self) then
+      Sciter.MainWnd := 0;
     FLayout := nil;
   end;
   inherited;

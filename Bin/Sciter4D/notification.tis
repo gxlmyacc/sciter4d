@@ -1,8 +1,10 @@
 ﻿class Notification 
 {
-  const WAIT_TIMER = 5s; // 消息显示时长
-  const TYPE_TOAST = "toast";
-  const TYPE_TRAY = "tray";  
+  const WAIT_TIMER       = 5s; // 消息显示时长
+  const TOAST_WAIT_TIMER = 3s; // 消息显示时长
+  const TYPE_TOAST       = "toast";
+  const TYPE_TRAY        = "tray";  
+  const TYPE_LOADING     = "loading";
   var msgs = {}; // 单例, 同一时间只能有一个消息
    
   function onMouse(evt) {
@@ -13,80 +15,110 @@
       return true;
     } 
   }
-     
-  function cancel(notifyType = TYPE_TRAY) { // 如果你想取消显示，则调用这个方法
-    var msg = msgs[notifyType];
-    if (!msg) return;      
-    if(msg.attributes["state"] == "shown") {
-      msg.off(".notification."+notifyType);
-      msg.attributes["state"] = undefined;
-      msg.move();
-    }		 
-  }
 
   // 注意: 动画状态是在CSS中定义的
   function closeIt(notifyType = TYPE_TRAY) {
-     var msg = msgs[notifyType];
+     var options = msgs[notifyType];
+     var msg = options && options.elPopup;
      if (!msg) return;
      msg.off("animationend.notification."+notifyType);  
+     if (options.busy) self.state.busy = false;
+     if (options.disabled && options.shim) {options.shim.detach(); options.shim = null; };
      
      if(!msg.isVisible) return;
      msg.attributes["state"] = "closed";
      msg.on("animationend.notification."+notifyType, function(evt) { 
        msg.off(this function); // 只做一次
        msg.attributes["state"] = undefined;
-       msg.postEvent("notification-closed"); 
+       msg.postEvent("notification-closed");       
        msg.move();
+       msgs[notifyType] = null;
        return true;
      });
+  }
+  function closeTray() { 
+    return this.closeIt(TYPE_TRAY);
+  }
+
+  function closeToast() { 
+    return this.closeIt(TYPE_TOAST);
+  }
+
+  function closeLoading() { 
+    return this.closeIt(TYPE_LOADING);
+  }
+
+  function cancel(notifyType = TYPE_TRAY) { // 如果你想取消显示，则调用这个方法
+     var options = msgs[notifyType];
+     var msg = options && options.elPopup;
+    if (!msg) return;    
+    if (options.busy) self.state.busy = false;
+    if (options.disabled && options.shim) {options.shim.detach(); options.shim = null; };    
+    if(msg.attributes["state"] !== undefined) {
+      msg.off(".notification."+notifyType);
+      msg.attributes["state"] = undefined;
+      msg.move();
+      msgs[notifyType] = null;
+    }		 
   }
    
   function notify(options) { 
     cancel(options.type);
     
+    msgs[options.type] = options;
+
     var msg = options.elPopup;
-    msgs[options.type] = msg;
-    
     msg.$( content ).html = options.message;
-    if (!options.waitTimer) options.waitTimer = WAIT_TIMER; 
-    msg.on("mouseup.notification."+options.type, onMouse);
-    
-    var header = msg.$( header );
-    if(header) 
-    {
-      var caption = header.$(caption);
-      if (caption)
-        caption.text = options.title;
-      else
-        header.text = options.title;
-    }  
+    if (options.type == TYPE_TRAY) {
+      msg.on("mouseup.notification."+options.type, onMouse);
+      
+      var header = msg.$( header );
+      if(options.title && header) {
+        var caption = header.$(caption);
+        if (caption)
+          caption.text = options.title;
+        else
+          header.text = options.title;
+      }  
+    }
     
     // 设置"off stage"的初始化状态
     msg.attributes["state"] = "initial";
     
     // 计算它的真实尺寸
+    msg.move(-10000, -10000);
     var (w,h) = msg.box(#dimension,#border);
+
     // 获取 **声明的** 外边距宽度, 注意: 由于外边距的合并，它们可能与计算值不一致
     w += msg.toPixels(msg.style#margin-right || "0", #width);
     h += msg.toPixels(msg.style#margin-bottom || "0", #height);
 
     if (options.type == TYPE_TRAY) {
-      // 获取 屏幕工作区域信息
-      var (X1,Y1, X2, Y2) = view.screenBox(#workarea, #rect);
-      // 将消息对话框移动到右下角
-      msg.move( X2 - w, Y2 - h, #screen, #detached-topmost-window );
+      var (x1,y1, x2, y2) = view.screenBox(#workarea, #rect);
+      msg.move( x2 - w, y2 - h, #screen, #detached-topmost-window );
     }
     else if (options.type == TYPE_TOAST) {
-      // 获取 窗口宽高信息
-      var (W1, H1) = view.root.box(#dimension, #view);
-      // 将消息对话框移动到右下角
-      msg.move( (W1 - w) / 2, (H1 - h) / 2, #view, #attached-window );
+      var (w1, h1) = view.root.box(#dimension, #view);
+      var (x, y) = ((w1 - w) / 2, (h1 - h) / 2);
+      options.top && (y = options.top);
+      options.bottom && (y = h1 - options.bottom);
+      msg.move( x, y, #view, #attached-window );
+    } 
+    else if (options.type == TYPE_LOADING) {
+      var (w1, h1) = view.root.box(#dimension, #view);
+      var (x, y) = ((w1 - w) / 2, (h1 - h) / 2);
+      msg.move( x, y, #view, #attached-window );
     } 
     else return;
 
     function revealIt() {
       if(!msg.isVisible) return;
       msg.attributes["state"] = "shown";
+      if (options.busy) self.state.busy = true;
+      if (options.disabled) {
+        var shim = self.$(body div.notification-shim);
+        if (!shim) options.shim = self.$(body).$append(<div.notification-shim></div>);
+      }
       msg.on("animationend.notification."+options.type, function(evt) { 
         if(!msg.isVisible) return;
         msg.off(this function); // 只做一次
@@ -105,14 +137,27 @@
     return this.notify { elPopup: elPopup, message: message, title: title, waitTimer: waitTimer, type: TYPE_TRAY };
   }
   
-  function toast(messageOrOptions, waitTimer = WAIT_TIMER) {
+  function toast(messageOrOptions, waitTimer = TOAST_WAIT_TIMER) {
     var options = typeof messageOrOptions == #object ? messageOrOptions: { message: messageOrOptions, waitTimer: waitTimer };
     options.type = TYPE_TOAST;
-    if (!options.waitTimer) options.waitTimer = WAIT_TIMER;
+    if (!options.waitTimer) options.waitTimer = TOAST_WAIT_TIMER;
     if (!options.elPopup) {
-      options.elPopup = self.$(popup[type=toast]);
+      options.elPopup = self.$(popup[type={options.type}]);
       if (!options.elPopup) {
-        options.elPopup = Element.create { popup, type: TYPE_TOAST, [ { content, "" } ] };
+        options.elPopup = Element.create { popup, type: options.type, [ { content, "" } ] };
+        self.$(head).append(options.elPopup);
+      }
+    }
+    return this.notify(options);  
+  }
+
+  function loading(messageOrOptions, busy = false, disabled = false) {
+    var options = typeof messageOrOptions == #object ? messageOrOptions: { message: messageOrOptions, busy: busy, disabled: disabled };
+    options.type = TYPE_LOADING;
+    if (!options.elPopup) {
+      options.elPopup = self.$(popup[type={options.type}]);
+      if (!options.elPopup) {
+        options.elPopup = Element.create { popup, type: options.type, [ { icon, "" }, { content, "" } ] };
         self.$(head).append(options.elPopup);
       }
     }

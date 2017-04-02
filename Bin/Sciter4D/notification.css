@@ -1,6 +1,7 @@
 
 popup[type=tray] { style-set: notification-tray; }
 popup[type=toast] { style-set: notification-toast; }
+popup[type=loading] { style-set: notification-loading; }
 
 @set notification-tray {
 
@@ -8,7 +9,7 @@ popup[type=toast] { style-set: notification-toast; }
     background: white;
     border: 1px solid #aaa;
     border-radius: 4dip;
-    width: 300dip;
+    width: 260dip;
     display:none;
     transform: translate(0,0); opacity:1.0;
     font:system;
@@ -34,14 +35,52 @@ popup[type=toast] { style-set: notification-toast; }
     border-radius: 4dip;
     display: none;
     min-width: 80dip;
-    opacity: 1.0;
+    transform: scale(1.0); opacity:1.0;
     font: system;
   }
   
   :root[state] {display:inline-block;}
+  :root[state=initial] { opacity:0.0; transform: scale(0.0);} /* offstage */
+  :root[state=shown]   { opacity:1.0; transform: scale(1.0); transition: opacity(quad-out,300ms) transform(quad-out,300ms);  }
+  :root[state=closed]  { opacity:0.0; transform: scale(0.0); transition: opacity(quad-out,300ms) transform(quad-out,300ms);  }
+
+  content { display:block; padding: 8dip; text-align: center; }
+}
+
+html:busy .notification-shim {
+  position: absolute;
+  left: 0px; right: 0px; top: 0px; bottom: 0px;
+}
+
+@set notification-loading {
+  :root {
+    background-color: #00000088;
+    color: white;
+    border-radius: 4dip;
+    min-width: 128dip;
+    min-height: 90dip;
+    max-width: 480dip;
+    opacity: 1.0;
+    font: 11.5pt;
+    padding: 20dip 10dip 0dip 10dip;
+  }
+  
+  :root[state] {visibility:visible;}
   :root[state=initial] { opacity:0.0; } /* offstage */
-  :root[state=shown]   { opacity:1.0; transition: opacity(linear,500ms);  }
-  :root[state=closed]  { opacity:0.0; transition: opacity(linear,500ms);  }
+  :root[state=shown]   { opacity:1.0; transition: opacity(quad-out,300ms);  }
+  :root[state=closed]  { opacity:0.0; transition: opacity(quad-out,300ms);  }
+
+  icon {
+    display: block;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAjCAMAAADGxShVAAAAmVBMVEUAAAD////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////VHQRUAAAAMnRSTlMAyBkJAvuMXAXxZg/36c24hlc0LhIM5dzTop6YSSQe89mxqJWQgXl1amFRRxS/qm9GKlYfYN0AAAERSURBVDjLzZPXeoMwDIVlswKE2bATMpvVrfd/uBqTVhRc3yb/lT7rIORzAEb4MYsS0DFjKDjpJA52zDONJEbJ07RjXqrdtSs8qbD8qaRGwbMosqKr7NtiQKT9s1yUvMrLkylPjxajnTyULOEPLiJdf6lcMsL1itwIURCNPfpsgeDva7fJ4O74dsk8fbZh76yaVXye/WTrKxWvLmJD2ap4EZ3iNsVaKCVcTKnBKCnbKen+aIj37TfhBzwOizrID8bk1KTalA5vRxdm6DoDhyRfMKSSpmu/XUam0x/QyuA8p1/KRsSA9tv9OpxYiBuZhtHkLB3se462jiyCXqyBY8fbf22acgAd1zliwUFLe0lGNn8DcdEmYHESSh4AAAAASUVORK5CYII=);
+    background-repeat: no-repeat;
+    width: 34dip;
+    height: 35dip;
+    margin-left: *;
+    margin-right: *;
+    prototype: "Rotate" url(rotate.tis);
+    -rotate: auto;
+  }
 
   content { display:block; padding: 8dip; text-align: center; }
 }
