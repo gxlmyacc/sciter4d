@@ -243,10 +243,10 @@ const
       //DO_SWITCH_TAB = ACTIVATE_CHILD,// command to switch tab programmatically, handled by behavior:tabs
       //                               // use it as HTMLayoutPostEvent(tabsElementOrItsChild, DO_SWITCH_TAB, tabElementToShow, 0);
 
-      INIT_DATA_VIEW    = $93;       // request to virtual grid to initialize its view
+      //INIT_DATA_VIEW    = $93;       // request to virtual grid to initialize its view
       
-      ROWS_DATA_REQUEST = $94;         // request from virtual grid to data source behavior to fill data in the table
-                                      // parameters passed throug DATA_ROWS_PARAMS structure.
+      //ROWS_DATA_REQUEST = $94;         // request from virtual grid to data source behavior to fill data in the table
+      //                                 // parameters passed throug DATA_ROWS_PARAMS structure.
 
       UI_STATE_CHANGED = $95;        // ui state changed, observers shall update their visual states.
                                      // is sent for example by behavior:richtext when caret position/selection has changed.

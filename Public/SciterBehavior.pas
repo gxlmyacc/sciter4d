@@ -126,10 +126,6 @@ type
     function  OnElementExpanded(const he, target: IDomElement; _type: UINT{BEHAVIOR_EVENTS}; var params: TBehaviorEventParams): Boolean; virtual;
 
     function  OnActivateChild(const he, target: IDomElement; _type: UINT{BEHAVIOR_EVENTS}; var params: TBehaviorEventParams): Boolean; virtual;
-    
-    function  OnInitDataView(const he, target: IDomElement; _type: UINT{BEHAVIOR_EVENTS}; var params: TBehaviorEventParams): Boolean; virtual;
-    function  OnRowsDataRequest(const he, target: IDomElement; _type: UINT{BEHAVIOR_EVENTS}; var params: TBehaviorEventParams): Boolean; virtual;
-    
     function  OnUIStateChanged(const he, target: IDomElement; _type: UINT{BEHAVIOR_EVENTS}; var params: TBehaviorEventParams): Boolean; virtual;
     
     function  OnFormSubmit(const he, target: IDomElement; _type: UINT{BEHAVIOR_EVENTS}; var params: TBehaviorEventParams): Boolean; virtual;
@@ -295,8 +291,6 @@ begin
   FEventHandler.OnElementCollapsed := OnElementCollapsed;
   FEventHandler.OnElementExpanded := OnElementExpanded;
   FEventHandler.OnActivateChild := OnActivateChild;
-  FEventHandler.OnInitDataView := OnInitDataView;
-  FEventHandler.OnRowsDataRequest := OnRowsDataRequest;
   FEventHandler.OnUIStateChanged := OnUIStateChanged;
   FEventHandler.OnFormSubmit := OnFormSubmit;
   FEventHandler.OnFormReset := OnFormReset;
@@ -718,17 +712,6 @@ begin
   end;
 end;
 
-function TBehaviorEventHandler.OnInitDataView(const he,
-  target: IDomElement; _type: UINT; var params: TBehaviorEventParams): Boolean;
-begin
-  if (FSuper <> nil) and (@FSuper.OnInitDataView <> nil) then
-    Result := FSuper.OnInitDataView(he, target, _type, params)
-  else
-  begin
-    Result := False;
-  end;
-end;
-
 function TBehaviorEventHandler.OnKeyChar(const he, target: IDomElement;
   event_type: UINT; var params: TKeyParams): Boolean;
 begin
@@ -954,17 +937,6 @@ function TBehaviorEventHandler.OnRequestTooltip(const he,
 begin
   if (FSuper <> nil) and (@FSuper.OnRequestTooltip <> nil) then
     Result := FSuper.OnRequestTooltip(he, target, _type, params)
-  else
-  begin
-    Result := False;
-  end;
-end;
-
-function TBehaviorEventHandler.OnRowsDataRequest(const he,
-  target: IDomElement; _type: UINT; var params: TBehaviorEventParams): Boolean;
-begin
-  if (FSuper <> nil) and (@FSuper.OnRowsDataRequest <> nil) then
-    Result := FSuper.OnRowsDataRequest(he, target, _type, params)
   else
   begin
     Result := False;

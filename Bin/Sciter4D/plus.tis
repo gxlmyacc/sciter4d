@@ -491,12 +491,8 @@ const Plus = function() {
     ifelse && (ifelse.@.addClass("plus-hide"));
     
     function ifshowUpdater(thing,v){
-      if (ifelse) {
-        if (v) ifelse.@.addClass("plus-hide");
-        else ifelse.@.removeClass("plus-hide");
-      }
-      if (v) thing.@.removeClass("plus-hide");
-      else thing.@.addClass("plus-hide");
+      thing.@.toggleClass("plus-hide", !v);
+      ifelse && ifelse.@.toggleClass("plus-hide", v);
     }
     setupTerminalBinding(model,thing,path,false,ifshowUpdater);
   }
@@ -516,13 +512,12 @@ const Plus = function() {
           continue;
         }
         if (!child.@.exists("switch-case")) continue;
-        if (child.@["switch-case"] == v) child.@.removeClass("plus-hide");
-        else child.@.addClass("plus-hide");
+        if (child.@["switch-case"] == v) {
+          child.@.removeClass("plus-hide");
+          find = true;
+        } else child.@.addClass("plus-hide");
       }
-      if (def) {
-        if (find) def.@.addClass("plus-hide");
-        else def.@.removeClass("plus-hide");
-      }
+      if (def) def.@.toggleClass("plus-hide", find);
     }
     setupTerminalBinding(model,thing,path,false,switchShowUpdater);
   }

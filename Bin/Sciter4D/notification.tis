@@ -23,7 +23,7 @@
      if (!msg) return;
      msg.off("animationend.notification."+notifyType);  
      if (options.busy) self.state.busy = false;
-     if (options.disabled && options.shim) {options.shim.detach(); options.shim = null; };
+     if (options.disabled && options.shim) { options.shim.owner && options.shim.detach(); options.shim = null; };
      
      if(!msg.isVisible) return;
      msg.attributes["state"] = "closed";
@@ -53,7 +53,7 @@
      var msg = options && options.elPopup;
     if (!msg) return;    
     if (options.busy) self.state.busy = false;
-    if (options.disabled && options.shim) {options.shim.detach(); options.shim = null; };    
+    if (options.disabled && options.shim) { options.shim.owner && options.shim.detach(); options.shim = null; };    
     if(msg.attributes["state"] !== undefined) {
       msg.off(".notification."+notifyType);
       msg.attributes["state"] = undefined;
@@ -114,7 +114,7 @@
     function revealIt() {
       if(!msg.isVisible) return;
       msg.attributes["state"] = "shown";
-      if (options.busy) self.state.busy = true;
+      if (options.busy && !view.eventsRoot) self.state.busy = true;
       if (options.disabled) {
         var shim = self.$(body div.notification-shim);
         if (!shim) options.shim = self.$(body).$append(<div.notification-shim></div>);

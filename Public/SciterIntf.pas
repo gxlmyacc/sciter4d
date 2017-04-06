@@ -844,8 +844,6 @@ type
     function GetOnElementCollapsed: TBehaviorEventProc;
     function GetOnElementExpanded: TBehaviorEventProc;
     function GetOnActivateChild: TBehaviorEventProc;
-    function GetOnInitDataView: TBehaviorEventProc;
-    function GetOnRowsDataRequest: TBehaviorEventProc;
     function GetOnUIStateChanged: TBehaviorEventProc;
     function GetOnFormSubmit: TBehaviorEventProc;
     function GetOnFormReset: TBehaviorEventProc;
@@ -940,8 +938,6 @@ type
     procedure SetOnElementCollapsed(const Value: TBehaviorEventProc);
     procedure SetOnElementExpanded(const Value: TBehaviorEventProc);
     procedure SetOnActivateChild(const Value: TBehaviorEventProc);
-    procedure SetOnInitDataView(const Value: TBehaviorEventProc);
-    procedure SetOnRowsDataRequest(const Value: TBehaviorEventProc);
     procedure SetOnUIStateChanged(const Value: TBehaviorEventProc);
     procedure SetOnFormSubmit(const Value: TBehaviorEventProc);
     procedure SetOnFormReset(const Value: TBehaviorEventProc);
@@ -1131,12 +1127,6 @@ type
     {activate (select) child,
      used for example by accesskeys behaviors to send activation request, e.g. tab on behavior:tabs.}
     property OnActivateChild: TBehaviorEventProc read GetOnActivateChild write SetOnActivateChild;
-
-    {request to virtual grid to initialize its view}
-    property OnInitDataView: TBehaviorEventProc read GetOnInitDataView write SetOnInitDataView;
-    {request from virtual grid to data source behavior to fill data in the table
-     parameters passed throug DATA_ROWS_PARAMS structure.}
-    property OnRowsDataRequest: TBehaviorEventProc read GetOnRowsDataRequest write SetOnRowsDataRequest;
 
     {ui state changed, observers shall update their visual states.
      is sent for example by behavior:richtext when caret position/selection has changed.}
