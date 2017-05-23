@@ -16,9 +16,6 @@
     <window-button #window-close command="no-window-caption">r</window-button> 
   </div>
   <route-view name="currentRoute" before-animation="blend(cubic-in-out,500ms)" after-animation="blend(cubic-in-out,500ms)" >
-    <!--route name="start" path="0_start.html"  />
-    <route name="install" path="1_install.html"  />
-    <route name="end" path="2_end.html"  /-->
      <routes each="route in routes">
        <route @name="route.name" @path="route.path"  />
      </routes>
