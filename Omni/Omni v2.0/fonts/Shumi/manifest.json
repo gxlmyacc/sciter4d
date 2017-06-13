@@ -1,8 +1,0 @@
-{
-	name: "Shumi",
-	category: "display",
-	url_gallery: "https://www.behance.net/gallery/26717297/Shumi-Free-font",
-	styles: [
-		["Regular", "Shumi.otf", "Shumi"]
-	]
-}

@@ -1,8 +1,0 @@
-{
-	name: "Langdon",
-	category: "display",
-	url_gallery: "https://www.behance.net/gallery/7814505/Langdon",
-	styles: [
-		["Normal", "Langdon.otf", "Langdon"]
-	]
-}

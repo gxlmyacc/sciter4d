@@ -1,8 +1,0 @@
-{
-	name: "Metafors",
-	category: "handwriting",
-	url_gallery: "https://www.behance.net/gallery/36538125/metafors-free-font",
-	styles: [
-		["Regular", "metafors-Regular.otf", "metafors"]
-	]
-}
