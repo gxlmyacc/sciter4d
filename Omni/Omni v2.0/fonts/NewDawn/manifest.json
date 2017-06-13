@@ -1,0 +1,8 @@
+{
+	name: "New Dawn",
+	category: "sans-serif",
+	url_gallery: "https://www.behance.net/gallery/31496545/NEW-DAWN-%28Free-Font%29",
+	styles: [
+		["Regular", "NewDawn.ttf", "New Dawn"]
+	]
+}

@@ -1,0 +1,8 @@
+{
+	name: "Bizon",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/20936689/bizon-free-font",
+	styles: [
+		["Regular", "Bizon.otf", "Bizon"]
+	]
+}

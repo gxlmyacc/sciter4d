@@ -111,7 +111,9 @@ type
     function IsDomElement(): Boolean;
     // if it is a native functor reference
     function IsNativeFunction(): Boolean;
-      
+    function IsColor(): Boolean;
+    function IsDuration(): Boolean;
+    function IsAngle(): Boolean;
     function IsNull(): Boolean;
 
     function Equal(const rs: IDomValue): Boolean;
@@ -125,6 +127,9 @@ type
     function AsCurrency(defv: Currency = 0.0): Currency;
     function AsDate(defv: FILETIME): FILETIME;
     function AsDateTime(defv: TDateTime): TDateTime;
+    function AsColor(defv: UINT = 0): UINT;
+    function AsAngle(defv: Double = 0): Double;
+    function AsDuration(defv: Double = 0): Double;
 
     function SetAsString(const v: SciterString): Boolean;
     function SetAsPString(const s: PWideChar; slen: UINT): Boolean;
@@ -142,6 +147,12 @@ type
     function SetAsDateTime(const v: TDateTime; isUTC: Boolean = False): Boolean;
     function SetAsArray(const arr: array of IDomValue): Boolean; overload;
     function SetAsArray(const arr: array of SCITER_VALUE): Boolean; overload;
+    // set color value, abgr - a << 24 | b << 16 | g << 8 | r, where a,b,g,r are bytes
+    function SetAsColor(const abgr: UINT): Boolean;
+    // set duration value, seconds
+    function SetAsDuration(const seconds: Double): Boolean;
+    // set angle value, radians
+    function SetAsAngle(const sradians: Double): Boolean;
                             
     procedure Clear;
     procedure Append(const v: IDomValue);

@@ -1,0 +1,8 @@
+{
+	name: "Waterlily",
+	category: "brush",
+	url_gallery: "https://www.behance.net/gallery/25450611/Waterlily-%28Free-Font%29",
+	styles: [
+		["Normal", "Waterlily Script.ttf", "Waterlily"]
+	]
+}

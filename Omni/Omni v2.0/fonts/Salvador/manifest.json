@@ -1,0 +1,8 @@
+{
+	name: "Salvador",
+	category: "handwriting",
+	url_gallery: "https://www.behance.net/gallery/36626953/FREE-FONT-Salvador-Hand-v1-Handwriting-Font",
+	styles: [
+		["Regular", "Salvador_Hand_V1.otf", "Salvador_hand_v1"]
+	]
+}

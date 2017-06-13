@@ -1,0 +1,8 @@
+{
+	name: "BoldBrush",
+	category: "brush",
+	url_gallery: "https://www.behance.net/gallery/32559339/BRUX-BOLD-BRUSH-FONT",
+	styles: [
+		["Regular", "blowbrush.otf", "BoldBrush"]
+	]
+}

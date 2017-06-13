@@ -1,0 +1,8 @@
+{
+	name: "Tessallate",
+	category: "sans-serif",
+	url_gallery: "https://www.behance.net/gallery/31732123/Tessellate-FREE-FONT",
+	styles: [
+		["Regular", "Tessallate-Regular.ttf", "Tessallate"]
+	]
+}

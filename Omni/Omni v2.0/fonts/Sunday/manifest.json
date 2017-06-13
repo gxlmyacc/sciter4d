@@ -1,0 +1,8 @@
+{
+	name: "Sunday",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/21641889/Sunday",
+	styles: [
+		["Normal", "Sunday.otf", "Sunday"]
+	]
+}

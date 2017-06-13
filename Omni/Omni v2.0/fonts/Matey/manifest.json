@@ -1,0 +1,8 @@
+{
+	name: "Matey",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/654010/Alt-Matey-Typeface",
+	styles: [
+		["Regular", "alt_matey_v2_black.otf", "Matey"]
+	]
+}

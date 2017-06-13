@@ -1,0 +1,13 @@
+{
+	name: "Umar",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/20312177/Umar-Typeface-Free-Fonts",
+	styles: [
+		["Base", "Umar Base.ttf", "Umar Base"],
+		["College", "Umar College.ttf", "Umar College"],
+		["Rage", "Umar Rage.ttf", "Umar Rage"],
+		["Slab", "Umar Slab.ttf", "Umar Slab"],
+		["Slab College", "Umar Slab College.ttf", "Umar Slab College"],
+		["Stencils", "Umar Stencils.ttf", "Umar Stencils"]
+	]
+}

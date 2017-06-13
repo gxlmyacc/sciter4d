@@ -1,0 +1,8 @@
+{
+	name: "Nelda",
+	category: "handwriting",
+	url_gallery: "https://www.behance.net/gallery/28675383/Nelda-Script-%28Logo-Typeface%29",
+	styles: [
+		["Regular", "Nelda Free.otf", "Nelda Free"]
+	]
+}

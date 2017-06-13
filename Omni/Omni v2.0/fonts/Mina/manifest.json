@@ -1,0 +1,9 @@
+{
+	name: "Mina",
+	category: "brush",
+	url_gallery: "https://www.behance.net/gallery/35531811/Mina-Brush-Typeface-%28FREE%29",
+	styles: [
+		["Regular", "mina.otf", "mina"],
+		["Sideline", "mina-sideline.otf", "mina-sideline"]
+	]
+}

@@ -1,0 +1,8 @@
+{
+	name: "growl",
+	category: "brush",
+	url_gallery: "https://www.behance.net/gallery/23871901/Growl-Free-Font",
+	styles: [
+		["Rounded", "Growl_rounded.ttf", "Growl_rounded"]
+	]
+}

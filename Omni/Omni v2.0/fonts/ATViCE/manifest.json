@@ -1,0 +1,8 @@
+{
+	name: "Atvice",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/17442415/ATViCE-Display-Font",
+	styles: [
+		["Regular", "Atvice.ttf", "Atvice"]
+	]
+}

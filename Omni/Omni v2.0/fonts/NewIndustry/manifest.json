@@ -1,0 +1,8 @@
+{
+	name: "New Industry",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/28294995/NEW-INDUSTRY-Free-Font",
+	styles: [
+		["Regular", "NewIndustry-Regular.otf", "New Industry"]
+	]
+}

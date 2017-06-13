@@ -1,0 +1,8 @@
+{
+	name: "Kust",
+	category: "brush",
+	url_gallery: "https://www.behance.net/gallery/33481677/KUST-Free-Brush-Font",
+	styles: [
+		["Regular", "Kust.otf", "Kust"]
+	]
+}

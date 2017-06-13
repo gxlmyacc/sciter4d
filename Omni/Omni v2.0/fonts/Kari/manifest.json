@@ -1,0 +1,8 @@
+{
+	name: "Kari",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/Kari-Typeface/12823479",
+	styles: [
+		["Regular", "Kari.ttf", "Kari"]
+	]
+}

@@ -1,0 +1,13 @@
+{
+	name: "Fenton",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/29506851/Fenton-Typeface-Family",
+	styles: [
+		["Regular", "Fenton-Regular.otf", "Fenton"],
+		["Light", "Fenton-Light.otf", "Fenton Light"],
+		["Thin", "Fenton-Thin.otf", "Fenton Thin"],
+		["Medium", "Fenton-Medium.otf", "Fenton Medium"],
+		["Bold", "Fenton-Bold.otf", "Fenton Bold"],
+		["Black", "Fenton-Black.otf", "Fenton Black"]
+	]
+}

@@ -1,0 +1,8 @@
+{
+	name: "Alt hazer",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/26602315/Hazer-Typeface-%28-Free-Font-%29",
+	styles: [
+		["Regular", "alt_hazer.ttf", "alt hazer"]
+	]
+}

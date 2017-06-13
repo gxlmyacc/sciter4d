@@ -355,7 +355,7 @@ var
   el: IDomElement;
   panel_name: WideString;
 begin
-  if he.Equal(h_tabs_container) then
+  if (not he.IsValid) or he.Equal(h_tabs_container) then
   begin
     Result := nil;
     Exit;

@@ -1,0 +1,8 @@
+{
+	name: "Exan",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/36169711/Exan-3-Free-Font",
+	styles: [
+		["Regular", "Exan-Regular.ttf", "Exan"]
+	]
+}

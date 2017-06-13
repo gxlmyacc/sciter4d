@@ -1,0 +1,11 @@
+{
+	name: "smaq",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/24553539/Smaq-Typeface-%28-Free-Font-%29",
+	styles: [
+		["2.8", "alt_smaq_2_8.ttf", "alt smaq 2.8"],
+		["4.8", "alt_smaq_4_8.ttf", "alt smaq 4.8"],
+		["6.8", "alt_smaq_6_8.ttf", "alt smaq 6.8"],
+		["8.8", "alt_smaq_8_8.ttf", "alt smaq 8.8"]
+	]
+}

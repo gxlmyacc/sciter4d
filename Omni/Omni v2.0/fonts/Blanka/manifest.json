@@ -1,0 +1,8 @@
+{
+	name: "Blanka",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/15451401/BLANKA-Free-font",
+	styles: [
+		["Regular", "Blanka-Regular.otf", "Blanka"]
+	]
+}

@@ -1,0 +1,8 @@
+{
+	name: "PLENTO",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/37385151/PLENTO-Free-typeface",
+	styles: [
+		["Regular", "PLENTO-Regular.ttf", "PLENTO"]
+	]
+}

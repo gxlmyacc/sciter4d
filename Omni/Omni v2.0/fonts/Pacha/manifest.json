@@ -1,0 +1,8 @@
+{
+	name: "Pacha",
+	category: "brush",
+	url_gallery: "https://www.behance.net/gallery/33231631/Pacha-Free-font",
+	styles: [
+		["Regular", "Pacha.otf", "Pacha"]
+	]
+}

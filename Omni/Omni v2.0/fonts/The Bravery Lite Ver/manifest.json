@@ -1,0 +1,8 @@
+{
+	name: "The Bravery Lite Ver",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/37668689/Bravery-Free-Display-Font",
+	styles: [
+		["Regular", "The Bravery Lite Ver.otf", "The Bravery Lite Ver."]
+	]
+}

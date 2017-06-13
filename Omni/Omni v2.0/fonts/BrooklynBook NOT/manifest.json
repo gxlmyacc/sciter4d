@@ -1,0 +1,8 @@
+{
+	name: "Brooklyn Book",
+	category: "sans-serif",
+	url_gallery: "https://vllg.com/constellation/brooklyn/samples",
+	styles: [
+		["Regular", "BrooklynBook.otf", "BrooklynBook"]
+	]
+}

@@ -1,0 +1,10 @@
+{
+	name: "Voyager Grotesque",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/vger-grotesque/6636573",
+	styles: [
+		["Regular", "VoyagerGrotesque.otf", "VoyagerGrotesque"],
+		["Bold", "VoyagerGrotesqueBold.otf", "VoyagerGrotesqueBold"],
+		["Light", "VoyagerGrotesqueLight.otf", "VoyagerGrotesqueLight"],
+	]
+}

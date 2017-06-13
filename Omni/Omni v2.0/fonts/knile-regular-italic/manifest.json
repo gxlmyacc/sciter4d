@@ -1,0 +1,9 @@
+{
+	name: "Knile",
+	category: "serif",
+	url_gallery: "https://www.behance.net/gallery/36385509/Knile-font",
+	styles: [
+		["Regular", "Knile-Regular.otf", "Knile"],
+		["Italic", "Knile-RegularItalic.otf", "Knile"],
+	]
+}

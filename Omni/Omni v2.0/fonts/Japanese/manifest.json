@@ -1,0 +1,7 @@
+{
+	name: "Japanese",
+	category: "display",
+	styles: [
+		["Regular", "Japanese.ttf", "Japanese"]
+	]
+}

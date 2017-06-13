@@ -1,0 +1,11 @@
+{
+	name: "Royals",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/26233783/ROYALS-font-Free-Font",
+	styles: [
+		["Regular", "Royals-Regular.ttf", "Royals"],
+		["Italic", "Royals-Italic.ttf", "Royals"],
+		["Rush", "Royals-Rush.ttf", "Royals"],
+		["RushItalic", "Royals-RushItalic.ttf", "Royals"]
+	]
+}

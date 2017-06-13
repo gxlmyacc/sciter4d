@@ -1,0 +1,7 @@
+{
+	name: "Aldo the Apache",
+	category: "display",
+	styles: [
+		["Regular", "AldotheApache.ttf", "Aldo the Apache"]
+	]
+}

@@ -1,0 +1,8 @@
+{
+	name: "DREAMERS BRUSH",
+	category: "brush",
+	url_gallery: "https://www.behance.net/gallery/29939959/Dreamers-Brush-%28Free-Font%29",
+	styles: [
+		["Regular", "DREAMERS BRUSH.otf", "Dreamers Brush"]
+	]
+}

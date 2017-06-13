@@ -1,0 +1,8 @@
+{
+	name: "Firefly",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/26529061/FREE-Font-Firefly-2015",
+	styles: [
+		["Regular", "Firefly.otf", "Firefly"]
+	]
+}

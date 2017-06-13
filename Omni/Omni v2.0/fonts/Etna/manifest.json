@@ -1,0 +1,8 @@
+{
+	name: "Etna",
+	category: "sans-serif",
+	url_gallery: "https://www.behance.net/gallery/27266073/ETNA-Free-font",
+	styles: [
+		["Regular", "Etna.otf", "Etna"]
+	]
+}

@@ -1,0 +1,9 @@
+{
+	name: "Elrotex",
+	category: "brush",
+	url_gallery: "https://www.behance.net/gallery/31586567/Elrotex-Brush-Font",
+	styles: [
+		["Regular", "Elrotex.otf", "Elrotex"],
+		["Swash", "ElrotexSwash.otf", "Elrotex Swash"]
+	]
+}

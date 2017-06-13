@@ -1,0 +1,8 @@
+{
+	name: "Sequel",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/36451955/Sequel-Font",
+	styles: [
+		["Sequel", "Sequel-Regular.ttf", "Knile"],
+	]
+}

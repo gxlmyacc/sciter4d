@@ -1,0 +1,8 @@
+{
+	name: "Manifesto",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/21065399/MANIFESTO-vector-free-font",
+	styles: [
+		["Regular", "Manifesto.ttf", "MANIFESTO"]
+	]
+}

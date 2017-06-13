@@ -1,0 +1,8 @@
+{
+	name: "Kino40",
+	category: "handwriting",
+	url_gallery: "https://www.behance.net/gallery/21891945/KINO-40-%28free-font%29",
+	styles: [
+		["Regular", "KINO40.ttf", "KINO 40"]
+	]
+}

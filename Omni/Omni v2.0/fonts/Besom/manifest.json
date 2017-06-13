@@ -1,0 +1,8 @@
+{
+	name: "Besom",
+	category: "brush",
+	url_gallery: "https://www.behance.net/gallery/22459913/besom-free-brush-font-",
+	styles: [
+		["Regular", "Besom.ttf", "Besom 2"]
+	]
+}

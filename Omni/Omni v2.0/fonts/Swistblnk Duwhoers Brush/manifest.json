@@ -1,0 +1,8 @@
+{
+	name: "Swistblnk Duwhoers Brush",
+	category: "handwriting",
+	url_gallery: "https://www.behance.net/gallery/32969439/Duwhoers-Brush-Free-Font",
+	styles: [
+		["Regular", "Swistblnk Duwhoers Brush.ttf", "Swistblnk Duwhoers Brush"]
+	]
+}

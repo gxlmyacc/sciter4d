@@ -1,0 +1,8 @@
+{
+	name: "Elixia",
+	category: "sans-serif",
+	url_gallery: "https://www.behance.net/gallery/32544505/ELIXIA-Free-Font",
+	styles: [
+		["Regular", "ELIXIA.ttf", "Elixia"]
+	]
+}

@@ -1,0 +1,8 @@
+{
+	name: "Stoked",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/24597223/STOKED-%28free-font%29",
+	styles: [
+		["Normal", "stoked.ttf", "Stoked"]
+	]
+}

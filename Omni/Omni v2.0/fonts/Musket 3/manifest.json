@@ -1,0 +1,8 @@
+{
+	name: "Musket",
+	category: "serif",
+	url_gallery: "https://www.behance.net/gallery/21677209/Marske-FREE-FONT",
+	styles: [
+		["Regular", "Musket regular.otf", "Musket"]
+	]
+}

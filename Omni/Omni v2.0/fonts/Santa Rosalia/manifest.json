@@ -1,0 +1,8 @@
+{
+	name: "Santa Rosalia",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/5045579/Santa-Rosalia",
+	styles: [
+		["Regular", "Santa Rosalia.ttf", "Santa Rosalia"]
+	]
+}

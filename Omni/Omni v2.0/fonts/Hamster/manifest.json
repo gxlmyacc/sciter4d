@@ -1,0 +1,8 @@
+{
+	name: "Hamster",
+	category: "handwriting",
+	url_gallery: "https://www.behance.net/gallery/24882765/hamster-script-%28free-font%29",
+	styles: [
+		["Normal", "Hamster.otf", "Hamster"]
+	]
+}

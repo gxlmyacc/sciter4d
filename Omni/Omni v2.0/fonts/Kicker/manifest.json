@@ -1,0 +1,9 @@
+{
+	name: "Kicker",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/35578513/Kicker-Free-Font-%28Regular-Oblique%29",
+	styles: [
+		["Regular", "Kicker.otf", "Kicker"],
+		["Oblique", "Kicker-Oblique.otf", "Kicker-Oblique"]
+	]
+}

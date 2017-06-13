@@ -1,0 +1,7 @@
+{
+	name: "Ikaros",
+	category: "sans-serif",
+	styles: [
+		["Normal", "Ikaros.otf", "Ikaros"]
+	]
+}

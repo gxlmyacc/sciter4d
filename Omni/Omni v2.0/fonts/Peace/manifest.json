@@ -1,0 +1,8 @@
+{
+	name: "Peace",
+	category: "sans-serif",
+	url_gallery: "https://www.behance.net/gallery/34760019/Peace-Sans-FREE-FONT",
+	styles: [
+		["Regular", "Peace Sans.otf", "Peace Sans"]
+	]
+}

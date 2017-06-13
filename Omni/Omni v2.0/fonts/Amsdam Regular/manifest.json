@@ -1,0 +1,8 @@
+{
+	name: "Amsdam",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/29067587/Amsdam-typeface",
+	styles: [
+		["Regular", "Amsdam Regular.ttf", "Amsdam"]
+	]
+}

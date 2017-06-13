@@ -1,0 +1,9 @@
+{
+	name: "Track",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/8622945/Tracks-Type",
+	styles: [
+		["Regular", "Track.otf", "Track"],
+		["Italic", "Track Italic.otf", "Track"]
+	]
+}

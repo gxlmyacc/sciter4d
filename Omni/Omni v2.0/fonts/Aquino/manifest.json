@@ -1,0 +1,8 @@
+{
+	name: "Aquino",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/36680585/Aquino-free-font",
+	styles: [
+		["Regular", "Aquino-Demo.ttf", "Aquino Demo"]
+	]
+}

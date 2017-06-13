@@ -1,0 +1,8 @@
+{
+	name: "Godfeem",
+	category: "brush",
+	url_gallery: "https://www.behance.net/gallery/29754835/Godfeem-Font",
+	styles: [
+		["Regular", "Godfeem.otf", "Godfeem"]
+	]
+}

@@ -1,0 +1,8 @@
+{
+	name: "Mekar Script",
+	category: "handwriting",
+	url_gallery: "https://www.behance.net/gallery/34492483/Mekar-Script",
+	styles: [
+		["Regular", "Mekar Script.otf", "Mekar Script free"]
+	]
+}

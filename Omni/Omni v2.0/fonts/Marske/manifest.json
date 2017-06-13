@@ -1,0 +1,8 @@
+{
+	name: "Marske",
+	category: "display",
+	url_gallery: "https://www.behance.net/gallery/21677209/Marske-FREE-FONT",
+	styles: [
+		["Regular", "Marske.otf", "Marske"]
+	]
+}
