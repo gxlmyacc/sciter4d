@@ -22,7 +22,7 @@ type
     procedure SetHandleOwner(const Value: Boolean);
     
     // open archive blob:
-    function  Open(data: LPCBYTE; dataLen: UINT; dataCanWrite: Boolean = False): Boolean; overload;
+    function  Open(data: LPCBYTE; data_length: UINT): Boolean; overload;
     function  Open(const filename: SciterString): Boolean; overload;
     procedure Close();
 

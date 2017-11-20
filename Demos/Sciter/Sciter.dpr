@@ -17,6 +17,7 @@ uses
   SciterTypes,
   SciterIntf,
   SciterWndIntf,
+  SciterArchiveIntf,
   SciterObj in 'SciterObj.pas',
   ObjComAutoEx,
   //Behavior.Cef,
