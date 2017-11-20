@@ -1,14 +1,15 @@
 ﻿
 /* 主要处理器 */
 [model] { aspect:"Plus.Model" url(plus.tis); }
-[model] [if-show] { aspect:"Plus.IfShow"; }
-[model] [switch-show] { aspect:"Plus.switchShow"; }
-[model] [each] { aspect:"Plus.Repeater"; } /* note repeater shall come first before [model] [name] for <select each="..." name="var"> */
-[model] [name] { aspect:"Plus.Terminal"; }
-[model] [class*='{{'] { aspect:"Plus.ClassTerminal"; }
-[model] [value*='{{'] { aspect:"Plus.valAttrTerminal"; }
-[model] [href*='{{'] { aspect:"Plus.hrefAttrTerminal"; }
-[model] [src*='{{'] { aspect:"Plus.srcAttrTerminal"; }
+[model] [if-show], [model][if-show] { aspect:"Plus.IfShow"; }
+[model] [switch-show], [model][switch-show] { aspect:"Plus.switchShow"; }
+[model] [each], [model][each] { aspect:"Plus.Repeater"; } /* note repeater shall come first before [model] [name] for <select each="..." name="var"> */
+[model] [name], [model][name] { aspect:"Plus.Terminal"; }
+[model] [class*='{{'], [model][class*='{{'] { aspect:"Plus.ClassTerminal"; }
+[model] [value*='{{'], [model][value*='{{'] { aspect:"Plus.valAttrTerminal"; }
+[model] [href*='{{'], [model][href*='{{'] { aspect:"Plus.hrefAttrTerminal"; }
+[model] [src*='{{'], [model][src*='{{'] { aspect:"Plus.srcAttrTerminal"; }
+
 
 /* 任何以'@'作为前缀的属性被认为绑定属性: */ 
 [model] *:has-bound-attributes { aspect:"Plus.boundAttributesTerminal"; }

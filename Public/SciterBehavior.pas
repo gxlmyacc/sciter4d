@@ -132,6 +132,7 @@ type
     function  OnFormReset(const he, target: IDomElement; _type: UINT{BEHAVIOR_EVENTS}; var params: TBehaviorEventParams): Boolean; virtual;
     
     function  OnDocumentCreated(const he, target: IDomElement; _type: UINT{BEHAVIOR_EVENTS}; var params: TBehaviorEventParams): Boolean; virtual;
+    function  OnDocumentParsed(const he, target: IDomElement; _type: UINT{BEHAVIOR_EVENTS}; var params: TBehaviorEventParams): Boolean; virtual;
     function  OnDocumentReady(const he, target: IDomElement; _type: UINT{BEHAVIOR_EVENTS}; var params: TBehaviorEventParams): Boolean; virtual;
     function  OnDocumentComplete(const he, target: IDomElement; _type: UINT{BEHAVIOR_EVENTS}; var params: TBehaviorEventParams): Boolean; virtual;
     function  OnDocumentCloseRequest(const he, target: IDomElement; _type: UINT{BEHAVIOR_EVENTS}; var params: TBehaviorEventParams): Boolean; virtual;
@@ -295,6 +296,7 @@ begin
   FEventHandler.OnFormSubmit := OnFormSubmit;
   FEventHandler.OnFormReset := OnFormReset;
   FEventHandler.OnDocumentCreated := OnDocumentCreated;
+  FEventHandler.OnDocumentParsed := OnDocumentParsed;
   FEventHandler.OnDocumentReady := OnDocumentReady;
   FEventHandler.OnDocumentComplete := OnDocumentComplete;
   FEventHandler.OnDocumentCloseRequest := OnDocumentCloseRequest;
@@ -496,6 +498,18 @@ function TBehaviorEventHandler.OnDocumentCreated(const he,
 begin
   if (FSuper <> nil) and (@FSuper.OnDocumentCreated <> nil) then
     Result := FSuper.OnDocumentCreated(he, target, _type, params)
+  else
+  begin
+    Result := False;
+  end;
+end;
+
+function TBehaviorEventHandler.OnDocumentParsed(const he,
+  target: IDomElement; _type: UINT;
+  var params: TBehaviorEventParams): Boolean;
+begin
+  if (FSuper <> nil) and (@FSuper.OnDocumentParsed <> nil) then
+    Result := FSuper.OnDocumentParsed(he, target, _type, params)
   else
   begin
     Result := False;

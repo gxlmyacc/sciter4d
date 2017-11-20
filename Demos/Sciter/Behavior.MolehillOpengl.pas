@@ -120,6 +120,7 @@ begin
 
   FContext.event_draw.SetEvent;
   //ctx->event_draw_complete.wait();
+  glFinish();
 
   Result := true; // done drawing
 end;

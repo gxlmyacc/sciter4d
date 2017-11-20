@@ -859,6 +859,7 @@ type
     function GetOnFormSubmit: TBehaviorEventProc;
     function GetOnFormReset: TBehaviorEventProc;
     function GetOnDocumentCreated: TBehaviorEventProc;
+    function GetOnDocumentParsed: TBehaviorEventProc;
     function GetOnDocumentReady: TBehaviorEventProc;
     function GetOnDocumentComplete: TBehaviorEventProc;
     function GetOnDocumentClose: TBehaviorEventProc;
@@ -953,6 +954,7 @@ type
     procedure SetOnFormSubmit(const Value: TBehaviorEventProc);
     procedure SetOnFormReset(const Value: TBehaviorEventProc);
     procedure SetOnDocumentCreated(const Value: TBehaviorEventProc);
+    procedure SetOnDocumentParsed(const Value: TBehaviorEventProc);
     procedure SetOnDocumentReady(const Value: TBehaviorEventProc);
     procedure SetOnDocumentComplete(const Value: TBehaviorEventProc);
     procedure SetOnDocumentClose(const Value: TBehaviorEventProc);
@@ -1154,6 +1156,8 @@ type
 
     {document created, script namespace initialized. target -> the document}
     property OnDocumentCreated: TBehaviorEventProc read GetOnDocumentCreated write SetOnDocumentCreated;
+    {document just finished parsing - has got DOM structure. This event is generated before DOCUMENT_READY}
+    property OnDocumentParsed: TBehaviorEventProc read GetOnDocumentParsed write SetOnDocumentParsed;
     {document has got DOM structure, styles and behaviors of DOM elements. Script loading run is complete at this moment.}
     property OnDocumentReady: TBehaviorEventProc read GetOnDocumentReady write SetOnDocumentReady;
     {document in behavior:frame or root document is complete.}

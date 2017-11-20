@@ -37,6 +37,8 @@ begin
   {$IF CompilerVersion > 18.5}
    ReportMemoryLeaksOnShutdown := True;
   {$IFEND}
+  //
+  // OleUninitialize;
   LoadSciter4D(ExtractFilePath(ParamStr(0)) + DLL_Sciter4D);
   //SciterIntf.Sciter.DriverName := ExtractFilePath(ParamStr(0)) + DLL_Sciter;
   //SciterIntf.Sciter.ReportBehaviorCount := True;

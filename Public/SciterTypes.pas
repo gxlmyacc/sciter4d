@@ -279,6 +279,7 @@ const
       DOCUMENT_CLOSE_REQUEST = $C1; // document is about to be closed, to cancel closing do: evt.data = sciter::value("cancel");
       DOCUMENT_CLOSE    = $C2;      // last notification before document removal from the DOM
       DOCUMENT_READY    = $C3;      // document has got DOM structure, styles and behaviors of DOM elements. Script loading run is complete at this moment. 
+      DOCUMENT_PARSED   = $C4;      // document just finished parsing - has got DOM structure. This event is generated before DOCUMENT_READY
 
 
       VIDEO_INITIALIZED = $D1;      // <video> "ready" notification
@@ -605,57 +606,56 @@ type
    *  Control here is any dom element having appropriate behavior applied
    **)
   CTL_TYPE = (
-    CTL_NO,               ///< This dom element has no behavior at all.
+    CTL_NO = 0,               ///< This dom element has no behavior at all.
     CTL_UNKNOWN = 1,      ///< This dom element has behavior but its type is unknown.
-    CTL_EDIT,             ///< Single line edit box.
-    CTL_NUMERIC,          ///< Numeric input with optional spin buttons.
-    CTL_CLICKABLE,        ///< toolbar button, behavior:clickable.
-    CTL_BUTTON,           ///< Command button.
-    CTL_CHECKBOX,         ///< CheckBox (button).
-    CTL_RADIO,            ///< OptionBox (button).
-    CTL_SELECT_SINGLE,    ///< Single select, ListBox or TreeView.
-    CTL_SELECT_MULTIPLE,  ///< Multiselectable select, ListBox or TreeView.
-    CTL_DD_SELECT,        ///< Dropdown single select.
-    CTL_TEXTAREA,         ///< Multiline TextBox.
-    CTL_HTMLAREA,         ///< WYSIWYG HTML editor.
-    CTL_PASSWORD,         ///< Password input element.
-    CTL_PROGRESS,         ///< Progress element.
-    CTL_SLIDER,           ///< Slider input element.  
-    CTL_DECIMAL,          ///< Decimal number input element.
-    CTL_CURRENCY,         ///< Currency input element.
-    CTL_SCROLLBAR,
+    CTL_EDIT = 2,             ///< Single line edit box.
+    CTL_NUMERIC = 3,          ///< Numeric input with optional spin buttons.
+    CTL_CLICKABLE = 4,        ///< toolbar button, behavior:clickable.
+    CTL_BUTTON = 5,           ///< Command button.
+    CTL_CHECKBOX = 6,         ///< CheckBox (button).
+    CTL_RADIO = 7,            ///< OptionBox (button).
+    CTL_SELECT_SINGLE = 8,    ///< Single select, ListBox or TreeView.
+    CTL_SELECT_MULTIPLE = 9,  ///< Multiselectable select, ListBox or TreeView.
+    CTL_DD_SELECT = 10,        ///< Dropdown single select.
+    CTL_TEXTAREA = 11,         ///< Multiline TextBox.
+    CTL_HTMLAREA = 12,         ///< WYSIWYG HTML editor.
+    CTL_PASSWORD = 13,         ///< Password input element.
+    CTL_PROGRESS = 14,         ///< Progress element.
+    CTL_SLIDER = 15,           ///< Slider input element.
+    CTL_DECIMAL = 16,          ///< Decimal number input element.
+    CTL_CURRENCY = 17,         ///< Currency input element.
+    CTL_SCROLLBAR = 18,
+    CTL_LIST = 19,
+    CTL_RICHTEXT = 20,
+    CTL_CALENDAR = 21,
+    CTL_DATE = 22,
+    CTL_TIME = 23,
+    CTL_FILE = 24,             ///< file input element.
+    CTL_PATH = 25,             ///< path input element.
+
+    CTL_LAST_INPUT = 26,
+
+    CTL_HYPERLINK = CTL_LAST_INPUT,
+    CTL_FORM = 27,
     
-    CTL_HYPERLINK,
-    
-    CTL_MENUBAR,
-    CTL_MENU,
-    CTL_MENUBUTTON,
+    CTL_MENUBAR = 28,
+    CTL_MENU = 29,
+    CTL_MENUBUTTON = 30,
 
-    CTL_CALENDAR,
-    CTL_DATE,
-    CTL_TIME,
-    
-    CTL_FRAME,
-    CTL_FRAMESET,
+    CTL_FRAME = 31,
+    CTL_FRAMESET = 32,
 
-    CTL_GRAPHICS,
-    CTL_SPRITE,
+    CTL_TOOLTIP = 33,
 
-    CTL_LIST,
-    CTL_RICHTEXT,
-    CTL_TOOLTIP,
+    CTL_HIDDEN = 34,
+    CTL_URL = 35,              ///< URL input element.
+    CTL_TOOLBAR = 36,
 
-    CTL_HIDDEN,
-    CTL_URL,            ///< URL input element.
-    CTL_TOOLBAR,
-    
-    CTL_FORM,
-    CTL_FILE,           ///< file input element.
-    CTL_PATH,           ///< path input element.
-    CTL_WINDOW,         ///< has HWND attached to it
+    CTL_WINDOW = 37,           ///< has HWND attached to it
 
-    CTL_LABEL,            
-    CTL_IMAGE           ///< image/object.
+    CTL_LABEL = 38,
+    CTL_IMAGE = 39,            ///< image/video object.
+    CTL_PLAINTEXT = 40         ///< Multiline TextBox + colorizer.
   );
   TControlType = CTL_TYPE;
 
