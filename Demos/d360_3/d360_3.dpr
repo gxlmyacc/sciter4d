@@ -1,6 +1,11 @@
 program d360_3;
 
 uses
+ {$IF CompilerVersion >= 18.5}
+  SimpleShareMem,
+ {$ELSE}
+  FastMM4,
+ {$IFEND}
   SysUtils,
   Windows,
   Forms,

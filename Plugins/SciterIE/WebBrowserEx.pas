@@ -965,7 +965,7 @@ begin
 end;
 
 procedure HandleIECompatible;
-  function GetIEFeatrueValue: Integer;
+  function GetIEFeatrueValue: Cardinal;
   var
     StrVer, StrVer1: string;
     IntPos, IntVer: Integer;
@@ -1019,29 +1019,36 @@ procedure HandleIECompatible;
       RegCloseKey(LKey);
     end;
   end;
-  procedure WriteIEFeatureControl(const AKey, AName: string; const AValue: Integer; var Changed: Boolean);
+  procedure WriteIEFeatureControl(const AKey, AName: string; const AValue: Cardinal; var Changed: Boolean);
   var
-    iOldValue: Integer;
+    iOldValue: Cardinal;
     LKey: HKEY;
     dwDataType, dwDataSize: Cardinal;
   begin
-    if RegOpenKeyEx(HKEY_CURRENT_USER, PChar('Software\Microsoft\Internet Explorer\Main\FeatureControl\' + AKey),
-      0, KEY_READ or KEY_WRITE, LKey) = ERROR_SUCCESS then
     try
-      dwDataType := REG_DWORD;
-      if RegQueryValueEx(LKey, PChar(AName), nil, @dwDataType, @iOldValue, @dwDataSize) <> ERROR_SUCCESS then
-        iOldValue := -1;
-      if iOldValue <> AValue then
-        Changed := RegSetValueEx(LKey, PChar(AName), 0, dwDataType, @iOldValue, dwDataSize) = ERROR_SUCCESS;
-    finally
-      RegCloseKey(LKey);
+      if RegOpenKeyEx(HKEY_CURRENT_USER, PChar('Software\Microsoft\Internet Explorer\Main\FeatureControl\' + AKey),
+        0, KEY_READ or KEY_WRITE, LKey) = ERROR_SUCCESS then
+      try
+        dwDataType := REG_DWORD;
+        if RegQueryValueEx(LKey, PChar(AName), nil, @dwDataType, @iOldValue, @dwDataSize) <> ERROR_SUCCESS then
+          iOldValue := 0;
+        dwDataType := REG_DWORD;
+        if iOldValue <> AValue then
+          Changed := RegSetValueEx(LKey, PChar(AName), 0, dwDataType, @AValue, SizeOf(AValue)) = ERROR_SUCCESS;
+      finally
+        RegCloseKey(LKey);
+      end;
+    except
+      on e: Exception do
+        OutputDebugString(PChar('[WriteIEFeatureControl]' + e.Message));
     end;
+
   end;
 const
   WM_SETTINGCHANGE = $001A;
 var
   sRegName: string;
-  iFeatrueValue: Integer;
+  iFeatrueValue: Cardinal;
   bChanged: Boolean;
 begin
   bChanged := False;
@@ -1928,14 +1935,11 @@ begin
 end;
 
 
-
-
-
 initialization
-  OleInitialize(nil);
-  HandleIECompatible;
+   OleInitialize(nil);
+   HandleIECompatible;
 
 finalization
-  OleUninitialize;
+   OleUninitialize;
 
 end.

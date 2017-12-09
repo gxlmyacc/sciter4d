@@ -14,15 +14,14 @@ uses
 
 var
   packfolderFile: string;
-  sCurrentDir, sResourceFile, sTargetFile, sResource: string;
-  iPrefixLen, iSuffixLen, i: Integer;
-  lsBytes: TStrings;
+  sCurrentDir, sPackfolder, sResourceFile, sTargetFile: string;
   msResource: TMemoryStream;
   pByte: PAnsiChar;
 begin
   sCurrentDir := GetCurrentDir;
-  sResourceFile := IncludeTrailingPathDelimiter(sCurrentDir) + 'resources.cpp';
-  sTargetFile := IncludeTrailingPathDelimiter(sCurrentDir) + 'resources.dat';
+  sPackfolder := ParamStr(1);
+  sResourceFile := IncludeTrailingPathDelimiter(sCurrentDir) + '~resources.sar';
+  sTargetFile := IncludeTrailingPathDelimiter(sCurrentDir) + ExtractFileName(sPackfolder) + '.dat';
   packfolderFile := ExtractFilePath(ParamStr(0)) + 'packfolder.exe';
   if not FileExists(packfolderFile) then
   begin
@@ -37,7 +36,7 @@ begin
     Writeln(Format('[%s] file not exist!', [ExtractFileName(packfolderFile)]));
     Exit;
   end;
-  if not WinExecAndWait32(packfolderFile, ParamStr(1) + ' resources.cpp -v "resources"', sCurrentDir, SW_HIDE) then
+  if not WinExecAndWait32(packfolderFile, sPackfolder + ' resources.sar -binary', sCurrentDir, SW_HIDE) then
   begin
     Writeln(Format('run [%s] fail!', [ExtractFileName(packfolderFile)]));
     Exit;
@@ -47,28 +46,14 @@ begin
     Writeln(Format('resources file [%s] not find!', [sResourceFile]));
     Exit;
   end;
-  iPrefixLen := Length('const unsigned char resources[] = {'#$A#9);
-  iSuffixLen := Length(', };'#$A);
-  sResource := StrLoadFromFile(sResourceFile);
-  sResource := Copy(sResource, iPrefixLen+1, Length(sResource)-iPrefixLen-iSuffixLen);
-  lsBytes := TStringList.Create;
+  msResource := TMemoryStream.Create;
   try
-    lsBytes.Delimiter := ',';
-    lsBytes.DelimitedText := sResource;
-
-    msResource := TMemoryStream.Create;
-    try
-      msResource.SetSize(lsBytes.Count);
-      pByte := msResource.Memory;
-      CopyMemory(pByte, PChar('dat'), 3);
-      for i := 3 to lsBytes.Count - 1 do
-        pByte[i] := AnsiChar(StrToInt(lsBytes[i]));
-      msResource.SaveToFile(sTargetFile);
-    finally
-      msResource.Free;
-    end;
+    msResource.LoadFromFile(sResourceFile);
+    pByte := msResource.Memory;
+    CopyMemory(pByte, PChar('dat'), 3);
+    msResource.SaveToFile(sTargetFile);
   finally
-    lsBytes.Free;
+    msResource.Free;
   end;
   if FileExists(sResourceFile) then
     DeleteFile(PChar(sResourceFile));

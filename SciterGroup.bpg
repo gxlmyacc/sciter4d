@@ -14,7 +14,7 @@ PROJECTS = Layered.exe QQLogin.exe SciterTest.exe Sciter.exe minimal.exe \
   d360_3.exe d360_4.exe Picasa.exe Collapsible.exe KillerWhale.exe AButtons.exe \
   DeskTip.exe BrushAsist.exe Repeatable.exe Plus.exe DeskLyrics.exe EPPortal.exe \
   DirectxDemo.exe VSTDemo.exe VSTPlugin.dll SciterWke.dll SciterFlash.dll \
-  SciterIE.dll packfolderd.exe
+  SciterIE.dll
 #------------------------------------------------------------------------------
 default: $(PROJECTS)
 #------------------------------------------------------------------------------
@@ -105,8 +105,4 @@ SciterIE.dll: Plugins\SciterIE\SciterIE.dpr
 
 Installer.exe: Demos\Installer\Installer.dpr
   $(DCC)
-
-packfolderd.exe: Demos\packfolderd\packfolderd.dpr
-  $(DCC)
-
 
