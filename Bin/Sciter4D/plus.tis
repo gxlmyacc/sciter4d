@@ -636,6 +636,7 @@ function @observing(func, paths..) {
               for(var i = start; i < end; ++i)
                 observeChanges(obj[i], onchange, spath);
             }
+            break;
             case #delete-range: spath = path + "[]"; break;
             default: return;
           }
@@ -672,31 +673,43 @@ function @observing(func, paths..) {
   return func;
 }
 
+function Array.merge(source) 
+{
+  for( var (i,v) in source ) 
+  {
+    if( i < this.length ) {
+      var rv = this[k];
+      if( typeof v == typeof rv && (typeof rv == #array || typeof rv == #object))
+        rv.merge(v);
+      else 
+        this[k] = v;
+    } else
+      this.push(v);
+  }
+  if( this.length > source.length )
+    this.length = source.length;
+}
 
-// 这个方法等价于jQuery中的$.extend(deep)方法,
-// 它将对象树和数组进行合并，并且不会重新创建已存在的对象
 function Object.merge(objects..) 
 {
-  function merge1(reciever,source) {
+  function merge1(receiver,source) {
     var rv;
-    for( var (k,v) in source ) {
-      rv = reciever[k];
-      if( typeof v == #object && typeof rv == #object )
-        merge1(rv,v);
-      else if( typeof v == #array && typeof rv == #array ) {
-        rv.length = v.length;
-        merge1(rv,v);
-      }
-      else if (rv !== v) reciever[k] = v;   
+    for( var (k,v) in source ) 
+    {
+      rv = receiver[k];
+      if( typeof v == typeof rv && (typeof rv == #array || typeof rv == #object))
+        rv.merge(v);
+      else
+        receiver[k] = v;
     }
   }
 
   if(typeof this == #object)
-    for( var obj in objects ) // called as memeber function
+    for( var obj in objects ) // called as member function
       merge1(this,obj);
   else { 
     var _this = objects[0];
-    for( var obj in objects.slice(1)) // called static function
+    for( var obj in objects.slice(1)) // called as static function
       merge1(_this,obj);
   }
 }

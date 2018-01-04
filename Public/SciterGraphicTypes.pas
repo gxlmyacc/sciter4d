@@ -82,6 +82,14 @@ type
   TSciterTextDirection = SCITER_TEXT_DIRECTION;
 
 
+  SCITER_IMAGE_ENCODING = (
+    SCITER_IMAGE_ENCODING_RAW, // [a,b,g,r,a,b,g,r,...] vector
+    SCITER_IMAGE_ENCODING_PNG,
+    SCITER_IMAGE_ENCODING_JPG,
+    SCITER_IMAGE_ENCODING_WEBP
+  );
+  TSciterImageEncoding = SCITER_IMAGE_ENCODING;
+
   SCITER_TEXT_FORMAT = packed record
     fontFamily:       LPWSTR;
     fontWeight:       UINT; // 100...900, 400 - normal, 700 - bold

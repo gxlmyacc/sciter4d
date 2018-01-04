@@ -262,7 +262,7 @@ end;
 procedure TMainForm.Button8Click(Sender: TObject);
 var
   func: ITiscriptFunction;
-begin           
+begin
   func := Tiscript.F(_NativeAnonymousFunction);
   func.Call(['¹þ¹þ']);
 end;

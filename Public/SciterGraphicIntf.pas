@@ -49,8 +49,12 @@ type
     function GetInfo(var width, height: UINT; var usesAlpha: BOOL): GRAPHIN_RESULT;
     function Clear(byColor: SC_COLOR): ISciterImage;
 
-    function Save(pfn: image_write_function; var prm: Pointer; bpp: UINT = 32; quality: UINT = 100): ISciterImage; overload;
-    function Save(const filename: SciterString; bpp: UINT = 32; quality: UINT = 32): ISciterImage; overload;
+    function Save(pfn: image_write_function; var prm: Pointer;
+      encoding: TSciterImageEncoding = SCITER_IMAGE_ENCODING_PNG;
+      quality: UINT = 0 (*JPEG qquality: 20..100, if 0 - PNG*)): ISciterImage; overload;
+    function Save(const filename: SciterString; encoding:
+      TSciterImageEncoding = SCITER_IMAGE_ENCODING_PNG;
+      quality: UINT = 0 (*JPEG qquality: 20..100, if 0 - PNG*)): ISciterImage; overload;
 
     function CreateGraphic: ISciterGraphic;
 

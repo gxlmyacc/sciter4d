@@ -40,6 +40,7 @@
         foreground-repeat : expand stretch-left stretch-right stretch-middle;
         foreground-image: @BUTTON_FORE_NORMAL; 
         display:block; 
+        background:transparent; 
         background-repeat:no-repeat; 
         background-position:50% 50%; 
         background-size:38dip 38dip;
@@ -47,7 +48,7 @@
         size:46dip; 
       }
 	    div#toolbar > button:hover          {  foreground-image: @BUTTON_FORE_HOVER; transition:none; }
-	    div#toolbar > button:active         {  foreground-image: @BUTTON_FORE_ACTIVE; foreground-position:53% 53%; }
+	    div#toolbar > button:active         {  foreground-image: @BUTTON_FORE_ACTIVE; background-position:53% 53%; }
 	    div#toolbar > button:checked	      {  foreground-image: @BUTTON_FORE_CHECKED;  }
 	    div#toolbar > button:checked:hover  {  foreground-image: @BUTTON_FORE_CHECKED_HOVER; }
 	    div#toolbar > button:disabled       {  foreground-image: @BUTTON_FORE_DISABLED; opacity:0.5; }

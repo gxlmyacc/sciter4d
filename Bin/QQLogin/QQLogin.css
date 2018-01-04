@@ -219,6 +219,7 @@ div.pwd:hover {
 }
  
 input[name="userid"] {
+  border: none;
   border-top-left-radius: @MARGIN_SHADOW;
  }
       
@@ -313,6 +314,7 @@ popup#userList > option:checked .userId {
 }
  
 input[name="password"] {
+  border: none;
   border-bottom-left-radius: @MARGIN_SHADOW;
 }
 
@@ -398,6 +400,15 @@ div#popupKeyboard:active {
   color: #656565;
   font-size: 12dip;
   background-image: url(images/checkbox_normal.png);
+  background-repeat:  no-repeat;
+  background-position: left center;
+  foreground: none;
+  border: none;
+}
+#userInput button[type="checkbox"]::marker {
+  background: none;
+  foreground: none;
+  border: none;  
 }
 
 #userInput button[type="checkbox"]:hover {
