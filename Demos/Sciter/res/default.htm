@@ -11,8 +11,8 @@
 	    @const BUTTON_FORE_DISABLED: none;
 
       @image-map icons {
-        src: url(res:icons-n.png) 160dpi,
-             url(res:icons-h.png) ;
+        src: url(res:icons-h.png) 192dpi,
+             url(res:icons-n.png) ;
         cells:3 2; /* 3 columns, 2 rows */
         /* logical names of the parts, see toolbar-icons.png */ 
         items:  open,
@@ -26,15 +26,16 @@
       html { background-color:#5C4C4C; overflow:hidden; } 
       
       body { flow:horizontal; margin:0; }
-   
-      div#toolbar  
+      
+      toolbar  
       {
         flow:vertical; 
         width:max-content; 
         padding:3dip; 
         height:*;
+        background:transparent;
       }
-      div#toolbar > button                   
+      toolbar > button                   
       {
         foreground-position: 4 4 4 4; 
         foreground-repeat : expand stretch-left stretch-right stretch-middle;
@@ -47,11 +48,11 @@
         padding:0;
         size:46dip; 
       }
-	    div#toolbar > button:hover          {  foreground-image: @BUTTON_FORE_HOVER; transition:none; }
-	    div#toolbar > button:active         {  foreground-image: @BUTTON_FORE_ACTIVE; background-position:53% 53%; }
-	    div#toolbar > button:checked	      {  foreground-image: @BUTTON_FORE_CHECKED;  }
-	    div#toolbar > button:checked:hover  {  foreground-image: @BUTTON_FORE_CHECKED_HOVER; }
-	    div#toolbar > button:disabled       {  foreground-image: @BUTTON_FORE_DISABLED; opacity:0.5; }
+	    toolbar > button:hover          {  foreground-image: @BUTTON_FORE_HOVER; transition:none; }
+	    toolbar > button:active         {  foreground-image: @BUTTON_FORE_ACTIVE; background-position:53% 53%; }
+	    toolbar > button:checked	      {  foreground-image: @BUTTON_FORE_CHECKED;  }
+	    toolbar > button:checked:hover  {  foreground-image: @BUTTON_FORE_CHECKED_HOVER; }
+	    toolbar > button:disabled       {  foreground-image: @BUTTON_FORE_DISABLED; opacity:0.5; }
 	    frame#content{ size:*; 
 	                   background :url(res:no-color.png) repeat; }
       frame#content > div#intro
@@ -67,20 +68,19 @@
           outline:2px orange solid -2px;
       }
 
-      div#toolbar > button#open         { background-image:image-map(icons,open); }
-      div#toolbar > button#reload       { background-image:image-map(icons,refresh); }
-      div#toolbar > button#help         { background-image:image-map(icons,help); }
-      div#toolbar > button#inspector    { background-image:image-map(icons,inspector); }
-      div#toolbar > button#open-in-view { background-image:image-map(icons,open-in-view); }
-      div#toolbar > button#glass        { background-image:image-map(icons,glass); margin-top:*; }
+      toolbar > button#open         { background-image:image-map(icons,open); }
+      toolbar > button#reload       { background-image:image-map(icons,refresh); }
+      toolbar > button#help         { background-image:image-map(icons,help); }
+      toolbar > button#inspector    { background-image:image-map(icons,inspector); }
+      toolbar > button#open-in-view { background-image:image-map(icons,open-in-view); }
+      toolbar > button#glass        { background-image:image-map(icons,glass); margin-top:*; }
       
             
       /*div#intro { behavior:htmlarea; }*/
       
-      @media on-glass 
-      {
-         html { background-color:transparent; }
-         frame#content { background-image:none; }
+      @media on-glass {
+        html { background-color:transparent; }
+        html > body > frame#content { background-image:none; }
       }
       
       hr { margin:0; padding:0; height:0; border:none; border-top: 1px dashed #999; }
@@ -88,7 +88,7 @@
     </style>
 
     <script type="text/tiscript">
-    
+
       const APP_NAME = "sciter.app";
       include "settings.tis";
 
@@ -104,23 +104,21 @@
          
       var debugIsActive = false; 
 
-      $(button#glass).onClick = function()
+      function loadFile(fn)
       {
-		    view.glass(this.value);
-      }
-      
-      $(button#help).onClick = function()
-      {
-		    //view.open("file://" + System.home("../doc/main.htm"));
-        view.window 
-        {
-          url: "file://" + System.home("../doc/main.htm").toUrlString(),
-          type: View.FRAME_WINDOW,
-          state: View.WINDOW_SHOWN,
-          alignment:5,
-          width: 1024,
-          height: 800
-        };
+        filename = fn;
+        content.load(fn);
+        $(button#reload).state.disabled = false;
+        var inspectorButton = $(button#inspector);
+        inspectorButton.state.disabled = false;
+        if(debugIsActive)
+          view.launchDebugView();
+        var croot = content[0];
+        var title = croot.$(head>title);
+        if( title )
+          view.windowCaption =  title.text || "Sciter";
+        else
+          view.windowCaption =  "Sciter";
       }
 
       function content.onExchange(evt)
@@ -146,37 +144,80 @@
            if(typeof evt.dragging == #array)
              fn = evt.dragging[0];
            else
-  		       fn = evt.dragging;
+             fn = evt.dragging;
            loadFile(fn);
            return true;
          }
-      }
+      }      
 
-      $(div#toolbar > button#inspector).onClick = function()
+      event click $(toolbar > button#open)
       {
-        view.launchDebugView();
-      }
-
-      function self.onKey(evt)
-      {
-        if( evt.type == Event.KEY_DOWN 
-         && evt.keyCode == Event.VK_F12 
-         && !$(button#inspector).state.disabled )
-        {
-          view.launchDebugView();
-          return true;
+        var fn = view.selectFile(#open,file_filter);
+		    if( fn ) 
+		    {
+          loadFile(fn);
+          // getting root node of the frame
+          var croot = content[0];
+          var title = croot.$(head>title); 
+          if( title )
+            view.windowCaption = title.text; // calling native method defined in sciter.h 
         }
+      }
+      event click $(toolbar > button#reload)
+      {
+		    if( filename ) {
+          content.load(filename);
+          if(debugIsActive)
+            view.launchDebugView();
+        }
+      }
+
+      event click $(toolbar > button#open-in-view)
+      {
+        var fn = view.selectFile(#open,file_filter);
+		    if( fn ) 
+		    {
+          view.load(fn);
+        }
+      }
+
+      event click $(toolbar > button#glass)
+      {
+        if( this.value)
+          view.windowBlurbehind = #auto;
+        else
+          view.windowBlurbehind = undefined;
+      }
+      
+      event click $(toolbar > button#help)
+      {
+		    //view.open("file://" + System.home("../doc/main.htm"));
+        view.window 
+        {
+          url: "file://" + System.home("../../doc/main.htm"),
+          type: View.FRAME_WINDOW,
+          state: View.WINDOW_SHOWN,
+          alignment:5,
+          width: 1024,
+          height: 800
+        };
+      }
+      
+      event click $(toolbar > button#inspector)
+      {
+        if(!view.inspectorIsPresent()) // native function, defined in sciter.cpp
+          view.launchDebugView();
       }
 
       function self.ready() {
         Settings.restore();
-      }      
-           
-    </script>
+      }
+
+  </script>
 
   </head>
   <body aria-label="Sciter Frame Body">
-    <div #toolbar role="toolbar">
+    <toolbar>
       <button #open title="加载HTML" aria-label="Load Document" />
       <button #open-in-view title="在视图中加载HTML" aria-label="Load Document in View" />
       <button #reload title="重新加载" disabled aria-label="Reload Document" />
@@ -185,7 +226,7 @@
       <button #inspector title="DOM监视器" aria-label="DOM inspector" />
       <button|checkbox #glass title="毛玻璃模式" aria-label="Set Glass Mode"/> 
 
-    </div>
+    </toolbar>
     <frame #content src="res:sys-info.html" aria-label="Content" ></frame>
   </body>
 </html>

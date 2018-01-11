@@ -8,8 +8,10 @@
              background-size:cover;
              overflow:hidden;  }
     
-      body { font:system; margin:0; padding:8px;
+      body { font:system; margin:0; padding:8dip;
              background: radial-gradient(90% 90%, circle farthest-side, white, orange/25%, rgb(128,64,0)/40%, rgba(128,64,0,0)); }
+
+      a[href] { color:#000; }
     
       div#intro
       { 
@@ -18,7 +20,7 @@
         margin-bottom:*;
         behavior:htmlarea;
         background: rgba(0,0,0,0.5);
-        border-radius:3px;
+        border-radius:3dip;
         width:max-content;
       }
       div#intro > img#arrow { vertical-align:middle; size:0.8em; color:brown; }  
@@ -33,7 +35,7 @@
         //border-bottom: 1px solid orange; 
         text-align:center;
         margin-top:0.5em; 
-        text-shadow: 1px 1px 2px rgb(32,16,0) ;
+        text-shadow: 2dip 2dip 2dip rgb(32,16,0) ;
       }
       
       footer { font-size:85%; text-align:center; }
@@ -54,6 +56,11 @@
 	  $(#os-type).text = System.HANDHELD_OS? "handheld":"desktop";
 	  $(#os-version).text = System.OS;
     $(#gfx-backend).text = view.backendName;
+
+    event click $(a[href]) {
+      Sciter.launch( this.attributes["href"] );
+      return true;
+    }
   
   </script>
 </head>
@@ -73,6 +80,12 @@
 	  <dt>国家:</dt>	   <dd #country></dd>
 	  <dt>语言:</dt>	 <dd #language></dd>
   </dl>
-  <footer>Sciter包含H-SMILE(HTML/CSS)和TIScript引擎。Terra Informatica Software, Inc.</footer>
+  <footer>Sciter包含: 
+    <ul>
+      <li>H-SMILE(HTML/CSS)和TIScript引擎，来自<a href="http://terrainformatica.com/">Terra Informatica Software, Inc.</a></li>
+      <li><a href="https://skia.org/">Skia库</a>, sponsored and managed by Google. Skia is used for rendering when the engine is configured to do so.</li>
+      <li><a href="https://github.com/nucleic/kiwi/">KIWI Cassowary Constraint Solver</a> by Chris Colbert and The Nucleic Development Team.</li>
+    </ul>
+  </footer>
 </body>
 </html>

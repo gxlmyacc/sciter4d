@@ -47,17 +47,18 @@ const
 
 function TSciterObject.OnScriptCallTs(const he: IDomElement; pvm: Ptiscript_VM;
   const name: PWideChar; var retval: tiscript_value): Boolean;
-var
-  vm: ITiscriptRuntime;
 begin
   Result := False;
 
   if name = 'launchDebugView' then
   begin
     launchDebugView;
-    vm := Tiscript.CreateRuntime(pvm);
-    vm.V(retval).B := True;
-
+    Tiscript.V(retval).B := True;
+    Result := True;
+  end
+  else if name = 'inspectorIsPresent' then
+  begin
+    Tiscript.V(retval).B := DebugOut.InspectorIsPresent;
     Result := True;
   end;
 end;

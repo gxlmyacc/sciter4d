@@ -152,7 +152,7 @@
         addNamedItem(f,name,formation(el)) ; // add its sub-hierachy
         return false;                          // don't go inside it
       }
-      else if( el.tag in LISTS && el.prototype === Element) { 
+      else if( el.tag in LISTS && el.prototype === Element ) { 
         addNamedItem(f,name,repeatable(el)) ; // theses are repeatable formations
         return false;                         // don't go inside it
       }

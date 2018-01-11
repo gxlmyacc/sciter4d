@@ -59,6 +59,7 @@ begin
   MainForm := CreateWindow(HInstance,
     CWFlags_Sizeable + [swScreenCenter,swEnableDebug, swMain], 970, 642);
   MainForm.Layout.Behavior.RttiObject :=  WrapObjectDispatch(TSciterObject.Create(MainForm), True) as IDispatchRttiObject;
+  MainForm.Layout.EnableDebugger(True);
 
   sOpenFile := ParamStr(1);
   if (sOpenFile <> '') then
