@@ -111,8 +111,8 @@ type
   SCITER_VALUE_ARRAY  = array of SCITER_VALUE;
   PSCITER_VALUE_ARRAY = ^SCITER_VALUE_ARRAY;
 
-  JsonValue     = SCITER_VALUE;
-  PJsonValue    = ^JsonValue;
+  SciterValue   = SCITER_VALUE;
+  PSciterValue  = ^SciterValue;
 
   tiscript_VM = record
   end;
@@ -1274,7 +1274,7 @@ type
   // GET_VALUE/SET_VALUE methods params
   VALUE_PARAMS = record
     methodID: TBehaviorMethodIdentifier; // see: #BEHAVIOR_METHOD_IDENTIFIERS
-    val:      JsonValue;
+    val:      SciterValue;
   end;
   TValueParams = VALUE_PARAMS;
   PValueParams = ^TValueParams;

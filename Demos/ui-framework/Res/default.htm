@@ -12,13 +12,12 @@
     
       var taskNo = 0;
 
-      $(#start-task).onClick = function()
+      event click $(#start-task)
       {
         ++taskNo;
         var taskElem = $(div#tasks > select).$append(<option>Task { taskNo }<progress max=100 /> <span.result /></option>);
-        function onProgress(p100) { taskElem.$(progress).value = p100; }
-        function onDone(taskId) { taskElem.$(span.result).text = "任务完成!"; taskElem.$(progress).remove(); }
-       
+        function onProgress(p100) { if(taskElem.root) taskElem.$(progress).value = p100; }
+        function onDone(taskId) { if(taskElem.root) { taskElem.$(span.result).text = "任务完成!"; taskElem.$(progress).remove() }}
         view.execTask(taskNo,onProgress,onDone, { a: 1, b:"dddd", c: [1, 2, 3] });
       }
     

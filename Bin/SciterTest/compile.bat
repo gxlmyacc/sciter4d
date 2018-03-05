@@ -1,0 +1,1 @@
+..\tiscript.exe -o "test1.tis" -c "test.tis"

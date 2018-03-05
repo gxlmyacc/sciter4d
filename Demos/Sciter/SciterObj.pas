@@ -80,40 +80,40 @@ end;
 
 function TSciterObject.OnButtonClick(const he, target: IDomElement;
   _type: UINT; var params: TBehaviorEventParams): Boolean;
-var
-  sFileName: String;
+//var
+//  sFileName: String;
 begin
   Result := False;
   if not FWnd.IsBubbling(_type) then
     Exit;
 
-  if he.ID = 'open' then
-  begin
-    sFileName := FWnd.Layout.Eval(Format('view.selectFile(#open, "%s", "%s");', [file_filter, '.html']));
-    if (sFileName = 'undefined') or (sFileName = EmptyStr) then
-      Exit;
-
-    loadFile(sFileName);
-  end
-  else
-  if he.ID = 'reload' then
-  begin
-    if filename <> EmptyStr then
-    begin
-      loadFile(filename);
-      if debugIsActive then
-        launchDebugView;
-    end;
-  end
-  else
-  if he.ID = 'open-in-view' then
-  begin
-    sFileName := FWnd.Layout.Eval(Format('view.selectFile(#open, "%s", "%s");', [file_filter, '.html']));
-    if sFileName = EmptyStr then
-      Exit;
-      
-    FWnd.Layout.LoadFile(sFileName);
-  end;
+//  if he.ID = 'open' then
+//  begin
+//    sFileName := FWnd.Layout.Eval(Format('view.selectFile(#open, "%s", "%s");', [file_filter, '.html']));
+//    if (sFileName = 'undefined') or (sFileName = EmptyStr) then
+//      Exit;
+//
+//    loadFile(sFileName);
+//  end
+//  else
+//  if he.ID = 'reload' then
+//  begin
+//    if filename <> EmptyStr then
+//    begin
+//      loadFile(filename);
+//      if debugIsActive then
+//        launchDebugView;
+//    end;
+//  end
+//  else
+//  if he.ID = 'open-in-view' then
+//  begin
+//    sFileName := FWnd.Layout.Eval(Format('view.selectFile(#open, "%s", "%s");', [file_filter, '.html']));
+//    if sFileName = EmptyStr then
+//      Exit;
+//      
+//    FWnd.Layout.LoadFile(sFileName);
+//  end;
 end;
 
 procedure TSciterObject.loadFile(const fn: WideString);

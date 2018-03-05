@@ -260,11 +260,12 @@ begin
 end;
 
 procedure TMainForm.Button8Click(Sender: TObject);
-var
-  func: ITiscriptFunction;
+//var
+//  func: ITiscriptFunction;
 begin
-  func := Tiscript.F(_NativeAnonymousFunction);
-  func.Call(['込込']);
+  Test;
+//  func := Tiscript.F(_NativeAnonymousFunction);
+//  func.Call(['込込']);
 end;
 
 end.
