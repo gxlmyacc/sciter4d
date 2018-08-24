@@ -1,0 +1,6 @@
+menu.context li[name="edit:undo"] label:lang(zh) { content: "撤销"; }
+menu.context li[name="edit:redo"] label:lang(zh) { content: "重做"; }
+menu.context li[name="edit:cut"] label:lang(zh) { content: "剪切"; }
+menu.context li[name="edit:copy"] label:lang(zh) { content: "复制"; }
+menu.context li[name="edit:paste"] label:lang(zh) { content: "粘贴"; }
+menu.context li[name="edit:selectall"] label:lang(zh) { content: "选择所有"; }

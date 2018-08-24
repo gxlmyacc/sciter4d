@@ -1,0 +1,59 @@
+﻿
+function alert(message, title = "警告", buttons = [{id:#ok, text:"确定"}]) {
+  if (typeof message == #object || typeof message == #array || typeof message == #namespace || typeof message == #Element) 
+    return view.msgbox(#alert, String.printf("%V", message).replace("\t", " "), title, buttons);
+  else
+    return view.msgbox(#alert, message, title, buttons);
+}
+
+function confirm(message, title = "确认 对话框", buttons = [{id:#ok, text:"确定"}, {id:#cancel, text:"取消"}]) {
+  if (typeof message == #object || typeof message == #array || typeof message == #namespace || typeof message == #Element) 
+    return view.msgbox(#question, String.printf("%V", message).replace("\t", " "), title, buttons) == #ok;
+  else    
+    return view.msgbox(#question, message, title, buttons) == #ok;  
+}
+
+function prompt(text, defaultText = "", title = "确认 对话框", buttons = [{id:#ok, text:"确定"}, {id:#cancel, text:"取消"}]) {
+  var result = null;
+  view.msgbox {
+    content: "<label>"+text+"</label><br/><input|text #input style='display:block;width:1*;' />", 
+    title:   title, 
+    buttons: buttons,
+    onLoad:  
+      function(root){ 
+        if (defaultText) 
+          root.$(#input).value = defaultText; 
+        },
+    onClose: 
+      function (root,buttonSym) { 
+        if (buttonSym == #ok) 
+          result = root.$(#input).value;
+        return true; 
+      }  
+  };   
+  return result;
+}
+
+const REG_URLPARAMS =/([^?=&]+)(=([^&]*))?/g;
+
+function crackUrlParams(strParams) {
+  var params = {};
+  strParams.replace(REG_URLPARAMS, function(p0, p1, p2, p3) { params[p1] = p3; } );    
+  return params;
+}
+
+function MasterScript(param) { 
+  this.urlParams = crackUrlParams((this.url() ~% "?").urlUnescape()); 
+  if (self.parent && self.parent.router) self.router = self.parent.router; 
+  if( self === view.root ) {
+    if (param.url)
+      load(param.url);
+    var that = this;
+    if (this.@["window-round"])
+      roundWindow(this.@["window-round"].toInteger(-1), that);
+    if (this.@.exists("window-shadow"))  
+      setupShadow(this.@["window-shadow"].toInteger(-1), that)
+    if (this.@["window-frame"] == "solid")
+      self.post(::enableMinToTaskbar(that)); 
+  }
+}

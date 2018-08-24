@@ -1,0 +1,314 @@
+var logEnable = true;
+ 
+function log(message){
+  if (!logEnable) return; 
+  if (typeof message == #object || typeof message == #array || typeof message == #namespace || typeof message == #Element)
+    stdout.println(String.printf("%V", message).replace("\t", " "));
+  else
+    stdout.println(message);
+}
+
+function String.urlEncode(){
+  return encodeURL(this);
+}
+
+function __array_find(arr, callback, thisArg){
+  var ret;
+  for(var (i,v) in arr) {
+    if (thisArg) ret = callback.call(thisArg, v, i, arr);
+    else ret = callback(v, i, arr);
+    if (ret) return (i, v);
+  }
+  return (-1, undefined);
+}
+function Array.find(callback, thisArg = undefined){
+  var (i,v) = __array_find(this, callback, thisArg);
+  return v;
+}
+function Array.findIndex(callback, thisArg = undefined){
+  var (i,v) = __array_find(this, callback, thisArg);
+  return i;
+}
+function Array.some(callback, thisArg = undefined){
+  var (i,v) = __array_find(this, callback, thisArg);
+  return i >= 0;
+}
+function Array.every(callback, thisArg = undefined){
+  var ret;
+  for(var (i,v) in this) {
+    if (thisArg) ret = callback.call(thisArg, v, i, this);
+    else ret = callback(v, i, this);
+    if (!ret) return false;
+  }
+  return true;
+}
+function Array.clear(){
+  while(this.length) this.pop();
+  return this;
+}
+function Array.from(arrayLike, mapFn = undefined, thisArg = undefined){
+  this.clear();
+  if (arrayLike.length) Array.push.apply(this, arrayLike);
+  if (mapFn) this.map(mapFn, thisArg);
+  return this;
+}
+function Array.includes(value, start = 0){
+  if (start < 0) start = this.length + start;
+  for(var i = start; i < this.length; i++) 
+    if (this[i] == value) return true;
+  return false;
+}
+function Array.fill(value, start = 0, end = undefined){
+  if (start < 0) start = this.length + start;
+  if (start < 0) start = 0;
+  if (end === undefined) end = this.length;
+  else {
+    if (end < 0) end = this.length + end;
+    if (end > this.length) end = this.length;
+  }
+  for(var i = start; i < end; i++) this[i] = value;
+  return this;
+}
+function Array.copyWithin(target, start = 0, end = undefined){
+  if (target < 0) target = this.length + target;
+  if (target < 0) target = 0;
+  if (target >= this.length) return this;
+  if (start < 0) start = this.length + start;
+  if (start < 0) start = 0;
+  if (end === undefined) end = this.length;
+  else {
+    if (end < 0) end = this.length + end;
+    if (end > this.length) end = this.length;
+  }
+  if (start == target) return this;
+  var cp = [];
+  for(var i = 0; (target+i < this.length) && (start+i < end); i++) {
+    if (start < target) {
+      cp.push(this[target+i]);
+      this[target+i] = (start+i < target) ? this[start+i] : cp[start+i-target];
+    }
+    else this[target+i] = this[start+i]; 
+  }
+  return this;
+}
+function Array.forEach(fn){
+  if (!fn) return;
+  for (var (k, v) in this) {
+    var ret = fn(v, k);
+    if (ret) return ret;
+  }
+}
+function Array.pluck(key) {
+  var out = new Array(this.length);
+  for(var (i,v) in this) out[i] = v[key];
+  return out;
+}
+function Array.shuffle() {
+  var ri; const rnd = rand; 
+  var shuffled = new Array(this.length);
+  for(var (i,v) in this ) {
+    ri = rnd(i);
+    shuffled[i] = shuffled[ri];
+    shuffled[ri] = v;
+  }
+  return shuffled;
+}
+function Array.groupBy(criterion) {
+  var result = {};
+  var group = typeof criterion == #function ? criterion : (:v: v[criterion] );
+  for( var v in this ) {
+    var key = group(v);
+    if(key in result) result[key].push(v);
+    else result[key] = [v];
+  } 
+  return result;
+}
+function Array.zip(args..) {
+  var arrays = args.length ? args : this;
+  var length = arrays.reduce( :ml,v: v.length > ml?v.length:ml , 0);
+  var results = new Array(length);
+  for (var i in length)
+    results[i] = arrays.pluck(i);
+  return results;
+}
+
+Object.forEach = Array.forEach;
+
+function Object.toUrlParams(base = "", escape = true){
+  var ret = base;
+  for (var (k, v) in this) {
+    if (ret) ret += "&";
+    if (typeof v == #object || typeof v == #array) 
+      v = JSON.stringify(v);
+    ret += k + "=" + (escape ? (""+v).urlEscape() : (""+v));
+  }
+  return ret;
+}
+
+function Function.bind(context, bindargs..) {
+  return function(args..) {
+    if(bindargs.length)
+      return (this super).apply(context, bindargs.concat(args));
+    else
+      return (this super).apply(context, args);
+  };
+}
+function Function.memoize(hasher = null) {
+  assert !hasher || typeof hasher == #function;
+  var memo = {};
+  return function(args..) {
+    var key = hasher ? hasher.apply(this, args) : args;
+    var val = memo[key];
+    if( val === undefined )
+      memo[key] = val = (this super).apply(this, args);
+    return val;
+  };
+}
+function Function.partial(pargs..) {
+  return function(args..) {
+    return (this super).apply(this, pargs.concat(args));
+  };
+};
+function Function.once() {
+  var ran = false, memo;
+  return function(args..) {
+    if (!ran) {
+      ran = true;
+      memo = (this super).apply(this, args);
+    }
+    return memo;
+  };
+}
+function Function.delay(milliseconds, args..) {
+  setTimeout(:: (this super).apply(null, args), milliseconds, true );
+}
+function Function.defer(args..) {
+  var func = this;
+  setTimeout( :: func.apply(null, args) );
+}
+function Function.throttle(milliseconds, options = {}) {
+  var context, args, result;
+  var running = false;
+  var previous = 0;
+  var func = this;
+  milliseconds = milliseconds.toInteger();
+  function later() {
+    previous = options.leading === false ? 0 : Date.ticks();
+    running = false;
+    result = func.apply(context, args);
+  };
+  return function(arguments..) {
+    var now = Date.ticks();
+    if (!previous && options.leading === false) previous = now;
+    var remaining = milliseconds - (now - previous);
+    context = this;
+    args = arguments;
+    if (remaining <= 0) {
+      setTimeout(later, 0, true);
+      running = false;
+      previous = now;
+      result = func.apply(context, args);
+    } else if (!running && options.trailing !== false) {
+      running = true;
+      setTimeout(later, remaining, true);
+    }
+    return result;
+  };
+}
+
+function Function.debounce(milliseconds, immediate = false) {
+  var running = false, args, context, timestamp, result;
+  milliseconds = milliseconds.toInteger();
+  var func = this;
+  return function(arguments..) 
+  {
+    context = this;
+    args = arguments;
+    timestamp = Date.ticks();
+    var later = function() 
+    {
+      var last = Date.ticks() - timestamp;
+      if (last < milliseconds) {
+        running = true;
+        setTimeout(later, milliseconds - last, true);
+      } else {
+        running = false;
+        if (!immediate) result = func.apply(context, args);
+      }
+    };
+    var callNow = immediate && !running;
+    if (!running) {
+      running = true;
+      setTimeout(later, milliseconds, true);
+    }
+    if (callNow) result = func.apply(context, args);
+    return result;
+  };
+}
+function Function.wrap(wrapper) {
+  return function(arguments..) {
+    return wrapper.apply(this,(this super),arguments);
+  };
+}
+function Function.batch(funcs..) {
+  return function(arguments..) {
+    var args = arguments;
+    for (var i = 0; i < funcs.length; ++i) {
+    if( typeof args == #array )
+      args = funcs[i].apply(this, args);
+    else
+      args = funcs[i].call(this, args);
+    }
+    return args;
+  };
+}
+
+function Date.format(fmt){
+  var o = {
+    "Y+": this.year,
+    "M+": this.month,
+    "D+": this.day,
+    "h+": this.hour,
+    "m+": this.minute,
+    "s+": this.second,
+    "q+": Math.floor((this.month + 3) / 3),
+    "z+": this.millisecond
+  };
+  for (var k in o) {
+    var rep = new RegExp("(" + k + ")").exec(fmt);
+    if (rep) fmt = fmt.replace(rep[0], (rep[0].length == 1) ? (o[k]) : (("0000" + o[k]).substr(-rep[0].length)));
+  }
+  return fmt;    
+};
+function Date.getTime(){
+  return this.valueOf();    
+};
+
+function Element.reload() {
+  if(this.parent) this.parent.load( this.url() );
+  else view.load(this.url());
+}
+function Element.show(){
+  this.@.removeClass("hidden");
+}
+function Element.hide(){
+  this.@.addClass("hidden");
+}
+function Element.toggle(){
+  this.@.toggleClass("hidden");
+}
+
+function Math.min(args..){
+  return args.length ? args.reduce(:a,b: (a < b ? a : b) ) : Float.MIN;
+}
+function Math.max(args..){
+  return args.length ? args.reduce(:a,b: (a > b ? a : b) ) : Float.MAX;
+}
+
+function setInterval(func, millisec) {
+  return setTimer(function(){ func(); return true; }, millisec)
+}
+function clearInterval(id_of_setinterval) {
+  if (id_of_setinterval) killTimer(id_of_setinterval);
+}
+

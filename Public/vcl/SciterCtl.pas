@@ -116,6 +116,7 @@ begin
   if (FLayout = nil) and (not (csDestroying in ComponentState)) then
   begin
     FLayout := LayoutFactory.Create(Self);
+    FLayout.SetOption(SCITER_SET_UX_THEMING, Integer(True));
   end;
 
   if HandleAllocated and (FLayout <> nil) then

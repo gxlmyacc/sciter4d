@@ -1,0 +1,235 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{25E80EB2-1774-4FD6-8AFA-79E95EA1BCE1}</ProjectGuid>
+			<MainSource>Sciter4D.dpr</MainSource>
+			<Base>True</Base>
+			<Config Condition="'$(Config)'==''">Debug</Config>
+			<TargetedPlatforms>3</TargetedPlatforms>
+			<AppType>Library</AppType>
+			<FrameworkType>None</FrameworkType>
+			<ProjectVersion>16.1</ProjectVersion>
+			<Platform Condition="'$(Platform)'==''">Win32</Platform>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Base)'=='true') or '$(Base_Win64)'!=''">
+			<Base_Win64>true</Base_Win64>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
+			<Base_Win32>true</Base_Win32>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+			<Cfg_1>true</Cfg_1>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_1)'=='true') or '$(Cfg_1_Win32)'!=''">
+			<Cfg_1_Win32>true</Cfg_1_Win32>
+			<CfgParent>Cfg_1</CfgParent>
+			<Cfg_1>true</Cfg_1>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+			<Cfg_2>true</Cfg_2>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Cfg_2)'=='true') or '$(Cfg_2_Win64)'!=''">
+			<Cfg_2_Win64>true</Cfg_2_Win64>
+			<CfgParent>Cfg_2</CfgParent>
+			<Cfg_2>true</Cfg_2>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_2)'=='true') or '$(Cfg_2_Win32)'!=''">
+			<Cfg_2_Win32>true</Cfg_2_Win32>
+			<CfgParent>Cfg_2</CfgParent>
+			<Cfg_2>true</Cfg_2>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Base)'!=''">
+			<SanitizedProjectName>Sciter4D</SanitizedProjectName>
+			<Manifest_File>None</Manifest_File>
+			<DCC_DcuOutput>dcu</DCC_DcuOutput>
+			<DCC_ExeOutput>..\bin</DCC_ExeOutput>
+			<VerInfo_Locale>1033</VerInfo_Locale>
+			<DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
+			<DCC_UnitSearchPath>..\Public;..\Public\JSB;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+			<DCC_K>false</DCC_K>
+			<DCC_SymbolReferenceInfo>1</DCC_SymbolReferenceInfo>
+			<DCC_F>false</DCC_F>
+			<DCC_S>false</DCC_S>
+			<DCC_Define>Sciter4D;UseRuntimeLinking;UseLogHelper1;$(DCC_Define)</DCC_Define>
+			<DCC_E>false</DCC_E>
+			<DCC_N>true</DCC_N>
+			<DCC_UsePackage>rtl;$(DCC_UsePackage)</DCC_UsePackage>
+			<DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Winapi;System.Win;$(DCC_Namespace)</DCC_Namespace>
+			<DCC_ImageBase>00400000</DCC_ImageBase>
+			<GenDll>true</GenDll>
+			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0</VerInfo_Keys>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Base_Win64)'!=''">
+			<DCC_Namespace>Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;$(DCC_Namespace)</DCC_Namespace>
+			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+			<VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Base_Win32)'!=''">
+			<Debugger_HostApplication>..\Bin\EPPortal.exe</Debugger_HostApplication>
+			<DCC_UnitSearchPath>LVCL1;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+			<VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+			<DCC_Namespace>Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_1)'!=''">
+			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+			<DCC_DebugInformation>0</DCC_DebugInformation>
+			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
+			<VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_2)'!=''">
+			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+			<DCC_Optimize>false</DCC_Optimize>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_2_Win64)'!=''">
+			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+			<VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
+			<Debugger_HostApplication>..\Bin\d360_2.exe</Debugger_HostApplication>
+			<VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+		</PropertyGroup>
+		<ItemGroup>
+			<DelphiCompile Include="$(MainSource)">
+				<MainSource>MainSource</MainSource>
+			</DelphiCompile>
+			<RcCompile Include="MyRes32.rc">
+				<Form>MyRes32.res</Form>
+			</RcCompile>
+			<RcCompile Include="version.rc">
+				<Form>version.res</Form>
+			</RcCompile>
+			<DCCReference Include="..\Public\SciterTypes.pas"/>
+			<DCCReference Include="..\Public\SciterImportDefs.pas"/>
+			<DCCReference Include="..\Public\SciterIntf.pas"/>
+			<DCCReference Include="..\Public\SciterVideoIntf.pas"/>
+			<DCCReference Include="..\Public\TiscriptIntf.pas"/>
+			<DCCReference Include="..\Public\SciterDebugIntf.pas"/>
+			<DCCReference Include="..\Public\SciterBehavior.pas"/>
+			<DCCReference Include="..\Public\TiscriptTypes.pas"/>
+			<DCCReference Include="..\Public\SciterFactoryIntf.pas"/>
+			<DCCReference Include="..\Public\SciterWndIntf.pas"/>
+			<DCCReference Include="..\Public\SciterGraphicTypes.pas"/>
+			<DCCReference Include="..\Public\SciterGraphicIntf.pas"/>
+			<DCCReference Include="..\Public\SciterRequestIntf.pas"/>
+			<DCCReference Include="..\Public\SciterURIIntf.pas"/>
+			<DCCReference Include="..\Public\SciterPluginIntf.pas"/>
+			<DCCReference Include="..\Public\SciterDomainIntf.pas"/>
+			<DCCReference Include="..\Public\SciterDirectXIntf.pas"/>
+			<DCCReference Include="..\Public\ObjAutoEx.pas"/>
+			<DCCReference Include="..\Public\ObjComAutoEx.pas"/>
+			<DCCReference Include="SciterMath.pas"/>
+			<DCCReference Include="SciterHash.pas"/>
+			<DCCReference Include="SciterMemLib.pas"/>
+			<DCCReference Include="SciterApiImpl.pas"/>
+			<DCCReference Include="SciterDom.pas"/>
+			<DCCReference Include="SciterValue.pas"/>
+			<DCCReference Include="SciterDebugImpl.pas"/>
+			<DCCReference Include="SciterLayout.pas"/>
+			<DCCReference Include="SciterWndImpl.pas"/>
+			<DCCReference Include="SciterBehaviorDef.pas"/>
+			<DCCReference Include="SciterURIImpl.pas"/>
+			<DCCReference Include="SciterPluginImpl.pas"/>
+			<DCCReference Include="SciterFactoryImpl.pas"/>
+			<DCCReference Include="Behavior.WinCmd.pas"/>
+			<DCCReference Include="Behavior.WinSizer.pas"/>
+			<DCCReference Include="Behavior.MenuTab.pas"/>
+			<DCCReference Include="Behavior.Dragable.pas"/>
+			<DCCReference Include="SciterDomainImpl.pas"/>
+			<DCCReference Include="SciterVideoImpl.pas"/>
+			<DCCReference Include="SciterGraphicApiImpl.pas"/>
+			<DCCReference Include="SciterGraphicImpl.pas"/>
+			<DCCReference Include="SciterRequestApiImpl.pas"/>
+			<DCCReference Include="SciterRequestImpl.pas"/>
+			<DCCReference Include="SciterDirectXImpl.pas"/>
+			<DCCReference Include="SciterNativeMethods.pas"/>
+			<DCCReference Include="TiscriptApiImpl.pas"/>
+			<DCCReference Include="TiscriptStream.pas"/>
+			<DCCReference Include="TiscriptOle.pas"/>
+			<DCCReference Include="TiscriptClassInfo.pas"/>
+			<DCCReference Include="TiscriptClass.pas"/>
+			<DCCReference Include="TiscriptRuntime.pas"/>
+			<DCCReference Include="SciterExportDefs.pas"/>
+			<DCCReference Include="SciterImpl.pas"/>
+			<DCCReference Include="TiscriptImpl.pas"/>
+			<DCCReference Include="ShadowUtils.pas"/>
+			<DCCReference Include="RoundUtils.pas"/>
+			<DCCReference Include="SciterTimerMgr.pas"/>
+			<DCCReference Include="SciterArchiveImpl.pas"/>
+			<DCCReference Include="..\Public\SciterArchiveIntf.pas"/>
+			<BuildConfiguration Include="Debug">
+				<Key>Cfg_2</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Base">
+				<Key>Base</Key>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Release">
+				<Key>Cfg_1</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+		</ItemGroup>
+		<ProjectExtensions>
+			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject>
+				<Delphi.Personality>
+					<Source>
+						<Source Name="MainSource">Sciter4D.dpr</Source>
+					</Source>
+					<VersionInfo>
+						<VersionInfo Name="IncludeVerInfo">False</VersionInfo>
+						<VersionInfo Name="AutoIncBuild">False</VersionInfo>
+						<VersionInfo Name="MajorVer">1</VersionInfo>
+						<VersionInfo Name="MinorVer">0</VersionInfo>
+						<VersionInfo Name="Release">0</VersionInfo>
+						<VersionInfo Name="Build">0</VersionInfo>
+						<VersionInfo Name="Debug">False</VersionInfo>
+						<VersionInfo Name="PreRelease">False</VersionInfo>
+						<VersionInfo Name="Special">False</VersionInfo>
+						<VersionInfo Name="Private">False</VersionInfo>
+						<VersionInfo Name="DLL">False</VersionInfo>
+						<VersionInfo Name="Locale">1033</VersionInfo>
+						<VersionInfo Name="CodePage">1252</VersionInfo>
+					</VersionInfo>
+					<VersionInfoKeys>
+						<VersionInfoKeys Name="CompanyName"/>
+						<VersionInfoKeys Name="FileDescription"/>
+						<VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys>
+						<VersionInfoKeys Name="InternalName"/>
+						<VersionInfoKeys Name="LegalCopyright"/>
+						<VersionInfoKeys Name="LegalTrademarks"/>
+						<VersionInfoKeys Name="OriginalFilename"/>
+						<VersionInfoKeys Name="ProductName"/>
+						<VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+					</VersionInfoKeys>
+				</Delphi.Personality>
+				<Platforms>
+					<Platform value="OSX32">False</Platform>
+					<Platform value="Win64">True</Platform>
+					<Platform value="Win32">True</Platform>
+				</Platforms>
+			</BorlandProject>
+			<ProjectFileVersion>12</ProjectFileVersion>
+		</ProjectExtensions>
+		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')" Project="$(BDS)\Bin\CodeGear.Delphi.Targets"/>
+		<Import Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')" Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj"/>
+	</Project>

@@ -76,7 +76,10 @@ var
   M: PMsg;
 begin
   if (FLayout = nil) and (not (csDestroying in ComponentState)) then
+  begin
     FLayout := LayoutFactory.Create(Self);
+    FLayout.SetOption(SCITER_SET_UX_THEMING, Integer(True));
+  end;
 
   bHandled := False;
   DoWndProc(Message, bHandled);

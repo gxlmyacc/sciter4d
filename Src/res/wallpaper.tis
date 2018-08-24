@@ -1,0 +1,11 @@
+﻿class Wallpaper: Behavior
+{
+  function attached() {
+    if (this.@#src) this.style#background-image = "url("+this.@#src+")";
+  }
+  
+  property value(v){
+    get { return this.@#src;  }
+    set { if (this.@#src != v){ this.@#src = v; this.style#background-image = "url("+this.@#src+")"; } }
+  }
+}

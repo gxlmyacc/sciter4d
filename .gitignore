@@ -17,9 +17,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-.svn
-Src/
-SciterVideoLib/
+*.svn
 Others/
 Demos/Help/
 Demos/packfolderd/
@@ -33,9 +31,6 @@ Bin/sciter32_*.dll
 # *.exe
 
 # other files
-SciterGroupWithSrc.bpg
-SciterGroupWithSrc.groupproj
-SciterGroupWithSrc.groupproj.local
 
 
 

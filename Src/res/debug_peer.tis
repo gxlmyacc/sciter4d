@@ -1,0 +1,367 @@
+﻿//debugPeer
+!function() {
+  const PORT = 0x0DEB;
+  
+  const STATE_SYMS = [
+    #link       ,    #hover      ,    #active     ,    #focus      ,    #visited    ,    #current    ,
+    #checked    ,    #unchecked  ,    #selected   ,    #disabled   ,    #read-only  ,    #expanded   ,
+    #collapsed  ,    #incomplete ,    #invalid    ,    #animating  ,    #anchor     ,    #synthetic  ,
+    #owns-popup ,    #tab-focus  ,    #empty      ,    #busy       ,    #drag-over  ,    #drop-target,
+    #moving     ,    #copying    ,    #drag-source,    #popup      ,    #ltr        ,    #rtl        ,
+    #ready      ,    #content-editable,    #content-non-editable ];  
+ 
+  var root;
+  var socket;
+  var connected;
+  var host;
+    
+  const PENDING_CAPACITY = 100; //items    
+  var pending = []; // pending posts awaiting delivery
+  var resources = {};
+  
+  const DATA_HTML = 0;
+  const DATA_IMAGE = 1;
+  const DATA_STYLE = 2;
+  const DATA_CURSOR = 3;
+  const DATA_SCRIPT = 4;
+  const DATA_RAW_DATA = 5;    // raw data request
+  const DATA_FONT = 6;
+  const DATA_SOUND = 7; // wav bytes
+  
+  function post( procname, args.. ) {
+    args.unshift( procname );
+    if( connected )
+      socket.send( args );
+    pending.push( args );
+    if( pending.length > PENDING_CAPACITY )
+      pending.splice(0,1);
+  }
+  
+  function serializeElement(el) {
+    function atts() {
+      var a = [];
+      for( var (val,name) in el.attributes ) a.push([name,val]);
+      return a;
+    }
+    var obj = {
+      tag       : el.tag,
+      id        : el.id,
+      type      : el.attributes["type"],
+      cls       : el.attributes["class"],
+      atts      : atts(),
+      children  : el.length,
+      nodes     : el.lastNode ? (el.lastNode.nodeIndex + 1) : 0,
+      uid       : el.uid,
+      index     : el.index,
+      
+    };
+    if(el.length == 0) {
+      // if element has no children but text:
+      var t = el.text.trim();
+      if(t) obj.text = t;
+    }
+    return obj;
+  }
+  
+  function rootElement() {
+    //var content = view.root.$(frame#content);
+    //if( content ) // seems like we are running on sciter.exe facade:
+    //  return content[0];
+    if( root && root.length)
+      return root[0];
+    return view.root;
+  }
+
+ 
+  function elementStack(element) 
+  {
+    const root = rootElement();
+    var stack = [];
+    while( element ) 
+    {
+      stack.unshift(serializeElement(element));
+      if( element === root )
+        break;
+      element = element.parent;
+    }  
+    return stack;
+  }
+  
+  // commands to be requested by the debugger
+  const commands = {};
+
+  commands.highlightElement = function(elementUid) {
+    var node = view.getNodeByUID(elementUid);
+    //stdout.println("commands.highlightElement",node);
+    view.highlightedNode = node;
+   };
+          
+  commands.getElementContent = function(elementUid, rid) {
+    var list = [];
+    if( elementUid === null )
+      list.push( serializeElement(rootElement()) );
+    else {
+      //stdout.printf("getElementContent %V %V\n",elementUid, rid);    
+      var element = view.getNodeByUID(elementUid);
+      //stdout.println("getElementContent",element);    
+      if( element instanceof Element )
+        for(var n = element.firstNode; n; n = n.nextNode )
+        {
+          if( n.isText ) 
+            list.push( n.text );
+          else if( n.isElement )
+            list.push( serializeElement(n) );
+        }
+    }
+    //stdout.printf("#deeResponse %V %V\n",list,rid);    
+    post(#deeResponse, list, rid);
+  };
+  
+  commands.getElementDetails = function(elementUid, rid) 
+  {
+    var element = view.getNodeByUID(elementUid);
+    var details;
+    if( element instanceof Element ) {
+      details = view.getElementDetails(element); 
+      
+      var states = [];      
+      for( var sn in STATE_SYMS )
+        if( element.state[sn] ) 
+          states.push(sn);
+      details.states = states;
+      
+      var (x,y,w,h) = element.box(#rectw,#inner,#view);
+      var (px1,py1,px2,py2) = element.box(#rect,#padding,#inner);
+      var (bx1,by1,bx2,by2) = element.box(#rect,#border,#padding);
+      var (mx1,my1,mx2,my2) = element.box(#rect,#margin,#border);
+      
+      details.metrics = {
+        inner   : [x,y,w,h],
+        padding : [px1,py1,px2,py2],
+        border  : [bx1,by1,bx2,by2],
+        margin  : [mx1,my1,mx2,my2]
+      };
+      
+    }      
+      
+    post(#deeResponse, details || {}, rid);
+  };
+  
+  commands.getElementStack = function(elementUid, rid) 
+  {
+    //log("got getElementStack", elementUid, rid);
+    const root = rootElement();
+    var element = view.getNodeByUID(elementUid);
+    var stack = [];
+    while( element ) 
+    {
+      stack.unshift(serializeElement(element));
+      if( element === root )
+        break;
+      element = element.parent;
+    }
+    //log("posting back getElementStack", stack, stack.length);
+    post(#deeResponse, stack , rid);
+  };
+  
+  commands.addBreakpoint = function( bp, rid )
+  {
+    var url = bp[0], lineNo = bp[1];
+    VM.addBreakpoint(url.urlUnescape(),lineNo);
+    var bps = []; VM.foreachBreakpoint( :url,lineNo { bps.push {url:url.urlEncode(),lineNo:lineNo} } );
+    post(#deeResponse, bps , rid);
+  };
+  commands.removeBreakpoint = function( bp, rid )
+  {    
+    var url = bp[0], lineNo = bp[1];
+    VM.removeBreakpoint(url.urlUnescape(),lineNo);
+    var bps = []; VM.foreachBreakpoint( :url,lineNo: bps.push {url:url.urlEncode(),lineNo:lineNo} );
+    post(#deeResponse, bps , rid);
+  };
+  commands.allBreakpoints = function(dummy, rid)
+  {
+    var bps = []; VM.foreachBreakpoint( :url,lineNo: bps.push {url:url.urlEncode(),lineNo:lineNo} );
+    post(#deeResponse, bps , rid);
+  };
+  
+  const INFO_SEVERITY = 0;
+  const ERROR_SEVERITY = 2;
+
+  commands.evalIt = function(text) {
+    var el = view.highlightedNode || rootElement();
+    
+    try {
+      var result = eval.call(el,text,el.ns);
+      post(#deeLog, 4, INFO_SEVERITY, result.toString());  
+    } catch(e) {
+      post(#deeLog, 4, ERROR_SEVERITY, e.message);  
+    }
+  };
+  
+  // finally setup trackers/handlers
+  view.logHandler( function(subsystem, severity, message) {
+    post(#deeLog, subsystem, severity, message);  
+  });
+  
+ 
+  view.resourceTracker( function(def) {
+    if(resources[def.url])
+      return; // done it already
+    
+    if( def.type == DATA_RAW_DATA )
+      switch( def.url %~ "." ) // 
+      {
+        case "htm": case "html": def.type = DATA_HTML; break;
+        case "png": case "jpg": case "bmp": case "gif": case "svg": def.type = DATA_IMAGE; break;
+        case "js": case "json": case "tis": def.type = DATA_SCRIPT; break;
+        case "css" : def.type = DATA_STYLE; break;
+      }
+  
+    resources[def.url] = def;
+    if( connected )
+      post(#deeResourceArrived, def);  
+  });
+  
+  var breakpointHitResponseCode = 0; // one of DEBUG_COMMAND
+
+  commands.breakpointHitResponse = function(code)
+  {
+    breakpointHitResponseCode = code;
+  }  
+  
+  // breakpointHitHandler setup  
+  if( !VM.breakpointHitHandler ) // setup breakpointHitHandler only once per VM 
+    VM.breakpointHitHandler = function(url,lineNo,env) {
+      if( !connected ) 
+        return 1 /*CONTINUE, can we do more here?*/;
+      post(#deeBreakpointHit,url.urlEncode(),lineNo,env); 
+      // wait here until we
+      while(breakpointHitResponseCode == 0 && connected)
+        view.doEvent(#wait); // #nowait ?
+      return breakpointHitResponseCode || 1 /*CONTINUE*/;
+    };
+    
+  self.on("~keydown", function(evt) {
+    if((evt.keyCode == Event.VK_I) && evt.ctrlKey && evt.shiftKey && evt.target )
+      view.connectToInspector();
+  });
+  
+  function postSnapshot() {
+    var re = rootElement();
+    var (w,h) = re.box(#dimension,#border);
+    var image = new Image(re, w, h, 60, 60 ); // make snapshot of the element in the image    
+    if( image ) {
+      var bytes = image.toBytes();
+      image.destroy();
+      post(#deeSnapshot, bytes); 
+    }
+  }
+  
+  function needSnapshotUpdate() {
+    rootElement().timer(1s, postSnapshot ); 
+  }
+  
+  view.connectToInspector = function(rootEl = null, inspectorHost = null) {
+  
+    if(socket)
+      return;
+      
+    socket = DataSocket.connect(PORT, inspectorHost || "localhost");
+    if(!socket) 
+    {
+      //rootElement().postEvent("inspector-connect",false);
+      view.msgbox(#error, "Debugger cannot create socket!");    
+      return false;
+    }
+        
+    socket.on("connect",function(  ) 
+    {
+      connected = true;
+      post(#deeAttach, (view.caption || "{no caption}"), rootElement().url(), VM.id );
+      while(pending.length)
+        socket.send( pending.remove(0) );
+      //log("connected");
+      needSnapshotUpdate();
+      for(var (u,def) in resources )
+        post(#deeResourceArrived, def);
+      //rootElement().postEvent("inspector-connect",true);
+    });
+
+    socket.on("data",function( data ) 
+    {
+      //log(String.printf("socket data received %V\n", data));
+      const method = commands[data.shift()];
+      assert(typeof method == #function);
+      method.apply(socket, data );
+    });
+    
+    function shutdown() 
+    {
+      view.connectedToInspector = false;   
+      if( socket )
+        socket.close();
+      connected = false;
+      socket = null;
+      rootElement().off(".debug-peer");
+      if( root == view.root )
+        root = null;
+      view.highlightedNode = null;
+      view.logHandler( null );
+      view.resourceTracker( null );
+      VM.breakpointHitHandler = null;  
+    }
+      
+    var usedRoot;
+    if(rootEl)
+      rootEl.on("newdocument", function() {
+        var title = rootEl.$(title);
+        post(#deeReattach, (title ? title.text : "{no title}"), rootElement().url() );
+        needSnapshotUpdate();
+      });
+    else {
+      view.on("newdocument", function() { if(socket) view.connectToInspector(); });
+      view.root.on("close.debug-peer", shutdown);
+    }
+      
+    root = rootEl;
+    
+    socket.on("close", function() { socket = null; shutdown(); } );
+    
+    (root || view.root).on("contentchange.debug-peer",function(evt) { 
+                          post(#deeElementContentChanged, evt.target.uid); 
+                          needSnapshotUpdate(); })
+                       .on("~mousedown.debug-peer",function(evt) { 
+                          if( evt.ctrlKey && evt.shiftKey && evt.target ) 
+                          {
+                            var stack = elementStack(evt.target);
+                            post(#deeElementHighlighted,stack); 
+                            view.highlightedNode = evt.target;
+                            return true;
+                          }})
+                       .on("~mouseup.debug-peer",function(evt) 
+                          { 
+                            if( evt.ctrlKey && evt.shiftKey )
+                              return true; // consume it
+                          }); 
+    
+    socket.on("error",function(errno) {
+      if(!View.debugPeerPresentedError) {
+        View.debugPeerPresentedError = true;
+        if( errno < 0) {
+          view.msgbox(#error, "timeout connecting with the Inspector!");
+        }
+        else 
+          view.msgbox(#error, "Inspector channel socket error:" + errno);
+      }
+      //rootElement().postEvent("inspector-connect",false);
+    });
+    
+    view.connectedToInspector = true;   
+    
+  }; // connectToInspector
+  
+  // if parent view is under the inspector then auto connect this one too.
+  if( view.parent && view.parent.connectedToInspector )
+    view.connectToInspector();
+    
+}();

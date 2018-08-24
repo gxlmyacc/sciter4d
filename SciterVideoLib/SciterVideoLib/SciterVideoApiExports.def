@@ -1,0 +1,26 @@
+LIBRARY SciterVideoLib.dll
+
+EXPORTS
+
+iasset_add_ref
+iasset_release
+iasset_get_interface
+
+video_source_play
+video_source_pause
+video_source_stop
+video_source_get_is_ended
+video_source_get_position
+video_source_set_position
+video_source_get_duration
+video_source_get_volume
+video_source_set_volume
+video_source_get_balance
+video_source_set_balance
+
+video_destination_is_alive
+video_destination_start_streaming
+video_destination_stop_streaming
+video_destination_render_frame
+fragmented_video_destination_render_frame_part
+

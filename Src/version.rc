@@ -1,0 +1,23 @@
+1 VERSIONINFO
+FILEVERSION 0,1,0,9
+PRODUCTVERSION 0,1,0,9
+FILEOS 0x4
+FILETYPE 0x1
+{
+BLOCK "StringFileInfo"
+{
+    BLOCK "040904E4"
+    {
+        VALUE "FileVersion", "0.1.0.9\0"
+        VALUE "ProductVersion", "0.1\0"
+        VALUE "CompanyName", "guoxl\0"
+        VALUE "ProductName", "Sciter4D\0"
+        VALUE "LegalCopyright", "Copyright by guoxl\0"
+        VALUE "FileDescription", "Sciter4D.dll\0"
+    }
+}
+BLOCK "VarFileInfo"
+{
+    VALUE "Translation", 0x0409 0x04E4
+}
+}
