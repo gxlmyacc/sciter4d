@@ -72,9 +72,6 @@
 			<Projects Include="Demos\DeskLyrics\DeskLyrics.dproj">
 				<Dependencies/>
 			</Projects>
-			<Projects Include="Demos\EPPortal\EPPortal.dproj">
-				<Dependencies/>
-			</Projects>
 			<Projects Include="Demos\DirectxDemo\DirectxDemo.dproj">
 				<Dependencies/>
 			</Projects>
@@ -314,15 +311,6 @@
 		<Target Name="DeskLyrics:Make">
 			<MSBuild Targets="Make" Projects="Demos\DeskLyrics\DeskLyrics.dproj"/>
 		</Target>
-		<Target Name="EPPortal">
-			<MSBuild Projects="Demos\EPPortal\EPPortal.dproj"/>
-		</Target>
-		<Target Name="EPPortal:Clean">
-			<MSBuild Targets="Clean" Projects="Demos\EPPortal\EPPortal.dproj"/>
-		</Target>
-		<Target Name="EPPortal:Make">
-			<MSBuild Targets="Make" Projects="Demos\EPPortal\EPPortal.dproj"/>
-		</Target>
 		<Target Name="DirectxDemo">
 			<MSBuild Projects="Demos\DirectxDemo\DirectxDemo.dproj"/>
 		</Target>
@@ -396,13 +384,13 @@
 			<MSBuild Targets="Make" Projects="Demos\packfolderd\packfolderd.dproj"/>
 		</Target>
 		<Target Name="Build">
-			<CallTarget Targets="Sciter4D;Layered;QQLogin;SciterTest;Sciter;minimal;Installer;plainWin;UIFramework;uminimal;d360;d360_2;d360_3;d360_4;Picasa;Collapsible;KillerWhale;AButtons;DeskTip;BrushAsist;Repeatable;Plus;DeskLyrics;EPPortal;DirectxDemo;Help;VSTDemo;VSTPlugin;SciterWke;SciterFlash;SciterIE;packfolderd"/>
+			<CallTarget Targets="Sciter4D;Layered;QQLogin;SciterTest;Sciter;minimal;Installer;plainWin;UIFramework;uminimal;d360;d360_2;d360_3;d360_4;Picasa;Collapsible;KillerWhale;AButtons;DeskTip;BrushAsist;Repeatable;Plus;DeskLyrics;DirectxDemo;Help;VSTDemo;VSTPlugin;SciterWke;SciterFlash;SciterIE;packfolderd"/>
 		</Target>
 		<Target Name="Clean">
-			<CallTarget Targets="Sciter4D:Clean;Layered:Clean;QQLogin:Clean;SciterTest:Clean;Sciter:Clean;minimal:Clean;Installer:Clean;plainWin:Clean;UIFramework:Clean;uminimal:Clean;d360:Clean;d360_2:Clean;d360_3:Clean;d360_4:Clean;Picasa:Clean;Collapsible:Clean;KillerWhale:Clean;AButtons:Clean;DeskTip:Clean;BrushAsist:Clean;Repeatable:Clean;Plus:Clean;DeskLyrics:Clean;EPPortal:Clean;DirectxDemo:Clean;Help:Clean;VSTDemo:Clean;VSTPlugin:Clean;SciterWke:Clean;SciterFlash:Clean;SciterIE:Clean;packfolderd:Clean"/>
+			<CallTarget Targets="Sciter4D:Clean;Layered:Clean;QQLogin:Clean;SciterTest:Clean;Sciter:Clean;minimal:Clean;Installer:Clean;plainWin:Clean;UIFramework:Clean;uminimal:Clean;d360:Clean;d360_2:Clean;d360_3:Clean;d360_4:Clean;Picasa:Clean;Collapsible:Clean;KillerWhale:Clean;AButtons:Clean;DeskTip:Clean;BrushAsist:Clean;Repeatable:Clean;Plus:Clean;DeskLyrics:Clean;DirectxDemo:Clean;Help:Clean;VSTDemo:Clean;VSTPlugin:Clean;SciterWke:Clean;SciterFlash:Clean;SciterIE:Clean;packfolderd:Clean"/>
 		</Target>
 		<Target Name="Make">
-			<CallTarget Targets="Sciter4D:Make;Layered:Make;QQLogin:Make;SciterTest:Make;Sciter:Make;minimal:Make;Installer:Make;plainWin:Make;UIFramework:Make;uminimal:Make;d360:Make;d360_2:Make;d360_3:Make;d360_4:Make;Picasa:Make;Collapsible:Make;KillerWhale:Make;AButtons:Make;DeskTip:Make;BrushAsist:Make;Repeatable:Make;Plus:Make;DeskLyrics:Make;EPPortal:Make;DirectxDemo:Make;Help:Make;VSTDemo:Make;VSTPlugin:Make;SciterWke:Make;SciterFlash:Make;SciterIE:Make;packfolderd:Make"/>
+			<CallTarget Targets="Sciter4D:Make;Layered:Make;QQLogin:Make;SciterTest:Make;Sciter:Make;minimal:Make;Installer:Make;plainWin:Make;UIFramework:Make;uminimal:Make;d360:Make;d360_2:Make;d360_3:Make;d360_4:Make;Picasa:Make;Collapsible:Make;KillerWhale:Make;AButtons:Make;DeskTip:Make;BrushAsist:Make;Repeatable:Make;Plus:Make;DeskLyrics:Make;DirectxDemo:Make;Help:Make;VSTDemo:Make;VSTPlugin:Make;SciterWke:Make;SciterFlash:Make;SciterIE:Make;packfolderd:Make"/>
 		</Target>
 		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')" Project="$(BDS)\Bin\CodeGear.Group.Targets"/>
 	</Project>

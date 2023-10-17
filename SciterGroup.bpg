@@ -12,7 +12,7 @@ BRCC = $(ROOT)\bin\brcc32.exe $**
 PROJECTS = Layered.exe QQLogin.exe SciterTest.exe Sciter.exe minimal.exe \
   Installer.exe plainWin.exe UIFramework.exe uminimal.exe d360.exe d360_2.exe \
   d360_3.exe d360_4.exe Picasa.exe Collapsible.exe KillerWhale.exe AButtons.exe \
-  DeskTip.exe BrushAsist.exe Repeatable.exe Plus.exe DeskLyrics.exe EPPortal.exe \
+  DeskTip.exe BrushAsist.exe Repeatable.exe Plus.exe DeskLyrics.exe \
   DirectxDemo.exe VSTDemo.exe VSTPlugin.dll SciterWke.dll SciterFlash.dll \
   SciterIE.dll
 #------------------------------------------------------------------------------
@@ -74,9 +74,6 @@ d360_4.exe: Demos\d360_4\d360_4.dpr
   $(DCC)
 
 DeskLyrics.exe: Demos\DeskLyrics\DeskLyrics.dpr
-  $(DCC)
-
-EPPortal.exe: Demos\EPPortal\EPPortal.dpr
   $(DCC)
 
 Plus.exe: Demos\Plus\Plus.dpr

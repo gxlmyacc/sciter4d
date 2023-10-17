@@ -28,6 +28,7 @@ Bin/sciter32_*.dll
 # delphi complie files
 *.dcu
 *.~*
+.history
 # *.exe
 
 # other files
